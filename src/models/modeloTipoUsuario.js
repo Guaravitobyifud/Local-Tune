@@ -30,11 +30,11 @@ const tb_tipoUsuario = connSequelize.define('tb_tipoUsuario', {
 
 }, _padraoTableBDExistence('tb_tipoUsuario'));
 
-tb_tipoUsuario.hasMany(tb_musico, {as:'AAAAA',foreignKey: 'cd_tipoUsuario'});
-tb_musico.belongsTo(tb_tipoUsuario, {as:'AAAAAA',foreignKey: 'cd_tipoUsuario'});
+tb_musico.hasMany(tb_tipoUsuario, {foreignKey: 'cd_musico'});
+tb_tipoUsuario.belongsTo(tb_musico, {foreignKey: 'cd_musico'});
 
-tb_estabelecimento.hasMany(tb_tipoUsuario, {as:'tb_estabelecimento',foreignKey: 'cd_tipoUsuario'});
-tb_tipoUsuario.belongsTo(tb_estabelecimento, {as:'tb_estabelecimento',foreignKey: 'cd_tipoUsuario'});
+tb_estabelecimento.hasMany(tb_tipoUsuario, {foreignKey: 'cd_estabelecimento'});
+tb_tipoUsuario.belongsTo(tb_estabelecimento, {foreignKey: 'cd_estabelecimento'});
 
 
 module.exports = {

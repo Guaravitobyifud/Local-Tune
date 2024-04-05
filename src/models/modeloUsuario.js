@@ -1,7 +1,7 @@
 const { connSequelize } = require('../../config/coneccao')
 const { DataTypes} = require ('sequelize')
 const { _padraoTableBDExistence } = require('../../config/confdobanco.js')
-const {tb_tipoUsuario} = require ('./modeloTipoUsuario')
+const {tb_tipoUsuario} = require ('./modeloTipoUsuario.js')
 const {tb_endereco} = require ('./modeloEndereco')
 const { tb_contato } = require('./modeloContato.js')
 const { tb_tipoMusical } = require('./modeloTipoMusica.js')
@@ -53,17 +53,17 @@ const tb_usuario = connSequelize.define('tb_usuario', {
     }
 }, _padraoTableBDExistence('tb_usuario'));
 
-tb_tipoUsuario.hasMany(tb_usuario, {as:'tb_tipoUsuario',foreignKey: 'cd_usuario'});
-tb_usuario.belongsTo(tb_tipoUsuario, {as:'tb_tipoUsuario',foreignKey: 'cd_usuario'});
+tb_tipoUsuario.hasMany(tb_usuario, {foreignKey: 'cd_tipoUsuario'});
+tb_usuario.belongsTo(tb_tipoUsuario, {foreignKey: 'cd_tipoUsuario'});
 
-tb_usuario.hasMany(tb_endereco, {as:'tb_endereco',foreignKey: 'cd_usuario'});
-tb_endereco.belongsTo(tb_usuario, {as:'tb_endereco',foreignKey: 'cd_usuario'});
+tb_endereco.hasMany(tb_usuario, {foreignKey: 'cd_endereco'});
+tb_usuario.belongsTo(tb_endereco, {foreignKey: 'cd_endereco'});
  
-tb_usuario.hasMany(tb_contato, {as:'tb_contato',foreignKey: 'cd_usuario'});
-tb_contato.belongsTo(tb_usuario, {as:'tb_contato',foreignKey: 'cd_usuario'});
+tb_contato.hasOne(tb_usuario, {foreignKey: 'cd_contato'});
+tb_usuario.belongsTo(tb_contato, {foreignKey: 'cd_contato'});
 
-tb_usuario.hasMany(tb_tipoMusical, {as:'tb_tipoMusical',foreignKey: 'cd_usuario'});
-tb_tipoMusical.belongsTo(tb_usuario, {as:'tb_tipoMusical',foreignKey: 'cd_usuario'});
+tb_tipoMusical.hasMany(tb_usuario, {foreignKey: 'cd_tipoMusical'});
+tb_usuario.belongsTo(tb_tipoMusical, {foreignKey: 'cd_tipoMusical'});
 
 module.exports = {
     tb_usuario

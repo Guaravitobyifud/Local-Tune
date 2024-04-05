@@ -4,7 +4,7 @@ const path = require('path')
 const mysql = require('mysql2')
 const hbs = require('express-hbs/lib/hbs')
 const {connSequelize, BD} = require('./config/coneccao')
-const {query} = require('./src/controllers/controlerTipoUsuario')
+const {query} = require('./src/controllers/controlerQuery')
 
 
 connSequelize.sync()
