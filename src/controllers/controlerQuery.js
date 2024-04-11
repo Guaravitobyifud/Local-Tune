@@ -4,22 +4,20 @@ const {tb_contato} = require ('../models/modeloContato')
 const {tb_endereco} = require ('../models/modeloEndereco')
 const {tb_estabelecimento} = require ('../models/modeloEstabelecimento')
 const {tb_musico} = require ('../models/modeloMusico')
-const {tb_tipoMusical} = require ('../models/modeloTipoMusica')
+const {tb_tipoMusical} = require ('../models/modeloTipoMusical')
 const {tb_tipoUsuario} = require ('../models/modeloTipoUsuario')
 const {tb_usuario} = require ('../models/modeloUsuario')
 
 async function runServer() {
     
-        // Sincroniza com o banco de dados
+  
         await connSequelize.sync();
 
-        // Executa a primeira consulta
-      /*  let resultBuscaContato = await tb_contato.findAll({ 
+        let resultBuscaContato = await tb_contato.findAll({ 
             raw: true
             });
         console.log("Contatos:", resultBuscaContato);
 
-        // Executa a segunda consulta
         let resultBuscaEndereco = await tb_endereco.findAll({
              attributes: [
             'nm_estado', 
@@ -30,9 +28,6 @@ async function runServer() {
              });
 
         console.log("Endereços agrupados:", resultBuscaEndereco);
-            } catch (error) {
-                 console.error('Ocorreu um erro:', error);
-            }
 
         let resultBuscaMusico = await tb_musico.findAll({
          attributes: [
@@ -54,33 +49,30 @@ async function runServer() {
              raw: true 
          });
 
-        console.log("Endereços agrupados e ordenados pelo estado:", resultBuscaEnderecoOG); */
+        console.log("Endereços agrupados e ordenados pelo estado:", resultBuscaEnderecoOG); 
         
 
         let resultBuscaUsuTipoUsu = await tb_usuario.findAll({
             attributes: [
-                        
-                        [Sequelize.literal('cd_cnpj'), "CNPJ"],
-                        [Sequelize.literal('cd_cpf'), "CPF"],
                         [Sequelize.literal('nm_usuario'), "Usuario"],
-                        [Sequelize.literal('cd_senha'), "Senha"]
+                        [Sequelize.literal('cd_senha'), "Senha"],
+                        [Sequelize.literal('cd_cnpj'), "CNPJ"],
+                        [Sequelize.literal('cd_cpf'), "CPF"]
             ],
             include: {
                 model: tb_tipoUsuario,
                 required: true,
-                attributes: [], //atributo vazio para não aparecer as informações
+                attributes: [],
                 include: [
                     {
                         model: tb_musico,
                         required: false,
-                        attributes: 
-                        [] // Seleciona os atributos relevantes do músico
+                        attributes: []
                     },
                     {
                         model: tb_estabelecimento,
                         required: false,
-                        attributes: 
-                        [] // Seleciona os atributos relevantes do estabelecimento
+                        attributes: []
                     }
                 ]
             },
@@ -89,9 +81,21 @@ async function runServer() {
         
         console.log(resultBuscaUsuTipoUsu);
         
- /*
 
        let resultBuscaUsuAll = await tb_usuario.findAll({
+            attributes: [
+                 [Sequelize.literal('nm_usuario'), "Usuario"],
+                 [Sequelize.literal('nm_email'), "e-mail"],
+                 [Sequelize.literal('cd_senha'), "Senha"],
+                 [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo Musical'],
+                 [Sequelize.literal('nr_celular'), "Numero de celular"],
+                 [Sequelize.literal('cd_cnpj'), "CNPJ"],
+                 [Sequelize.literal('cd_cpf'), "CPF"],
+                 [Sequelize.literal('nm_estado'), "Estado"],
+                 [Sequelize.literal('nm_cidade'), "Cidade"],
+                 [Sequelize.literal('nm_estado'), "Rua"],
+                 [Sequelize.literal('nm_cidade'), "Numero Residencial"]
+],
             include: [
                 {
                     model: tb_tipoUsuario,
@@ -99,25 +103,30 @@ async function runServer() {
                     include:[ {
                         model: tb_musico,
                         required: false,
+                        attributes: []
                     },
                     {
                         model: tb_estabelecimento,
                         required: false,
+                        attributes: []
                     }, 
                 ],
 
                 },
                 {
                     model: tb_contato,
-                    required: true
+                    required: true,
+                    attributes: []
                 },
                 {
                     model: tb_endereco,
-                    required: true
+                    required: true,
+                    attributes: []
                 },
                 {
                     model: tb_tipoMusical,
-                    required: true
+                    required: true,
+                    attributes: []
                 },
             ],
             raw: true
@@ -125,13 +134,25 @@ async function runServer() {
     
         console.log(resultBuscaUsuAll)
 
-        let resultBuscaUsuAllOG = await tb_usuario.findAll({
-           
-            group: ['cd_usuario', 'nm_usuario', 'nm_senha', ],
+        let resultBuscaUsuOG = await tb_usuario.findAll({
+            attributes: [
+                [Sequelize.literal('nm_usuario'), 'Usuario'], 
+                [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo Musical'],
+                [Sequelize.fn('COUNT', Sequelize.col('*')), 'QTD Total por Tipo Musical:']
+            ],
+            include: [          
+                {
+                    model: tb_tipoMusical,
+                    required: true,
+                    attributes: []
+                },
+            ],
+            order: ['nm_usuario'],
+            group: ['nm_usuario', 'ds_descricaoTpMusical'],
             raw: true
         })
     
-        console.log(resultBuscaUsuAllOG)*/ 
+        console.log(resultBuscaUsuOG)
 
 }
 

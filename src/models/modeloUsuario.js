@@ -4,7 +4,7 @@ const { _padraoTableBDExistence } = require('../../config/confdobanco.js')
 const {tb_tipoUsuario} = require ('./modeloTipoUsuario.js')
 const {tb_endereco} = require ('./modeloEndereco')
 const { tb_contato } = require('./modeloContato.js')
-const { tb_tipoMusical } = require('./modeloTipoMusica.js')
+const { tb_tipoMusical } = require('./modeloTipoMusical.js')
  
 const tb_usuario = connSequelize.define('tb_usuario', {
     cd_usuario: {

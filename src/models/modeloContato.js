@@ -9,7 +9,7 @@ const tb_contato = connSequelize.define('tb_contato', {
         primaryKey: true,
         autoIncrement: true
     },
-    nr_Celular: {
+    nr_celular: {
         type: DataTypes.STRING(11),
     },
     nm_email: {
