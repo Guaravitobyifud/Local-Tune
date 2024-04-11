@@ -85,21 +85,22 @@ async function runServer() {
        let resultBuscaUsuAll = await tb_usuario.findAll({
             attributes: [
                  [Sequelize.literal('nm_usuario'), "Usuario"],
-                 [Sequelize.literal('nm_email'), "e-mail"],
+                 [Sequelize.literal('nm_email'), "email"],
                  [Sequelize.literal('cd_senha'), "Senha"],
-                 [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo Musical'],
-                 [Sequelize.literal('nr_celular'), "Numero de celular"],
+                 [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+                 [Sequelize.literal('nr_celular'), "Numero_de_celular"],
                  [Sequelize.literal('cd_cnpj'), "CNPJ"],
                  [Sequelize.literal('cd_cpf'), "CPF"],
                  [Sequelize.literal('nm_estado'), "Estado"],
                  [Sequelize.literal('nm_cidade'), "Cidade"],
-                 [Sequelize.literal('nm_estado'), "Rua"],
-                 [Sequelize.literal('nm_cidade'), "Numero Residencial"]
+                 [Sequelize.literal('nm_rua'), "Rua"],
+                 [Sequelize.literal('nr_rua'), "Numero_Residencial"]
 ],
             include: [
                 {
                     model: tb_tipoUsuario,
                     required: true,
+                    attributes: [],
                     include:[ {
                         model: tb_musico,
                         required: false,
@@ -136,9 +137,8 @@ async function runServer() {
 
         let resultBuscaUsuOG = await tb_usuario.findAll({
             attributes: [
-                [Sequelize.literal('nm_usuario'), 'Usuario'], 
-                [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo Musical'],
-                [Sequelize.fn('COUNT', Sequelize.col('*')), 'QTD Total por Tipo Musical:']
+                [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+                [Sequelize.fn('COUNT', Sequelize.col('ds_descricaoTpMusical')), 'Total de usuarios por tipo musical:']
             ],
             include: [          
                 {
@@ -147,8 +147,9 @@ async function runServer() {
                     attributes: []
                 },
             ],
-            order: ['nm_usuario'],
-            group: ['nm_usuario', 'ds_descricaoTpMusical'],
+
+            order: [[Sequelize.literal('ds_descricaoTpMusical'), 'DESC']],
+            group: ['ds_descricaoTpMusical'],
             raw: true
         })
     
