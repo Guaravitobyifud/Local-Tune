@@ -1,4 +1,5 @@
 const { connSequelize, BD } = require('../../config/coneccao')
+const {Model, Op, Sequelize} = require('sequelize')
 const {tb_contato} = require ('../models/modeloContato')
 const {tb_endereco} = require ('../models/modeloEndereco')
 const {tb_estabelecimento} = require ('../models/modeloEstabelecimento')
@@ -57,27 +58,34 @@ async function runServer() {
         
 
         let resultBuscaUsuTipoUsu = await tb_usuario.findAll({
+            attributes: [
+                        
+                        [Sequelize.literal('cd_cnpj'), "CNPJ"],
+                        [Sequelize.literal('cd_cpf'), "CPF"],
+                        [Sequelize.literal('nm_usuario'), "Usuario"],
+                        [Sequelize.literal('cd_senha'), "Senha"]
+            ],
             include: {
                 model: tb_tipoUsuario,
                 required: true,
+                attributes: [], //atributo vazio para não aparecer as informações
                 include: [
                     {
                         model: tb_musico,
                         required: false,
-                        attributes: ['cd_musico', 'cd_cpf'] // Seleciona os atributos relevantes do músico
+                        attributes: 
+                        [] // Seleciona os atributos relevantes do músico
                     },
                     {
                         model: tb_estabelecimento,
                         required: false,
-                        attributes: ['cd_estabelecimento', 'cd_cnpj'] // Seleciona os atributos relevantes do estabelecimento
+                        attributes: 
+                        [] // Seleciona os atributos relevantes do estabelecimento
                     }
                 ]
             },
             raw: true
         });
-        
-        console.log(resultBuscaUsuTipoUsu);
-        
         
         console.log(resultBuscaUsuTipoUsu);
         
