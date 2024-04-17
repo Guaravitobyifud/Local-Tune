@@ -5,11 +5,11 @@ router.get('/', (req, res) => {
     res.render('login')
 })
 
-router.get('/cadastro', (req, res) => {
+router.post('/cadastro', (req, res) => {
     res.render('cadastro')
 })
 
-router.get('/index', (req, res) => {
+router.post('/index', (req, res) => {
     res.render('index')
 })
 
