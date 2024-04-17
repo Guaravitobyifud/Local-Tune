@@ -1,7 +1,5 @@
-const express = require('express');
-const router = express.Router();
-const app = express();
 const bcrypt = require('bcryptjs');
+const { tb_contato } = require('../models/modeloContato.js');
 const { tb_usuario } = require('../models/modeloUsuario.js');
 
 
@@ -13,7 +11,7 @@ exports.login = async (req, res) => {
 
         // Buscar usuário pelo e-mail
         try {
-        const usuario = await tb_usuario.findOne({ where: { nm_email } });
+        const usuario = await tb_contato.findOne({ where: { nm_email } });
 
             if (usuario) {
                 return res.redirect('/index')
@@ -39,5 +37,4 @@ exports.login = async (req, res) => {
     }
 }
 
-// Exporte o roteador 
-module.exports = router;
+

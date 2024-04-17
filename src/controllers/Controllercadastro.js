@@ -1,8 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const app = express();
 const bcrypt = require('bcryptjs');
 const { tb_usuario } = require('../models/modeloUsuario');
+const { tb_contato } = require('../models/modeloContato');
 
 
 //Rota de cadastro
@@ -11,7 +9,7 @@ exports.cadastro = async (req,res) =>{
 
     //Verificar se o usuário já existe
     try {
-        const usuario = await tb_usuario.findOne({ where: { nm_email } });
+        const usuario = await tb_contato.findOne({ where: { nm_email } });
 
             if (usuario) {
                 return res.status(404).send('E-mail e Senha inválido');
@@ -26,6 +24,3 @@ catch (error) {
     res.status(500).send('Erro ao realizar login.');
 }
 }
-
-// Exporte o roteador 
-module.exports = router;

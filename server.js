@@ -5,6 +5,7 @@ const mysql = require('mysql2')
 const hbs = require('express-hbs/lib/hbs')
 const {connSequelize, BD} = require('./config/coneccao')
 const {query} = require('./src/controllers/controlerQuery')
+const auth = require('./src/routes/auth')
 
 
 connSequelize.sync()
@@ -15,7 +16,7 @@ connSequelize.authenticate().then(() => {
 })
 
 //para ir às rotas
-/*app.set('view engine', 'hbs')
+app.set('view engine', 'hbs')
 
 
 app.set( 'views', path.join(__dirname, 'src/views'))
@@ -26,9 +27,9 @@ app.use(express.static(publicDirectory))
 
 app.use('/', require ('./src/routes/rotas'))
 
-app.use('/auth', require ('./src/routes/auth'))
+app.use('/auth', auth)
 
 // Inicia o servidor
 app.listen(5800, async() => {
     console.log('Servidor rodando na porta 5800')
-});*/
+});
