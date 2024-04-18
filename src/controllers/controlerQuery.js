@@ -135,7 +135,7 @@ async function runServer() {
     
         console.log(resultBuscaUsuAll)
 
-        let resultBuscaUsuOG = await tb_usuario.findAll({
+        let resultBuscaUsuO = await tb_usuario.findAll({
             attributes: [
                 [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
                 [Sequelize.fn('COUNT', Sequelize.col('ds_descricaoTpMusical')), 'Total de usuarios por tipo musical:']
@@ -153,7 +153,7 @@ async function runServer() {
             raw: true
         })
     
-        console.log(resultBuscaUsuOG)
+        console.log(resultBuscaUsuO)
 
 }
 
