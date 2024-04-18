@@ -1,13 +1,15 @@
 const bcrypt = require('bcryptjs');
 const { tb_contato } = require('../models/modeloContato.js');
 const { tb_usuario } = require('../models/modeloUsuario.js');
+import '../views/login.hbs'
+
 
 
 // Rota de login
 exports.login = async (req, res) => {
         console.log(req.body);
 
-        const { nm_email, cd_senha } = req.body;
+        const { email, password } = req.body;
 
         // Buscar usuário pelo e-mail
         try {

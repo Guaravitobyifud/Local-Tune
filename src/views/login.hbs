@@ -6,15 +6,26 @@
     <title>Document</title>
 </head>
 <body>
+
+    
     <h1>Login</h1>
     <form action="authlogin/login" method="get">
     <label for="">email</label>
-    <input type="text" name="nm_email"><br>
+    <input type="text" name="nm_email" id="email"><br>
     <br>
     <label for="">SENHA</label>
-    <input type="password" name="cd_senha"> 
+    <input type="password" name="cd_senha" id="password"> 
 
     <button type="submit" >ENVIAR</button>
     </form>   
+
+    <script>
+            const form = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+    }
+    exports.form;
+    
+    </script>
 </body>
 </html>
