@@ -3,7 +3,7 @@ const router = express.Router()
 const authlogin = require('../controllers/Controllerlogin')
 
 
-                    'authlogin/login'
+'auth/login'
 router.post("/login", authlogin.login);
 
 module.exports = router

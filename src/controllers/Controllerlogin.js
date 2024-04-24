@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
+const db = require('../../server.js')
 const { tb_contato } = require('../models/modeloContato.js');
 const { tb_usuario } = require('../models/modeloUsuario.js');
-import '../views/login.hbs'
+
 
 
 
@@ -13,7 +14,7 @@ exports.login = async (req, res) => {
 
         // Buscar usuário pelo e-mail
         try {
-        const usuario = await tb_contato.findOne({ where: { nm_email } });
+        const usuario = await tb_contato.findOne({ where: { nm_email: email } });
 
             if (usuario) {
                 return res.redirect('/index')
@@ -23,7 +24,7 @@ exports.login = async (req, res) => {
         }
 
         // Comparar a senha informada com a hash salva no banco de dados
-        const senhaValida = await bcrypt.compare(cd_senha, usuario.cd_senha);
+        const senhaValida = await bcrypt.compare(password, usuario.cd_senha);
 
         if (!senhaValida) {
             return res.status(401).send('Senha inválida.');

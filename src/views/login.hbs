@@ -9,23 +9,15 @@
 
     
     <h1>Login</h1>
-    <form action="authlogin/login" method="get">
-    <label for="">email</label>
-    <input type="text" name="nm_email" id="email"><br>
+    <form id="FORM" action="/auth/login" method="POST" required>
+    <label for="">EMAIL</label>
+    <input type="text" name="email" id="email" required><br>
     <br>
     <label for="">SENHA</label>
-    <input type="password" name="cd_senha" id="password"> 
+    <input type="password" name="password" id="password" required> 
 
     <button type="submit" >ENVIAR</button>
     </form>   
 
-    <script>
-            const form = {
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-    }
-    exports.form;
-    
-    </script>
 </body>
 </html>
