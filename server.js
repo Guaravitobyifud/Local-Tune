@@ -7,6 +7,22 @@ const {connSequelize, BD} = require('./config/coneccao')
 const {query} = require('./src/controllers/controlerQuery')
 const auth = require('./src/routes/auth')
 
+// Middleware de análise de corpo para dados JSON
+app.use(express.json());
+
+// Middleware de análise de corpo para dados codificados em URL
+app.use(express.urlencoded({ extended: true }));
+
+// Importe e use suas rotas
+const authRouter = require('./src/routes/auth');
+app.use('/auth', authRouter);
+
+// Middleware para logar o corpo da solicitação
+app.use((req, res, next) => {
+    console.log('email, password', req.body);
+    next();
+});
+
 
 connSequelize.sync()
 connSequelize.authenticate().then(() => {
