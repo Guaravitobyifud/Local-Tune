@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser')
 const { connSequelize, BD } = require('./config/coneccao');
 
 // Middleware de análise de corpo para dados JSON
@@ -11,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configuração de diretórios de visualização e mecanismo de visualização
 app.set('views', path.join(__dirname, '/src/views'));
+app.engine('hbs', exphbs({extname:'.hbs'}))
 app.set('view engine', 'hbs');
 
 // Servir arquivos estáticos
