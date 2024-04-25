@@ -11,10 +11,6 @@ const tb_contato = connSequelize.define('tb_contato', {
     },
     nr_celular: {
         type: DataTypes.STRING(11),
-    },
-    nm_email: {
-        type: DataTypes.STRING(60),
-        allowNull: false
     }
 }, _padraoTableBDExistence('tb_contato'));
 

@@ -21,6 +21,10 @@ const tb_usuario = connSequelize.define('tb_usuario', {
             key: 'cd_tipoUsuario'
         }
     },
+    nm_email: {
+        type: DataTypes.STRING(60),
+        allowNull: false
+    },
     nm_usuario:{
         type:DataTypes.TEXT(30),
     } ,
