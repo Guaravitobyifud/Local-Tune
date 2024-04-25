@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 const db = require('../../server.js')
-const { tb_contato } = require('../models/modeloContato.js');
 const { tb_usuario } = require('../models/modeloUsuario.js');
 
 
@@ -17,19 +16,16 @@ exports.login = async (req, res) => {
         const usuario = await tb_usuario.findOne({ where: { nm_email: email } });
 
             if (usuario) {
-                const senhaValida = await bcrypt.compare(password, usuario.cd_senha);
+                const senhaValida = await tb_usuario.findOne({ where: { cd_senha: password } });
                 if(senhaValida){
                     return  res.render('index')
                 }
-        else if (!senhaValida) {
-            error.value= `<h1>Usuário ou Senha inválidos<h1>`;
+                else if (!senhaValida) {
             return res.render('login')
-            
-        }else {
-           return  res.render('login'), {
-           message: "Usuario não encontrado"
-         }
-        }
+              }
+                 else {
+            return  res.render('login')
+                }
             }
         // Comparar a senha informada com a hash salva no banco de dados
         
@@ -39,5 +35,3 @@ exports.login = async (req, res) => {
         res.status(500).send('Erro ao realizar login.');
     }
 }
-
-

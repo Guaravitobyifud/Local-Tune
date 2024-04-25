@@ -1,11 +1,7 @@
-const express = require('express')
-const app = express()
-const path = require('path')
-const mysql = require('mysql2')
-const hbs = require('express-hbs/lib/hbs')
-const {connSequelize, BD} = require('./config/coneccao')
-const {query} = require('./src/controllers/controlerQuery')
-const auth = require('./src/routes/auth')
+const express = require('express');
+const app = express();
+const path = require('path');
+const { connSequelize, BD } = require('./config/coneccao');
 
 // Middleware de análise de corpo para dados JSON
 app.use(express.json());
@@ -13,9 +9,17 @@ app.use(express.json());
 // Middleware de análise de corpo para dados codificados em URL
 app.use(express.urlencoded({ extended: true }));
 
-// Importe e use suas rotas
+// Configuração de diretórios de visualização e mecanismo de visualização
+app.set('views', path.join(__dirname, '/src/views'));
+app.set('view engine', 'hbs');
+
+// Servir arquivos estáticos
+const publicDirectory = path.join(__dirname, '/src/public');
+app.use(express.static(publicDirectory));
+
+// Importar e usar suas rotas
+const rotas = require('./src/routes/rotas');
 const authRouter = require('./src/routes/auth');
-app.use('/auth', authRouter);
 
 // Middleware para logar o corpo da solicitação
 app.use((req, res, next) => {
@@ -23,29 +27,18 @@ app.use((req, res, next) => {
     next();
 });
 
+// Usar as rotas
+app.use('/', rotas);
+app.use('/auth', authRouter);
 
+// Sincronizar o Sequelize com o banco de dados e iniciar o servidor
 connSequelize.sync()
-connSequelize.authenticate().then(() => {
-        console.log(`Conexao bem sucedido do Sequelize com Mysql ${BD}`)
-}).catch(erroConn => {
-    console.log(`Incapaz de se conectar ao banco ${BD}`, erroConn)
-})
-
-//para ir às rotas
-app.set('view engine', 'hbs')
-
-
-app.set( 'views', path.join(__dirname, 'src/views'))
-
-const publicDirectory = path.join(__dirname, 'src/public')
-app.use(express.static(publicDirectory))
-
-
-app.use('/', require ('./src/routes/rotas'))
-
-app.use('/auth', auth)
-
-// Inicia o servidor
-app.listen(5800, async() => {
-    console.log('Servidor rodando na porta 5800')
-});
+    .then(() => {
+        console.log(`Conexão bem-sucedida do Sequelize com MySQL ${BD}`);
+        app.listen(5800, () => {
+            console.log('Servidor rodando na porta 5800');
+        });
+    })
+    .catch(erroConn => {
+        console.log(`Incapaz de se conectar ao banco ${BD}`, erroConn);
+    });
