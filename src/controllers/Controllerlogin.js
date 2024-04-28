@@ -9,7 +9,7 @@ const { tb_usuario } = require('../models/modeloUsuario.js');
 exports.login = async (req, res) => {
         console.log(req.body);
 
-        const { email, password, error } = req.body;
+        const { email, password} = req.body;
 
         // Buscar usuário pelo e-mail
         try {
@@ -17,21 +17,24 @@ exports.login = async (req, res) => {
 
             if (usuario) {
                 const senhaValida = await tb_usuario.findOne({ where: { cd_senha: password } });
+                // const senhaValida = await bcrypt.compare({ where: { cd_senha: password } });
                 if(senhaValida){
-                    return  res.render('index')
+                    res.render('index', { username: 'Bem vindo ' + usuario.nm_usuario });
+                    
                 }
                 else if (!senhaValida) {
-            return res.render('login')
-              }
-                 else {
-            return  res.render('login')
+                    return  res.render('login', {message: 'Email ou senha Incorretos'})
                 }
+                
+            }
+            else {
+                return  res.render('login', {message: 'Email ou Senha incorretos'})
             }
         // Comparar a senha informada com a hash salva no banco de dados
         
         // Login bem-sucedido
     } catch (error) {
         console.error('Erro no login:', error);
-        res.status(500).send('Erro ao realizar login.');
+        res.render('login', {message: 'Erro ao realizar login'})
     }
 }

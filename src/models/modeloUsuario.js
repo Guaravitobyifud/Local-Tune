@@ -54,7 +54,7 @@ const tb_usuario = connSequelize.define('tb_usuario', {
         }
     },
     cd_senha: {
-        type: DataTypes.STRING(16),
+        type: DataTypes.STRING(200),
     }
 }, _padraoTableBDExistence('tb_usuario'));
 

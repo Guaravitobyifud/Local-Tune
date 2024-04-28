@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const exphbs = require('express-handlebars');
+const hbs = require('hbs');
 const bodyParser = require('body-parser')
 const { connSequelize, BD } = require('./config/coneccao');
 
@@ -12,8 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuração de diretórios de visualização e mecanismo de visualização
-app.set('views', path.join(__dirname, '/src/views'));
-app.engine('hbs', exphbs({extname:'.hbs'}))
+app.set('views', path.join(__dirname, './src/views'));
 app.set('view engine', 'hbs');
 
 // Servir arquivos estáticos
@@ -24,11 +23,7 @@ app.use(express.static(publicDirectory));
 const rotas = require('./src/routes/rotas');
 const authRouter = require('./src/routes/auth');
 
-// Middleware para logar o corpo da solicitação
-app.use((req, res, next) => {
-    console.log('email, password', req.body);
-    next();
-});
+
 
 // Usar as rotas
 app.use('/', rotas);
