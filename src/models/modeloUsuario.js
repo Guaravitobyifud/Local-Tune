@@ -15,7 +15,7 @@ const tb_usuario = connSequelize.define('tb_usuario', {
     },
     cd_tipoUsuario: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'tb_tipoUsuario',
             key: 'cd_tipoUsuario'
@@ -31,7 +31,7 @@ const tb_usuario = connSequelize.define('tb_usuario', {
     } ,
     cd_endereco: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'tb_endereco',
             key: 'cd_endereco'
@@ -39,7 +39,7 @@ const tb_usuario = connSequelize.define('tb_usuario', {
     },
     cd_contato: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'tb_contato',
             key: 'cd_contato'
@@ -47,7 +47,7 @@ const tb_usuario = connSequelize.define('tb_usuario', {
     },
     cd_tipoMusical: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: 'tb_tipoMusical',
             key: 'cd_tipoMusical'
