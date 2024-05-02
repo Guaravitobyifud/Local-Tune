@@ -13,14 +13,14 @@ CONSTRAINT pk_tipoMusical PRIMARY KEY (cd_tipoMusical)
  
 CREATE TABLE tb_musico (
 cd_musico INT NOT NULL AUTO_INCREMENT,
-cd_cpf CHAR(14),
+cd_cpf CHAR(14) UNIQUE,
  
 CONSTRAINT pk_musico PRIMARY KEY (cd_musico)
 );
  
 CREATE TABLE tb_estabelecimento (
 cd_estabelecimento INT NOT NULL AUTO_INCREMENT,
-cd_cnpj CHAR(18),
+cd_cnpj CHAR(18) UNIQUE,
  
 CONSTRAINT pk_estabelecimento PRIMARY KEY (cd_estabelecimento)
 );
