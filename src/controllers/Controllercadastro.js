@@ -14,7 +14,7 @@ exports.cadastroUsuario = async (req, res) => {
         if (usuarioExistente) {
             return res.render('cadastro', { message: 'E-mail já está em uso.' })
         }
-
+        else{
         // Criptografar a senha
         const hashSenha = await bcrypt.hash(senha, 10)
 
@@ -27,6 +27,13 @@ exports.cadastroUsuario = async (req, res) => {
             cd_tipoMusical: null,
             cd_senha: hashSenha // Armazenar o hash da senha
         })
+       if(userCriado){
+        res.render('index')
+       }
+       else{
+        res.render('cadastro', {message: 'foi não homi'})
+       }
+    }
         
         // Aqui você pode enviar uma resposta de sucesso, redirecionar o usuário, etc.
     } catch (error) {

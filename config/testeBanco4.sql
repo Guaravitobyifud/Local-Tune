@@ -57,12 +57,12 @@ CONSTRAINT fk_estabelecimento FOREIGN KEY (cd_estabelecimento) REFERENCES tb_est
 CREATE TABLE tb_usuario (
 cd_usuario INT NOT NULL AUTO_INCREMENT,
 nm_email VARCHAR(60) UNIQUE,
-cd_tipoUsuario INT NOT NULL,
+cd_tipoUsuario INT,
 nm_usuario VARCHAR(40),
-cd_endereco INT NOT NULL,
-cd_contato INT NOT NULL ,
-cd_senha VARCHAR(16),
-cd_tipoMusical INT NOT NULL,
+cd_endereco INT,
+cd_contato INT,
+cd_senha VARCHAR(200),
+cd_tipoMusical INT,
  
  
 CONSTRAINT pk_usuario PRIMARY KEY (cd_usuario),
