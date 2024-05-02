@@ -10,10 +10,10 @@ router.post("/login", authlogin.login);
 'auth/cadastrouser'
 router.post("/cadastrouser", authcadastro.cadastroUsuario);
 
-// 'auth/cadastromusic'
-// router.post("/cadastromusic", authcadastro.cadastroMusico);
+'auth/cadastromusic'
+router.post("/cadastromusic", authcadastro.cadastroMusico);
 
-// 'auth/cadastrostbl'
-// router.post("/cadastrostbl", authcadastro.cadastroStbl);
+'auth/cadastrostbl'
+router.post("/cadastrostbl", authcadastro.cadastroStbl);
 
 module.exports = router

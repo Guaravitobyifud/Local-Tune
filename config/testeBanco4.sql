@@ -60,7 +60,7 @@ nm_email VARCHAR(60) UNIQUE,
 cd_tipoUsuario INT,
 nm_usuario VARCHAR(40),
 cd_endereco INT,
-cd_contato INT,
+cd_contato INT NOT NULL,
 cd_senha VARCHAR(200),
 cd_tipoMusical INT,
  
@@ -125,11 +125,11 @@ INSERT INTO tb_tipoUsuario (cd_musico, cd_estabelecimento) VALUES
  
 -- Inserir usuários
 INSERT INTO tb_usuario (nm_email, cd_tipoUsuario, nm_usuario, cd_endereco, cd_contato, cd_senha, cd_tipoMusical) VALUES 
-('curstcoba050494@gmail.com', 1, 'Curst Coba', 1, 1, 'senha123',1), 
-('aratuca.entrprise@outlook.com', 2, 'Araras e tucanos', 2, 2, 'senha456',3),
-('meusambaminhavida123@hotmail.com', 3, 'AdorSamba1213', 3, 3, 'senha789',3),
-('sebastian@gmail.com', 4, 'Chicken on a Stick', 4, 4, 'senha101',2),
-('escapeidoasilo456@gmail.com', 5, 'Casa de Repouso', 5, 5, 'senha112',4),
-('marseelo@gmail.com', 6, 'Guaraviton', 6, 6, 'pãodequeijomtbom', 3),
-('chicobuarquemeuamor@gmail.com', 7, 'RodrigoMPB', 7, 7, 'mpb>vida', 4),
-('eusoudorocknroll@gmail.com', 8, 'velvetime', 8, 8, 'missperfection', 1);
+('curstcoba050494@gmail.com', 1, 'Curst Coba', 1, 1, '$2a$10$zF.HklYT1cV9W57gvKGI2.HPoDJDuGbO.Z/34lu9cZ5SukXY1R5GG',1), -- senha123
+('aratuca.entrprise@outlook.com', 2, 'Araras e tucanos', 2, 2, '$2a$10$/dDa2FY64XbBukJidCuunuW1ltCRjRfE0NGQaePPKI3n5rJjX8UWa',3), -- senha456
+('meusambaminhavida123@hotmail.com', 3, 'AdorSamba1213', 3, 3, '$10$FPxFrum4/Sdoa1Pz/yfYv.6ND1IjAx2dkiSuJOzKxLZtDfysS8bIS',3), -- senha789
+('sebastian@gmail.com', 4, 'Chicken on a Stick', 4, 4, '$2a$10$MtuQrSod9cjs0dOvqjajR.Zyvi26T8emQJiaSy/DqQOftd5u50RYa',2), -- senha101
+('escapeidoasilo456@gmail.com', 5, 'Casa de Repouso', 5, 5, '$2a$10$W9cBlXYp/AtGstvCckEj0eRP19GINalNgyL3rqQvKqj2TmYlvtmWe',4), -- senha112
+('marseelo@gmail.com', 6, 'Guaraviton', 6, 6, '$2a$10$Ni4Ew2F88K4ChJh85Y4ii.oKjEdsRVMaGO7u52b6Ug4CPqWRiYhEO', 3), -- pãodequeijomtbom
+('chicobuarquemeuamor@gmail.com', 7, 'RodrigoMPB', 7, 7, '$2a$10$jubJ0nmtpnV1zp3MN3jNSe46KtodgPvgTewk0ppHT3ttWRKV9lf2e', 4), -- mpb>vida
+('eusoudorocknroll@gmail.com', 8, 'velvetime', 8, 8, '$10$ZTA0iWrJETbyvDn3rAlHAuL7tP9EwQ9kimpOdUFia1Xa5megBb.La', 1); -- missperfection
