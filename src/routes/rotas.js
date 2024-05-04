@@ -3,7 +3,11 @@ const router = express.Router()
 const app = require('../../server')
 
 router.get("/login", (req, res) => {
-    res.render("login")
+    if (req.session.autorizado) {
+        res.render('index', { username:'Você já está Logado ' + req.session.usuario.nm_usuario });
+    } else {
+        res.render("login");
+    }
 });
 
 router.get("/cadastro", (req, res) => {

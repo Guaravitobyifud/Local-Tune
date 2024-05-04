@@ -10,21 +10,21 @@ const tb_endereco = connSequelize.define('tb_endereco', {
         autoIncrement: true
     },
     nm_estado: {
-        type: DataTypes.STRING(20),
-        allowNull: true
-    },
-    nm_cidade: {
-        type: DataTypes.STRING(30),
-        allowNull: true
-    },
-    nm_rua: {
-        type: DataTypes.STRING(30),
-        allowNull: true
-    },
-    nr_rua: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(200),
         allowNull: true
     }
+    // nm_cidade: {
+    //     type: DataTypes.STRING(30),
+    //     allowNull: true
+    // },
+    // nm_rua: {
+    //     type: DataTypes.STRING(30),
+    //     allowNull: true
+    // },
+    // nr_rua: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: true
+    // }
 }, _padraoTableBDExistence('tb_endereco'));
 
 module.exports = {

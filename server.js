@@ -4,12 +4,26 @@ const path = require('path');
 const hbs = require('hbs');
 const bodyParser = require('body-parser')
 const { connSequelize, BD } = require('./config/coneccao');
+// const {query} = require('./src/controllers/controlerQuery')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 
 // Middleware de análise de corpo para dados JSON
 app.use(express.json());
 
 // Middleware de análise de corpo para dados codificados em URL
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser('Hello World'))
+app.use(session({
+    secret: 'FridinhaFofinha',
+    saveUninitialized: false,
+    resave: false,
+    cookie:{
+        sameSite: 'strict'
+    }
+})
+)
 
 // Configuração de diretórios de visualização e mecanismo de visualização
 app.set('views', path.join(__dirname, './src/views'));

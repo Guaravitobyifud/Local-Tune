@@ -15,6 +15,8 @@ exports.login = async (req, res) => {
         if (usuario) {
             const senhaValida = await bcrypt.compare(password, usuario.cd_senha);
             if (senhaValida) {
+                req.session.usuario = usuario
+                req.session.autorizado = true
                 res.render('index', { username: 'Bem-vindo ' + usuario.nm_usuario });
 
             } else {
@@ -28,4 +30,4 @@ exports.login = async (req, res) => {
         console.error('Erro no login:', error);
         res.render('login', { message: 'Erro ao realizar login' });
     }
-}
+};

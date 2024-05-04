@@ -4,6 +4,8 @@ const { tb_contato } = require('../models/modeloContato');
 const { tb_tipoMusical } = require('../models/modeloTipoMusical');
 const { tb_musico } = require('../models/modeloMusico');
 const { tb_tipoUsuario } = require('../models/modeloTipoUsuario');
+const { tb_estabelecimento } = require('../models/modeloEstabelecimento');
+const { tb_endereco } = require('../models/modeloEndereco');
 
 
 //Rota de cadastro
@@ -112,43 +114,57 @@ criaPerfilUsuMus()
     }
 }
 
- exports.cadastroStbl = async (req, res) => {
+exports.cadastroStbl = async (req, res) => {
 
     try {
-        const { nome, email, senhaC } = req.body
+        const { nome, email, senha, senha2, cnpj, endereco, cellfone, option } = req.body
 
         // Verificar se o e-mail já está em uso
         const usuarioExistente = await tb_usuario.findOne({ where: { nm_email: email } })
         if (usuarioExistente) {
             return res.render('cadastro', { message: 'E-mail já está em uso.' })
         }
-        else{
-        // Criptografar a senha
-        const hashSenha = await bcrypt.hash(senhaC, 10)
+        else {
+            // Criptografar a senha
+            if (senha == senha2) {
+                const hashSenha = await bcrypt.hash(senha, 10)
 
-        const userCriado = await tb_usuario.create({
-            cd_tipoUsuario: null,
-            nm_email: email,
-            nm_usuario: nome,
-            cd_endereco: null,
-            cd_contato: null,
-            cd_tipoMusical: null,
-            cd_senha: hashSenha // Armazenar o hash da senha
-        })
-       if(userCriado){
-        res.render('index')
-       }
-       else{
-        res.render('cadastro', {message: 'foi não homi'})
-       }
+                async function criaPerfilUsuMus() {
+                    const enderecoCriado = await tb_endereco.create({
+                         nm_endereco: endereco 
+                        });
+                    const stblCriado = await tb_estabelecimento.create({
+                         cd_cnpj: cnpj 
+                        });
+                    const tipoUsuCriado = await tb_tipoUsuario.create({
+                        cd_musico: null,
+                        cd_estabelecimento: stblCriado.cd_estabelecimento
+                    });
+                    const contatoCriado = await tb_contato.create({
+                         nr_celular: cellfone 
+                        });
+                    await tb_usuario.create({
+                        cd_tipoUsuario: tipoUsuCriado.cd_tipoUsuario,
+                        nm_email: email,
+                        nm_usuario: nome,
+                        cd_endereco: enderecoCriado.cd_endereco,
+                        cd_contato: contatoCriado.cd_contato,
+                        cd_tipoMusical: option,
+                        cd_senha: hashSenha // Armazenar o hash da senha
+                    });
+                    res.render('login'); // Redireciona para o index se o usuário for cadastrado com sucesso
+                }
+                criaPerfilUsuMus();
+            }
+            else {
+                res.render('cadastroSTBL', { message: 'As senhas não coincidem' });
+            }
+        }
     }
-        
-        // Aqui você pode enviar uma resposta de sucesso, redirecionar o usuário, etc.
-    } catch (error) {
+    catch (error) {
         // Lidar com qualquer erro que possa ocorrer durante o processo de cadastro
         console.error(error);
-        res.status(500).send('Erro interno do servidor')
+        res.status(500).send('Erro interno do servidor');
     }
 }
-    
 
