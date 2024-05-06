@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const app = require('../../server');
-const { Cookie } = require('express-session');
+const session = require('express-session');
 
 function userAuth(req, res, next) {
     if (req.session.user) {
@@ -24,6 +24,9 @@ router.get("/cadastroMusico", (req, res) => {
     res.render("cadastroMusico")
 });
 
+router.get("/busca", (req, res) => {
+    res.render("index");
+});
 
 router.get("/homeUsu", userAuth, (req, res) => {
     res.render('homeUsu')

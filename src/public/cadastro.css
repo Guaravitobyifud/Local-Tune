@@ -1,0 +1,83 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+#voltar-btn{
+    display: flex;
+    padding-left: 5%;
+    padding-top: 2%;
+}
+
+#voltar-btn a {
+    background-color: #444;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 30px;
+    text-decoration: none;
+}
+
+#voltar-btn a:hover {
+    background-color: #555;
+}
+
+/* Estilos para a página de cadastro */
+#cadastro {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#cadastro h1 {
+    margin-bottom: 20px;
+}
+
+#cadastro-form {
+    display: inline-block;
+    text-align: left;
+    width: 300px; /* Ajuste conforme necessário */
+    background-color: #a188ee;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: -15px 15px 0px rgb(235 16 16 / 38%)
+} /* Sombra leve para o formulário */
+
+
+#cadastro-form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333; /* Cor do texto */
+}
+
+#cadastro-form input[type="text"],
+#cadastro-form input[type="email"],
+#cadastro-form input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#cadastro-form button {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cadastro-form button:hover {
+    background-color: #555;
+}
+
+/* Estilos para melhorar a responsividade */
+@media (min-width: 600px) {
+    #cadastro-form {
+        width: 400px; /* Largura maior para telas maiores */
+    }
+}

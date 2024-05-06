@@ -7,6 +7,7 @@ const { connSequelize, BD } = require('./config/coneccao');
 // const {query} = require('./src/controllers/controlerQuery')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const Pesquisa = require('./src/controllers/ControllerPesquisa')
 
 // Middleware de análise de corpo para dados JSON
 app.use(express.json());
@@ -28,7 +29,6 @@ app.use((req, res, next) => {
     console.log(req.cookies);
     next();
   });
-  
 
 // Configuração de diretórios de visualização e mecanismo de visualização
 app.set('views', path.join(__dirname, './src/views'));

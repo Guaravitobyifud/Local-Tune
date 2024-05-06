@@ -155,6 +155,54 @@ async function runServer() {
     
         console.log(resultBuscaUsuO)
 
+        let resultBuscaUsu2 = await tb_usuario.findAll({
+            attributes: [
+                 [Sequelize.literal('nm_usuario'), "Usuario"],
+                 [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+                 [Sequelize.literal('nr_celular'), "Numero_de_celular"],
+                 [Sequelize.literal('nm_endereco'), "Endereco"]
+        ],
+            include: [
+                {
+                    model: tb_tipoUsuario,
+                    required: true,
+                    attributes: [],
+                    include:[ {
+                        model: tb_musico,
+                        required: false,
+                        attributes: []
+                    },
+                    {
+                        model: tb_estabelecimento,
+                        required: false,
+                        attributes: []
+                    }, 
+                ],
+        
+                },
+                {
+                    model: tb_contato,
+                    required: true,
+                    attributes: []
+                },
+                {
+                    model: tb_endereco,
+                    required: true,
+                    attributes: []
+                },
+                {
+                    model: tb_tipoMusical,
+                    required: true,
+                    attributes: []
+                },
+            ],
+            raw: true
+        })
+        
+        console.log(resultBuscaUsu2)
+
 }
+
+
 
 runServer();

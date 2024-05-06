@@ -27,10 +27,8 @@ CONSTRAINT pk_estabelecimento PRIMARY KEY (cd_estabelecimento)
  
 CREATE TABLE tb_endereco (
 cd_endereco INT NOT NULL AUTO_INCREMENT,
-nm_estado VARCHAR(20),
-nm_cidade VARCHAR(30),
-nm_rua VARCHAR(30),
-nr_rua INT,
+nm_endereco VARCHAR(200),
+
  
 CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco)
 );

@@ -1,19 +1,28 @@
-<!DOCTYPE html>
-<html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>LocalTune</title>
   <link rel="icon" type="images/logo_topo.png" href="/images/logo_topo.png">
-  <link href="/estilo" rel="stylesheet" type="text/css" />
+  <link href="../public/cadastro.css" rel="stylesheet"/>
 </head>
 
 <body>
-  <section>
+  <header>
+        <div class="voltar" id="voltar-btn">
+            <a href="/">Voltar</a>
+        </div>
+        <div class="voltar" id="voltar-btn">
+            <a href="/cadastroMusico">Cadastro Estabelecimento</a>
+        </div>
+        <div class="voltar" id="voltar-btn">
+            <a href="/cadastroSTBL">Cadastro Músico</a>
+        </div>
+    </header>
+
+  <section id="cadastro">
     <div id="erroContainer" class="erroContainer"></div>
     <h1>Cadastro de Usuário</h1>
-    <form action="/auth/cadastrouser" method="POST">
+    <form action="/auth/cadastrouser" method="POST" id="cadastro-form">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required>
         <br>
@@ -31,4 +40,3 @@
     <p>{{message}}</p>
 </body>
 
-</html>

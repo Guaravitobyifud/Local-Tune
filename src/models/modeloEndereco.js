@@ -9,7 +9,7 @@ const tb_endereco = connSequelize.define('tb_endereco', {
         primaryKey: true,
         autoIncrement: true
     },
-    nm_estado: {
+    nm_endereco: {
         type: DataTypes.STRING(200),
         allowNull: true
     }
