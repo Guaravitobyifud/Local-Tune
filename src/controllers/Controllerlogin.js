@@ -15,9 +15,28 @@ exports.login = async (req, res) => {
         if (usuario) {
             const senhaValida = await bcrypt.compare(password, usuario.cd_senha);
             if (senhaValida) {
-                req.session.usuario = usuario
-                req.session.autorizado = true
-                res.render('index', { username: 'Bem-vindo ' + usuario.nm_usuario });
+                // let dadosUsuario = {
+                //     userId: usuario.cd_usuario,
+                //     logado: true,
+                //     permissoes: {
+                //         papel: 'cliente',
+                //         acesso: ['homeUsu', 'perfilUsu']
+                //     }
+                // }
+                // dadosUsuario = JSON.stringify(dadosUsuario)
+                // res.cookie('cookie_login', dadosUsuario, {
+                //     httpOnly: false
+                // })
+                req.session.user = {
+                    userId: usuario.cd_usuario,
+                    username: usuario.nm_usuario,
+                    // Outras informações do usuário, se necessário
+                };
+
+                res.render('homeUsu', { 
+                    username: 'Bem-vindo ' + usuario.nm_usuario,
+                    logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
+                });
 
             } else {
                 return res.render('login', { message: 'Email ou senha incorretos' });

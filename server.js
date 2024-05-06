@@ -16,14 +16,19 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser('Hello World'))
 app.use(session({
-    secret: 'FridinhaFofinha',
+    secret: 'Fridinha_Fofinha',
     saveUninitialized: false,
     resave: false,
-    cookie:{
-        sameSite: 'strict'
-    }
+
 })
 )
+app.use(cookieParser())
+
+app.use((req, res, next) => {
+    console.log(req.cookies);
+    next();
+  });
+  
 
 // Configuração de diretórios de visualização e mecanismo de visualização
 app.set('views', path.join(__dirname, './src/views'));

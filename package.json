@@ -35,6 +35,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "^5.0.1",
+    "req": "^0.1.4",
+    "require": "^2.4.20",
     "sequelize": "^6.37.1",
     "web-vitals": "^3.5.2"
   },
