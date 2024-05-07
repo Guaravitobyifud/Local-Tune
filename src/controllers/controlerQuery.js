@@ -13,193 +13,183 @@ async function runServer() {
   
         await connSequelize.sync();
 
-        let resultBuscaContato = await tb_contato.findAll({ 
-            raw: true
-            });
-        console.log("Contatos:", resultBuscaContato);
+//         let resultBuscaContato = await tb_contato.findAll({ 
+//             raw: true
+//             });
+//         console.log("Contatos:", resultBuscaContato);
 
-        let resultBuscaEndereco = await tb_endereco.findAll({
-             attributes: [
-            'nm_estado', 
-            'nm_cidade',
-        ],
-             group: ['nm_estado', 'nm_cidade'],
-             raw: true 
-             });
+//         let resultBuscaEndereco = await tb_endereco.findAll({
+//              attributes: [
+//             'nm_estado', 
+//             'nm_cidade',
+//         ],
+//              group: ['nm_estado', 'nm_cidade'],
+//              raw: true 
+//              });
 
-        console.log("Endereços agrupados:", resultBuscaEndereco);
+//         console.log("Endereços agrupados:", resultBuscaEndereco);
 
-        let resultBuscaMusico = await tb_musico.findAll({
-         attributes: [
-             'cd_cpf', 
-         ],
-             order: ['cd_cpf'],
-             raw: true 
-         });
+//         let resultBuscaMusico = await tb_musico.findAll({
+//          attributes: [
+//              'cd_cpf', 
+//          ],
+//              order: ['cd_cpf'],
+//              raw: true 
+//          });
 
-        console.log("Musicos ordenados pelo CPF:", resultBuscaMusico);
+//         console.log("Musicos ordenados pelo CPF:", resultBuscaMusico);
 
-        let resultBuscaEnderecoOG = await tb_endereco.findAll({
-         attributes: [
-             'nm_estado', 
-             'nm_cidade',
-         ],
-             order: ['nm_estado'],
-             group: ['nm_estado', 'nm_cidade'],
-             raw: true 
-         });
+//         let resultBuscaEnderecoOG = await tb_endereco.findAll({
+//          attributes: [
+//              'nm_estado', 
+//              'nm_cidade',
+//          ],
+//              order: ['nm_estado'],
+//              group: ['nm_estado', 'nm_cidade'],
+//              raw: true 
+//          });
 
-        console.log("Endereços agrupados e ordenados pelo estado:", resultBuscaEnderecoOG); 
+//         console.log("Endereços agrupados e ordenados pelo estado:", resultBuscaEnderecoOG); 
         
 
-        let resultBuscaUsuTipoUsu = await tb_usuario.findAll({
-            attributes: [
-                        [Sequelize.literal('nm_usuario'), "Usuario"],
-                        [Sequelize.literal('cd_senha'), "Senha"],
-                        [Sequelize.literal('cd_cnpj'), "CNPJ"],
-                        [Sequelize.literal('cd_cpf'), "CPF"]
-            ],
-            include: {
-                model: tb_tipoUsuario,
-                required: true,
-                attributes: [],
-                include: [
-                    {
-                        model: tb_musico,
-                        required: false,
-                        attributes: []
-                    },
-                    {
-                        model: tb_estabelecimento,
-                        required: false,
-                        attributes: []
-                    }
-                ]
-            },
-            raw: true
-        });
+//         let resultBuscaUsuTipoUsu = await tb_usuario.findAll({
+//             attributes: [
+//                         [Sequelize.literal('nm_usuario'), "Usuario"],
+//                         [Sequelize.literal('cd_senha'), "Senha"],
+//                         [Sequelize.literal('cd_cnpj'), "CNPJ"],
+//                         [Sequelize.literal('cd_cpf'), "CPF"]
+//             ],
+//             include: {
+//                 model: tb_tipoUsuario,
+//                 required: true,
+//                 attributes: [],
+//                 include: [
+//                     {
+//                         model: tb_musico,
+//                         required: false,
+//                         attributes: []
+//                     },
+//                     {
+//                         model: tb_estabelecimento,
+//                         required: false,
+//                         attributes: []
+//                     }
+//                 ]
+//             },
+//             raw: true
+//         });
         
-        console.log(resultBuscaUsuTipoUsu);
+//         console.log(resultBuscaUsuTipoUsu);
         
 
-       let resultBuscaUsuAll = await tb_usuario.findAll({
-            attributes: [
-                 [Sequelize.literal('nm_usuario'), "Usuario"],
-                 [Sequelize.literal('nm_email'), "email"],
-                 [Sequelize.literal('cd_senha'), "Senha"],
-                 [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
-                 [Sequelize.literal('nr_celular'), "Numero_de_celular"],
-                 [Sequelize.literal('cd_cnpj'), "CNPJ"],
-                 [Sequelize.literal('cd_cpf'), "CPF"],
-                 [Sequelize.literal('nm_estado'), "Estado"],
-                 [Sequelize.literal('nm_cidade'), "Cidade"],
-                 [Sequelize.literal('nm_rua'), "Rua"],
-                 [Sequelize.literal('nr_rua'), "Numero_Residencial"]
-],
-            include: [
-                {
-                    model: tb_tipoUsuario,
-                    required: true,
-                    attributes: [],
-                    include:[ {
-                        model: tb_musico,
-                        required: false,
-                        attributes: []
-                    },
-                    {
-                        model: tb_estabelecimento,
-                        required: false,
-                        attributes: []
-                    }, 
-                ],
+//        let resultBuscaUsuAll = await tb_usuario.findAll({
+//             attributes: [
+//                  [Sequelize.literal('nm_usuario'), "Usuario"],
+//                  [Sequelize.literal('nm_email'), "email"],
+//                  [Sequelize.literal('cd_senha'), "Senha"],
+//                  [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+//                  [Sequelize.literal('nr_celular'), "Numero_de_celular"],
+//                  [Sequelize.literal('cd_cnpj'), "CNPJ"],
+//                  [Sequelize.literal('cd_cpf'), "CPF"],
+//                  [Sequelize.literal('nm_estado'), "Estado"],
+//                  [Sequelize.literal('nm_cidade'), "Cidade"],
+//                  [Sequelize.literal('nm_rua'), "Rua"],
+//                  [Sequelize.literal('nr_rua'), "Numero_Residencial"]
+// ],
+//             include: [
+//                 {
+//                     model: tb_tipoUsuario,
+//                     required: true,
+//                     attributes: [],
+//                     include:[ {
+//                         model: tb_musico,
+//                         required: false,
+//                         attributes: []
+//                     },
+//                     {
+//                         model: tb_estabelecimento,
+//                         required: false,
+//                         attributes: []
+//                     }, 
+//                 ],
 
-                },
-                {
-                    model: tb_contato,
-                    required: true,
-                    attributes: []
-                },
-                {
-                    model: tb_endereco,
-                    required: true,
-                    attributes: []
-                },
-                {
-                    model: tb_tipoMusical,
-                    required: true,
-                    attributes: []
-                },
-            ],
-            raw: true
-        })
+//                 },
+//                 {
+//                     model: tb_contato,
+//                     required: true,
+//                     attributes: []
+//                 },
+//                 {
+//                     model: tb_endereco,
+//                     required: true,
+//                     attributes: []
+//                 },
+//                 {
+//                     model: tb_tipoMusical,
+//                     required: true,
+//                     attributes: []
+//                 },
+//             ],
+//             raw: true
+//         })
     
-        console.log(resultBuscaUsuAll)
+//         console.log(resultBuscaUsuAll)
 
-        let resultBuscaUsuO = await tb_usuario.findAll({
-            attributes: [
-                [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
-                [Sequelize.fn('COUNT', Sequelize.col('ds_descricaoTpMusical')), 'Total de usuarios por tipo musical:']
-            ],
-            include: [          
-                {
-                    model: tb_tipoMusical,
-                    required: true,
-                    attributes: []
-                },
-            ],
+//         let resultBuscaUsuO = await tb_usuario.findAll({
+//             attributes: [
+//                 [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+//                 [Sequelize.fn('COUNT', Sequelize.col('ds_descricaoTpMusical')), 'Total de usuarios por tipo musical:']
+//             ],
+//             include: [          
+//                 {
+//                     model: tb_tipoMusical,
+//                     required: true,
+//                     attributes: []
+//                 },
+//             ],
 
-            order: [[Sequelize.literal('ds_descricaoTpMusical'), 'DESC']],
-            group: ['ds_descricaoTpMusical'],
-            raw: true
-        })
+//             order: [[Sequelize.literal('ds_descricaoTpMusical'), 'DESC']],
+//             group: ['ds_descricaoTpMusical'],
+//             raw: true
+//         })
     
-        console.log(resultBuscaUsuO)
-
+//         console.log(resultBuscaUsuO)
+const busca = 'Curst Coba'
         let resultBuscaUsu2 = await tb_usuario.findAll({
             attributes: [
                  [Sequelize.literal('nm_usuario'), "Usuario"],
                  [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
                  [Sequelize.literal('nr_celular'), "Numero_de_celular"],
                  [Sequelize.literal('nm_endereco'), "Endereco"]
-        ],
-            include: [
-                {
-                    model: tb_tipoUsuario,
-                    required: true,
-                    attributes: [],
-                    include:[ {
-                        model: tb_musico,
-                        required: false,
+                ],
+                include: [
+                    {
+                        model: tb_contato,
+                        required: true,
                         attributes: []
                     },
                     {
-                        model: tb_estabelecimento,
-                        required: false,
+                        model: tb_endereco,
+                        required: true,
                         attributes: []
-                    }, 
+                    },
+                    {
+                        model: tb_tipoMusical,
+                        required: true,
+                        attributes: []
+                    },
                 ],
-        
+                where: {
+                    nm_usuario: {
+                        [Op.like]: `${busca}%`
+                    },
                 },
-                {
-                    model: tb_contato,
-                    required: true,
-                    attributes: []
-                },
-                {
-                    model: tb_endereco,
-                    required: true,
-                    attributes: []
-                },
-                {
-                    model: tb_tipoMusical,
-                    required: true,
-                    attributes: []
-                },
-            ],
-            raw: true
-        })
-        
-        console.log(resultBuscaUsu2)
+                raw: true
+            });
+    
+            console.log(resultBuscaUsu2);
+
+            
 
 }
 

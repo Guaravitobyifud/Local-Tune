@@ -14,11 +14,17 @@
             <h3><a class="bo" href="/cadastro">Cadastro</a></h3><!--se logado vira perfil-->
         </div>
         <div class="buscar">
-            
+            <form action="/auth/Search" method="post">
+            <input id="busca" type="text" placeholder="O que você procura?" name="busca">
+            <button type="submit">Search</button>
         </form>
         </div>
     </header>
-{{message}}
-    
+{{#each message}}
+    <p>Nome do usuário: {{this.Usuario}}</p>
+    <p>Tipo Musical: {{this.Tipo_Musical}}</p>
+    <p>Número de Celular: {{this.Numero_de_celular}}</p>
+    <p>Endereço: {{this.Endereco}}</p>
+{{/each}}    
 </body>
 </html>

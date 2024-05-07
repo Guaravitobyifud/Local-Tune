@@ -89,15 +89,15 @@ INSERT INTO tb_estabelecimento (cd_cnpj) VALUES
 ('20.052.006/7622-24');
  
 -- Inserir endereços
-INSERT INTO tb_endereco (nm_estado, nm_cidade, nm_rua, nr_rua) VALUES 
-('SP', 'São Paulo', 'Rua A', 123), 
-('SP', 'Taubaté', 'Rua B', 456),
-('RJ', 'Rio de Janeiro', 'Rua C', 789),
-('BA', 'Xique-Xique', 'Rua D', 101),
-('BA', 'Salvador', 'Rua E', 112),
-('SP', 'São Vicente', 'Rua ABC', 342),
-('PA', 'Curitiba', 'Rua LMN', 687),
-('RJ', 'Mesquita', 'Rua Z', 967);
+INSERT INTO tb_endereco (nm_endereco) VALUES 
+('SP, São Paulo, Rua A 123'), 
+('SP, Taubaté, Rua B 456'),
+('RJ, Rio de Janeiro, Rua C 789'),
+('BA, Xique-Xique, Rua D 101'),
+('BA, Salvador, Rua E 112'),
+('SP, São Vicente, Rua ABC 342'),
+('PA, Curitiba, Rua LMN 687'),
+('RJ, Mesquita, Rua Z 967');
  
 -- Inserir contatos
 INSERT INTO tb_contato (nr_Celular) VALUES 

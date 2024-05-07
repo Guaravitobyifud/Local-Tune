@@ -17,7 +17,7 @@ router.post("/cadastromusic", authcadastro.cadastroMusico);
 'auth/cadastrostbl'
 router.post("/cadastrostbl", authcadastro.cadastroStbl);
 
-'auth/busca '
-router.post("/busca", pesquisa.Pesquisa);
+'auth/Search '
+router.post("/Search", pesquisa.Pesquisa);
 
 module.exports = router

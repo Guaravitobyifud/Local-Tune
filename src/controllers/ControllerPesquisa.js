@@ -1,14 +1,17 @@
-const {Op, Sequelize} = require('sequelize')
+const { connSequelize, BD } = require('../../config/coneccao')
+const {Model, Op, Sequelize} = require('sequelize')
 const {tb_contato} = require ('../models/modeloContato')
 const {tb_endereco} = require ('../models/modeloEndereco')
+const {tb_estabelecimento} = require ('../models/modeloEstabelecimento')
+const {tb_musico} = require ('../models/modeloMusico')
 const {tb_tipoMusical} = require ('../models/modeloTipoMusical')
+const {tb_tipoUsuario} = require ('../models/modeloTipoUsuario')
 const {tb_usuario} = require ('../models/modeloUsuario')
 
 
 exports.Pesquisa = async (req,res) =>{
-    console.log(req.body);
-
-    const {busca} =  req.body;
+    const {busca} = req.body;
+    await connSequelize.sync();
 try{
 
   let resultBuscaUsu2 = await tb_usuario.findAll({
@@ -42,9 +45,7 @@ try{
             },
             raw: true
         });
-
-        console.log(resultBuscaUsu2);
-        res.status(200).json(resultBuscaUsu2);
+        res.render('Search', {message: resultBuscaUsu2})
     } catch (error) {
         console.error(error); // Imprime o erro real para facilitar a depuração
         res.status(500).send('Internal Server Error');

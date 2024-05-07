@@ -24,8 +24,8 @@ router.get("/cadastroMusico", (req, res) => {
     res.render("cadastroMusico")
 });
 
-router.get("/busca", (req, res) => {
-    res.render("index");
+router.get("/Search", (req, res) => {
+    res.render("Search");
 });
 
 router.get("/homeUsu", userAuth, (req, res) => {
