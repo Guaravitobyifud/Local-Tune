@@ -12,7 +12,7 @@ const { tb_endereco } = require('../models/modeloEndereco');
 exports.cadastroUsuario = async (req, res) => {
 
     try {
-        const { nome, email, senhaC } = req.body
+        const { nome, email, senha, senha2 } = req.body
 
         // Verificar se o e-mail já está em uso
         const usuarioExistente = await tb_usuario.findOne({ where: { nm_email: email } })
@@ -20,8 +20,9 @@ exports.cadastroUsuario = async (req, res) => {
             return res.render('cadastro', { message: 'E-mail já está em uso.' })
         }
         else{
+            if(senha == senha2){
         // Criptografar a senha
-        const hashSenha = await bcrypt.hash(senhaC, 10)
+        const hashSenha = await bcrypt.hash(senha, 10)
 
         const userCriado = await tb_usuario.create({
             cd_tipoUsuario: null,
@@ -32,14 +33,20 @@ exports.cadastroUsuario = async (req, res) => {
             cd_tipoMusical: null,
             cd_senha: hashSenha // Armazenar o hash da senha
         })
+   
        if(userCriado){
-        res.render('index')
+        res.render('login')
        }
+    
        else{
         res.render('cadastro', {message: 'foi não homi'})
        }
-    }
-        
+    
+}
+else{
+    return res.render('cadastro', { message: 'As senhas tem que ser iguais' })
+}
+        }    
         // Aqui você pode enviar uma resposta de sucesso, redirecionar o usuário, etc.
     } catch (error) {
         // Lidar com qualquer erro que possa ocorrer durante o processo de cadastro
@@ -47,6 +54,7 @@ exports.cadastroUsuario = async (req, res) => {
         res.status(500).send('Erro interno do servidor')
     }
 }
+
 
 exports.cadastroMusico= async (req, res) => {
 
@@ -89,7 +97,7 @@ exports.cadastroMusico= async (req, res) => {
             cd_senha: hashSenha // Armazenar o hash da senha
         })
         if(userCriado){
-            res.render('index')
+            res.render('login')
            }
            else{
             res.render('cadastro', {message: 'foi não homi'})

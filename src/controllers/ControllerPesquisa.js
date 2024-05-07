@@ -11,14 +11,13 @@ const {tb_usuario} = require ('../models/modeloUsuario')
 
 exports.Pesquisa = async (req, res) => {
     const { busca } = req.body;
-    await connSequelize.sync();
     try {
-        let resultBuscaUsu2 = await tb_usuario.findAll({
+        const resultBuscaUsu2 = await tb_usuario.findAll({
             attributes: [
-                [Sequelize.literal('nm_usuario'), "Usuario"],
-                [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
-                [Sequelize.literal('nr_celular'), "Numero_de_celular"],
-                [Sequelize.literal('nm_endereco'), "Endereco"]
+                [Sequelize.literal('tb_usuario.nm_usuario'), "Usuario"],
+                [Sequelize.literal('tb_tipoMusical.ds_descricaoTpMusical'), 'Tipo_Musical'],
+                [Sequelize.literal('tb_contato.nr_celular'), "Numero_de_celular"],
+                [Sequelize.literal('tb_endereco.nm_endereco'), "Endereco"]
             ],
             include: [
                 {
@@ -44,9 +43,9 @@ exports.Pesquisa = async (req, res) => {
             },
             raw: true
         });
-        res.render('Search', { message: resultBuscaUsu2 }); // Renderizando a view com todos os resultados
+        res.render('Search', { message: resultBuscaUsu2 });
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
-}
+};

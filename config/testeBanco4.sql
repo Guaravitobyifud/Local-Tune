@@ -58,7 +58,7 @@ nm_email VARCHAR(60) UNIQUE,
 cd_tipoUsuario INT,
 nm_usuario VARCHAR(40),
 cd_endereco INT,
-cd_contato INT NOT NULL,
+cd_contato INT,
 cd_senha VARCHAR(200),
 cd_tipoMusical INT,
  
