@@ -11,8 +11,15 @@ function userAuth(req, res, next) {
     }
   }
 
-router.get("/login", (req, res) => {
-        res.render("login");
+  router.get("/login", (req, res) => {
+    if (req.session.user) {
+        res.render('homeUsu', { 
+            username: 'Bem-vindo ' + req.session.user.username,
+            logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
+        });
+    } else {
+        res.render('login'); // Redireciona para a página de login
+    }
 });
 
 router.get("/cadastro", (req, res) => {
@@ -28,9 +35,19 @@ router.get("/Search", (req, res) => {
     res.render("Search");
 });
 
+
 router.get("/homeUsu", userAuth, (req, res) => {
-    res.render('homeUsu')
+    // Verifica se há um usuário na sessão
+    if (req.session.user) {
+        res.render('homeUsu', { 
+            username: 'Bem-vindo ' + req.session.user.username,
+            logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
+        });
+    } else {
+        res.redirect('/login'); // Redireciona para a página de login se não houver usuário na sessão
+    }
 });
+
 
 
 router.get("/cadastroSTBL", (req, res) => {

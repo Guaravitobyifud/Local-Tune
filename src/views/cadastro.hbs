@@ -1,42 +1,127 @@
+<!DOCTYPE html>
+<html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>LocalTune</title>
   <link rel="icon" type="images/logo_topo.png" href="/images/logo_topo.png">
-  <link href="../public/cadastro.css" rel="stylesheet"/>
+  <link href="../public/cadastro.css" rel="stylesheet">
+  <style>
+    /* Estilos adicionais */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #46346e;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .voltar {
+      margin-right: 20px;
+    }
+
+    #cadastro {
+      max-width: 500px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #46346e;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #46346e;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #46346e;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #7f3eb4;
+    }
+
+    .message {
+      text-align: center;
+      color: #46346e;
+    }
+    a{
+            color: #fff;
+            text-decoration: none;
+        }
+  </style>
 </head>
 
 <body>
   <header>
-        <div class="voltar" id="voltar-btn">
-            <a href="/">Voltar</a>
-        </div>
-        <div class="voltar" id="voltar-btn">
-            <a href="/cadastroMusico">Cadastro Estabelecimento</a>
-        </div>
-        <div class="voltar" id="voltar-btn">
-            <a href="/cadastroSTBL">Cadastro Músico</a>
-        </div>
-    </header>
+    <div class="voltar">
+      <a href="/">Voltar</a>
+    </div>
+    <div class="voltar">
+      <a href="/cadastroMusico">Cadastro Estabelecimento</a>
+    </div>
+    <div class="voltar">
+      <a href="/cadastroSTBL">Cadastro Músico</a>
+    </div>
+  </header>
 
   <section id="cadastro">
     <div id="erroContainer" class="erroContainer"></div>
     <h1>Cadastro de Usuário</h1>
     <form action="/auth/cadastrouser" method="POST" id="cadastro-form">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <label for="senha">Senha:</label>
-        <input type="password" id="senhaC" name="senha" required>
-        <br>
-        <label for="senha">Confirmar Senha:</label>
-        <input type="password" id="senhaC2" name="senha" required>
-        <br>
-        <button type="submit">Cadastrar</button>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+      <br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br>
+      <label for="senha">Senha:</label>
+      <input type="password" id="senhaC" name="senha" required>
+      <br>
+      <label for="senha">Confirmar Senha:</label>
+      <input type="password" id="senhaC2" name="senha" required>
+      <br>
+      <button type="submit">Cadastrar</button>
     </form>
     <p>{{message}}</p>
+  </section>
 </body>
 
+</html>

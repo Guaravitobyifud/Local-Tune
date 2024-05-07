@@ -9,17 +9,16 @@ const {tb_tipoUsuario} = require ('../models/modeloTipoUsuario')
 const {tb_usuario} = require ('../models/modeloUsuario')
 
 
-exports.Pesquisa = async (req,res) =>{
-    const {busca} = req.body;
+exports.Pesquisa = async (req, res) => {
+    const { busca } = req.body;
     await connSequelize.sync();
-try{
-
-  let resultBuscaUsu2 = await tb_usuario.findAll({
-        attributes: [
-             [Sequelize.literal('nm_usuario'), "Usuario"],
-             [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
-             [Sequelize.literal('nr_celular'), "Numero_de_celular"],
-             [Sequelize.literal('nm_endereco'), "Endereco"]
+    try {
+        let resultBuscaUsu2 = await tb_usuario.findAll({
+            attributes: [
+                [Sequelize.literal('nm_usuario'), "Usuario"],
+                [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+                [Sequelize.literal('nr_celular'), "Numero_de_celular"],
+                [Sequelize.literal('nm_endereco'), "Endereco"]
             ],
             include: [
                 {
@@ -45,9 +44,9 @@ try{
             },
             raw: true
         });
-        res.render('Search', {message: resultBuscaUsu2})
+        res.render('Search', { message: resultBuscaUsu2 }); // Renderizando a view com todos os resultados
     } catch (error) {
-        console.error(error); // Imprime o erro real para facilitar a depuração
+        console.error(error);
         res.status(500).send('Internal Server Error');
     }
 }

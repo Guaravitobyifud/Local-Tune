@@ -2,57 +2,140 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>LocalTune</title>
-  <link rel="icon" type="images/logo_topo.png" href="/images/logo_topo.png">
-  <link href="/estilo" rel="stylesheet" type="text/css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>LocalTune</title>
+    <link rel="icon" type="images/logo_topo.png" href="/images/logo_topo.png">
+    <link href="/estilo" rel="stylesheet" type="text/css" />
+    <style>
+        /* Estilos */
+        *{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+        }
+        .bo{
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+        header {
+            background-color: #46346e;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .voltar {
+            margin-right: 20px;
+        }
+
+        h1 {
+            color: #46346e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #46346e;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        select {
+            background-color: #f9f9f9;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #46346e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #7f3eb4;
+        }
+
+        .message {
+            text-align: center;
+            color: #46346e;
+        }
+    </style>
 </head>
 
 <body>
-   <header>
-        <div class="voltar" id="voltar-btn">
+    <header>
+        <div class="voltar">
             <a href="/">Voltar</a>
         </div>
-        <div class="voltar" id="voltar-btn">
+        <div class="voltar">
             <a href="/cadastro">Cadastro Estabelecimento</a>
         </div>
-        <div class="voltar" id="voltar-btn">
+        <div class="voltar">
             <a href="/cadastroSTBL">Cadastro Músico</a>
         </div>
     </header>
-  <section>
-    <div id="erroContainer" class="erroContainer"></div>
-    <h1>Cadastro de Usuário</h1>
-    <form action="/auth/cadastromusic" method="POST">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-        <br>
-        <label for="nome">CPF:</label>
-        <input type="text" id="cpf" name="cpf" required>
-        <br>
-        <label for="nome">Telefone:</label>
-        <input type="text" id="cellfone" name="cellfone" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
-        <label for="senha">Senha:</label>
-        <input type="password" id="senhaM" name="senhaM" required>
-        <br>
-         <label for="senha">Confirmar Senha:</label>
-        <input type="password" id="senhaM2" name="senhaM2" required>
-        <p>{{message1}}</p>
-        <br>
-        <select name="option" id="">
-        <option value="1">Rock</option>
-        <option value="4">MPB</option>
-        <option value="3">Samba</option>
-        <option value="2">Jazz</option>
-        </select>
-        <button type="submit">Cadastrar</button>
-    </form>
-    <p>{{message}}</p>
+    <section>
+        <div id="erroContainer" class="erroContainer"></div>
+        <h1>Cadastro de Usuário</h1>
+        <form action="/auth/cadastromusic" method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+            <br>
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" required>
+            <br>
+            <label for="cellfone">Telefone:</label>
+            <input type="text" id="cellfone" name="cellfone" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="senha">Senha:</label>
+            <input type="password" id="senhaM" name="senhaM" required>
+            <br>
+            <label for="senha2">Confirmar Senha:</label>
+            <input type="password" id="senhaM2" name="senhaM2" required>
+            <br>
+            <label for="option">Gênero Musical:</label>
+            <select name="option" id="">
+                <option value="1">Rock</option>
+                <option value="4">MPB</option>
+                <option value="3">Samba</option>
+                <option value="2">Jazz</option>
+            </select>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <p class="message">{{message}}</p>
+    </section>
 </body>
 
 </html>

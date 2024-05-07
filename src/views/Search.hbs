@@ -1,30 +1,138 @@
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <title>LocalTune</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilo/style.css">
-   </head>
+</head>
 <body>
     <header>
         <div class="text_left">
-            <h3><a class="bo" href="/login">Login</a></h3><!--se logado vira perfil-->
+            <h3><a class="bo" href="/login">Login</a></h3>
         </div>
         <div class="text_left">
-            <h3><a class="bo" href="/cadastro">Cadastro</a></h3><!--se logado vira perfil-->
+            <h3><a class="bo" href="/cadastro">Cadastro</a></h3>
         </div>
-        <div class="buscar">
-            <form action="/auth/Search" method="post">
-            <input id="busca" type="text" placeholder="O que você procura?" name="busca">
-            <button type="submit">Search</button>
-        </form>
-        </div>
+        
     </header>
-{{#each message}}
-    <p>Nome do usuário: {{this.Usuario}}</p>
-    <p>Tipo Musical: {{this.Tipo_Musical}}</p>
-    <p>Número de Celular: {{this.Numero_de_celular}}</p>
-    <p>Endereço: {{this.Endereco}}</p>
-{{/each}}    
+    <div class="buscar">
+            <form action="/auth/Search" method="post">
+                <input id="idbusca" type="text" placeholder="O que você procura?" name="busca">
+                <button type="submit">Search</button>
+            </form>
+                
+            
+        
+    {{#each message}}
+    <div class="buxas">
+    <p class="dados">Nome do usuário: {{this.Usuario}}</p>
+    <p class="dados">Tipo Musical: {{this.Tipo_Musical}}</p>
+    <p class="dados">Número de Celular: {{this.Numero_de_celular}}</p>
+    <p class="dados">Endereço: {{this.Endereco}}</p>
+    </div>
+{{/each}}
+</div>
+    <style>/* Estilo para o cabeçalho */
+        *{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+        }
+.buxas{
+    background-color: #f2c8fa;
+    width: 35%;
+    padding: 2px;
+    border-radius: 20px;
+    margin-top: 10px;
+    box-shadow: #1e003070 -4px 0px 7px inset;
+}
+header {
+    background-color: #46346e; /* Cor de fundo do cabeçalho */
+    color: #fff; /* Cor do texto no cabeçalho */
+    padding: 20px; /* Espaçamento interno do cabeçalho */
+    display: flex; /* Define o layout do cabeçalho como flexível */
+    justify-content: space-between; /* Alinha os itens do cabeçalho nas extremidades */
+    align-items: center; /* Centraliza os itens verticalmente no cabeçalho */
+}
+
+/* Estilo para os links no cabeçalho */
+a {
+    color: #fff; /* Cor dos links no cabeçalho */
+    text-decoration: none; /* Remove o sublinhado dos links */
+    margin-left: 20px; /* Espaçamento à esquerda entre os links */
+    transition: color 0.3s; /* Adiciona uma transição suave na mudança de cor do texto */
+}
+
+a:hover {
+    color: #f1c40f; /* Altera a cor do texto quando o cursor está sobre o link */
+}
+
+.dados{
+    color: #363636;
+    margin-left: 10px;
+}
+
+/* Estilo para a barra de busca */
+.buscar {
+    position: relative; /* Define a posição como relativa para o posicionamento dos resultados da pesquisa */
+    background-color: #f7e2ff; /* Cor de fundo da barra de busca */
+    padding: 10px; /* Espaçamento interno da barra de busca */
+    border-radius: ; /* Adiciona bordas arredondadas à barra de busca */
+}
+
+#idbusca {
+    width: 300px; /* Largura do campo de busca */
+    border: none; /* Remove a borda do campo de busca */
+    outline: none; /* Remove o contorno ao focar no campo de busca */
+    font-size: 16px; /* Tamanho da fonte do campo de busca */
+    padding: 8px; /* Espaçamento interno do campo de busca */
+    border-radius: 20px; /* Adiciona bordas arredondadas ao campo de busca */
+}
+
+/* Estilo para os resultados da pesquisa */
+.resultado-pesquisa {
+    position: absolute; /* Define a posição como absoluta para sobrepor os resultados sobre a barra de busca */
+    top: calc(100% + 10px); /* Posiciona os resultados abaixo da barra de busca com um espaçamento */
+    left: 0; /* Alinha os resultados com a borda esquerda da barra de busca */
+    background-color: #fff; /* Cor de fundo dos resultados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave aos resultados */
+    border-radius: 10px; /* Adiciona bordas arredondadas aos resultados */
+    width: 100%; /* Largura dos resultados */
+    max-height: 200px; /* Altura máxima dos resultados para evitar que se tornem muito longos */
+    overflow-y: auto; /* Adiciona uma barra de rolagem vertical se os resultados forem muito longos */
+    z-index: 1; /* Define a ordem de empilhamento dos resultados */
+    display: none; /* Inicialmente, os resultados não são exibidos */
+}
+
+.resultado-pesquisa p {
+    padding: 10px; /* Espaçamento interno dos itens de resultado */
+    margin: 0; /* Remove a margem padrão dos itens de resultado */
+    cursor: pointer; /* Muda o cursor para indicar que os itens de resultado são clicáveis */
+    transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+
+.resultado-pesquisa p:hover {
+    background-color: #f2f2f2; /* Altera a cor de fundo quando o cursor está sobre um item de resultado */
+}
+button[type="submit"] {
+    width: 70px; /* Define a largura do botão de envio como 100% */
+    padding: 10px; /* Adiciona um espaçamento interno ao botão de envio */
+    background-color: #7f3eb4; /* Cor de fundo do botão de envio */
+    color: #fff; /* Cor do texto do botão de envio */
+    border: none; /* Remove a borda do botão de envio */
+    border-radius: 4px; /* Adiciona bordas arredondadas ao botão de envio */
+    cursor: pointer; /* Altera o cursor ao passar sobre o botão de envio */
+    transition: background-color 0.3s; /* Adiciona uma transição suave na mudança de cor de fundo */
+}
+
+button[type="submit"]:hover {
+    background-color: #8a3b9e; /* Altera a cor de fundo ao passar o cursor sobre o botão de envio */
+}
+
+button[type="submit"]:hover {
+    background-color: #cf6cba; /* Altera a cor de fundo ao passar o cursor sobre o botão de envio */
+}
+    </style>
+    <script src="../scripts/search.js"></script>
 </body>
 </html>
