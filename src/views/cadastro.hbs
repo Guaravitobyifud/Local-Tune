@@ -7,7 +7,8 @@
   <title>LocalTune</title>
   <link rel="icon" type="images/logo_topo.png" href="/images/logo_topo.png">
   <link href="../public/cadastro.css" rel="stylesheet">
-  <style>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0"></script>
+  {{!-- <style>
     /* Estilos adicionais */
     body {
       font-family: Arial, sans-serif;
@@ -86,7 +87,13 @@
             color: #fff;
             text-decoration: none;
         }
-  </style>
+  </style> --}}
+  <script>
+  window.onload = function() {
+    var cellField = document.getElementById('cellfone');
+    VMasker(cellField).maskPattern("(99) 99999-9999");
+  }
+</script>
 </head>
 
 <body>
@@ -112,6 +119,9 @@
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required>
       <br>
+      <label for="cellfone">Telefone:</label>
+      <input type="text" id="cellfone" name="cellfone"required>
+       <br>
       <label for="senha">Senha:</label>
       <input type="password" id="senha" name="senha" required>
       <br>

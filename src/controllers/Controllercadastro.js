@@ -24,6 +24,8 @@ exports.cadastroUsuario = async (req, res) => {
         // Criptografar a senha
         const hashSenha = await bcrypt.hash(senha, 10)
 
+        
+
         const userCriado = await tb_usuario.create({
             cd_tipoUsuario: null,
             nm_email: email,
