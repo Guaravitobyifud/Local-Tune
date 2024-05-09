@@ -154,7 +154,7 @@ async function runServer() {
 //         })
     
 //         console.log(resultBuscaUsuO)
-const busca = 'C'
+const busca = 'f'
         let resultBuscaUsu2 = await tb_usuario.findAll({
             attributes: [
                  [Sequelize.literal('nm_usuario'), "Usuario"],
