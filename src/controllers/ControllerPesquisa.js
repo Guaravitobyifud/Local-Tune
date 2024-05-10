@@ -22,12 +22,12 @@ exports.Pesquisa = async (req, res) => {
             include: [
                 {
                     model: tb_contato,
-                    required: true,
+                    required: false,
                     attributes: []
                 },
                 {
                     model: tb_endereco,
-                    required: true,
+                    required: false,
                     attributes: []
                 },
                 {

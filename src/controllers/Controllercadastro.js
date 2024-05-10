@@ -12,7 +12,7 @@ const { tb_endereco } = require('../models/modeloEndereco');
 exports.cadastroUsuario = async (req, res) => {
 
     try {
-        const { nome, email, senha, senha2 } = req.body
+        const { nome, email, senha, senha2, musica } = req.body
 
         // Verificar se o e-mail já está em uso
         const usuarioExistente = await tb_usuario.findOne({ where: { nm_email: email } })
@@ -32,7 +32,7 @@ exports.cadastroUsuario = async (req, res) => {
             nm_usuario: nome,
             cd_endereco: null,
             cd_contato: null,
-            cd_tipoMusical: null,
+            cd_tipoMusical: musica,
             cd_senha: hashSenha // Armazenar o hash da senha
         })
    
