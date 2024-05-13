@@ -53,7 +53,6 @@ cd_tipoUsuario INT,
 cd_endereco INT NULL,
 cd_contato INT NULL,
 cd_senha VARCHAR(200),
-cd_tipoMusical INT,
 cd_regsLegal INT NULL,
 
 
@@ -76,8 +75,10 @@ CONSTRAINT fk_tipoMusical FOREIGN KEY (cd_tipoMusical) REFERENCES tb_tipoMusical
 
 CREATE TABLE tb_banda (
 cd_banda INT NOT NULL AUTO_INCREMENT, 
+cd_usuario INT,
 
-CONSTRAINT pk_banda PRIMARY KEY (cd_banda)
+CONSTRAINT pk_banda PRIMARY KEY (cd_banda),
+CONSTRAINT fk_usuarioBanda FOREIGN KEY (cd_usuario) REFERENCES tb_usuario (cd_usuario)
 );
 
 CREATE TABLE tb_bandaMembros (
@@ -116,7 +117,7 @@ INSERT INTO tb_contato (nr_Celular) VALUES
 ('(09) 99909-9086'),
 ('(14) 99456-8496'),
 ('(10) 98906-8496'),
-('(14) 99456-8496');
+('(14) 99076-8496');
 
 -- Inserir tipos de usuário
 INSERT INTO tb_tipoUsuario (ds_descricaoTpUsu) VALUES 
@@ -133,16 +134,38 @@ INSERT INTO tb_regsLegal (cd_cpf, cd_cnpj) VALUES
 (NULL, '20.052.006/7622-24'),
 (NULL, NULL),
 (NULL, NULL),
-('987.654.321-10', NULL);
+('987.654.321-10', NULL),
+(NULL, '09.987.775/5401-45');
 
 -- Inserir usuários
-INSERT INTO tb_usuario (nm_email, cd_regsLegal, cd_tipoUsuario, nm_usuario, cd_endereco, cd_contato, cd_senha, cd_tipoMusical) VALUES 
-('curstcoba050494@gmail.com', 1, 2, 'Curst Coba', 1, 1, '$2a$10$zF.HklYT1cV9W57gvKGI2.HPoDJDuGbO.Z/34lu9cZ5SukXY1R5GG',1), -- senha123
-('aratuca.entrprise@outlook.com', 2, 3, 'Araras e tucanos', 2, 2, '$2a$10$/dDa2FY64XbBukJidCuunuW1ltCRjRfE0NGQaePPKI3n5rJjX8UWa',3), -- senha456
-('meusambaminhavida123@hotmail.com', 3, 1, 'AdorSamba1213', 3, 3, '$10$FPxFrum4/Sdoa1Pz/yfYv.6ND1IjAx2dkiSuJOzKxLZtDfysS8bIS',3), -- senha789
-('sebastian@gmail.com', 4, 2, 'Chicken on a Stick', 4, 4, '$2a$10$MtuQrSod9cjs0dOvqjajR.Zyvi26T8emQJiaSy/DqQOftd5u50RYa',2), -- senha101
-('escapeidoasilo456@gmail.com', 5, 3, 'Casa de Repouso', 5, 5, '$2a$10$W9cBlXYp/AtGstvCckEj0eRP19GINalNgyL3rqQvKqj2TmYlvtmWe',4), -- senha112
-('marseelo@gmail.com', 6, 1, 'Guaraviton', 6, 6, '$2a$10$Ni4Ew2F88K4ChJh85Y4ii.oKjEdsRVMaGO7u52b6Ug4CPqWRiYhEO', 3), -- pãodequeijomtbom
-('chicobuarquemeuamor@gmail.com', 7, 1, 'RodrigoMPB', 7, 7, '$2a$10$jubJ0nmtpnV1zp3MN3jNSe46KtodgPvgTewk0ppHT3ttWRKV9lf2e', 4), -- mpb>vida
-('eusoudorocknroll@gmail.com', 8, 2, 'velvetime', 8, 8, '$10$ZTA0iWrJETbyvDn3rAlHAuL7tP9EwQ9kimpOdUFia1Xa5megBb.La', 1); -- missperfection
+INSERT INTO tb_usuario (nm_email, cd_regsLegal, cd_tipoUsuario, nm_usuario, cd_endereco, cd_contato, cd_senha) VALUES 
+('curstcoba050494@gmail.com', 1, 2, 'Curst Coba', 1, 1, '$2a$10$zF.HklYT1cV9W57gvKGI2.HPoDJDuGbO.Z/34lu9cZ5SukXY1R5GG'), -- senha123
+('aratuca.entrprise@outlook.com', 2, 3, 'Araras e tucanos', 2, 2, '$2a$10$/dDa2FY64XbBukJidCuunuW1ltCRjRfE0NGQaePPKI3n5rJjX8UWa'), -- senha456
+('meusambaminhavida123@hotmail.com', 3, 1, 'AdorSamba1213', 3, 3, '$10$FPxFrum4/Sdoa1Pz/yfYv.6ND1IjAx2dkiSuJOzKxLZtDfysS8bIS'), -- senha789
+('sebastian@gmail.com', 4, 2, 'Jazztian', 4, 4, '$2a$10$MtuQrSod9cjs0dOvqjajR.Zyvi26T8emQJiaSy/DqQOftd5u50RYa'), -- senha101
+('escapeidoasilo456@gmail.com', 5, 3, 'Casa de Repouso', 5, 5, '$2a$10$W9cBlXYp/AtGstvCckEj0eRP19GINalNgyL3rqQvKqj2TmYlvtmWe'), -- senha112
+('marseelo@gmail.com', 6, 1, 'Guaraviton', 6, 6, '$2a$10$Ni4Ew2F88K4ChJh85Y4ii.oKjEdsRVMaGO7u52b6Ug4CPqWRiYhEO'), -- pãodequeijomtbom
+('chicobuarquemeuamor@gmail.com', 7, 1, 'RodrigoMPB', 7, 7, '$2a$10$jubJ0nmtpnV1zp3MN3jNSe46KtodgPvgTewk0ppHT3ttWRKV9lf2e'), -- mpb>vida
+('eusoudorocknroll@gmail.com', 8, 2, 'velvetime', 8, 8, '$10$ZTA0iWrJETbyvDn3rAlHAuL7tP9EwQ9kimpOdUFia1Xa5megBb.La'), -- missperfection
+('multiestilosbrasil@etec.sp.gov.br', 9, 4, 'MultiEstilosBrasil', 1, 1, 'TudoTem456'); -- TudoTem456
+
+INSERT INTO tb_usuTipoMus (cd_usuario, cd_tipoMusical) VALUES
+(1, 1),
+(2, 3),
+(3, 3),
+(4, 2),
+(5, 4),
+(6, 2),
+(7, 4),
+(8, 1),
+(9, 1),
+(9, 2);
+
+INSERT INTO tb_banda (cd_usuario) VALUES 
+(9);
+
+INSERT INTO tb_bandaMembros (cd_banda, cd_usuTipoMus) VALUES 
+(1, 1),
+(1, 4),
+(1, 8);
 

@@ -4,7 +4,7 @@ const { _padraoTableBDExistence } = require('../../config/confdobanco.js')
 const {tb_tipoUsuario} = require ('./modeloTipoUsuario.js')
 const {tb_endereco} = require ('./modeloEndereco')
 const { tb_contato } = require('./modeloContato.js')
-const { tb_tipoMusical } = require('./modeloTipoMusical.js')
+const { tb_regsLegal } = require('./modeloRegsLegal.js')
  
 const tb_usuario = connSequelize.define('tb_usuario', {
     cd_usuario: {
@@ -45,12 +45,12 @@ const tb_usuario = connSequelize.define('tb_usuario', {
             key: 'cd_contato'
         }
     },
-    cd_tipoMusical: {
+    cd_regsLegal: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-            model: 'tb_tipoMusical',
-            key: 'cd_tipoMusical'
+            model: 'tb_regsLegal',
+            key: 'cd_regsLegal'
         }
     },
     cd_senha: {
@@ -67,8 +67,8 @@ tb_usuario.belongsTo(tb_endereco, {foreignKey: 'cd_endereco'});
 tb_contato.hasOne(tb_usuario, {foreignKey: 'cd_contato'});
 tb_usuario.belongsTo(tb_contato, {foreignKey: 'cd_contato'});
 
-tb_tipoMusical.hasMany(tb_usuario, {foreignKey: 'cd_tipoMusical'});
-tb_usuario.belongsTo(tb_tipoMusical, {foreignKey: 'cd_tipoMusical'});
+tb_regsLegal.hasMany(tb_usuario, {foreignKey: 'cd_regsLegal'});
+tb_usuario.belongsTo(tb_regsLegal, {foreignKey: 'cd_regsLegal'});
 
 module.exports = {
     tb_usuario
