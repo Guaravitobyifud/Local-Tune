@@ -27,11 +27,15 @@
     {{#each message}}
     <div class="buxas">
     <p class="dados">Nome do usuário: {{this.Usuario}}</p>
-    <p class="dados">Tipo Musical: {{this.Tipo_Musical}}</p>
     <p class="dados">Número de Celular: {{this.Numero_de_celular}}</p>
     <p class="dados">Endereço: {{this.Endereco}}</p>
     </div>
 {{/each}}
+   {{#each message2}}
+   <div class="buxas buxas2">
+    <p class=" dados dados2">{{this.Tipo_Musical}}</p>
+   </div>
+   {{/each}}
 </div>
     <style>/* Estilo para o cabeçalho */
         *{
