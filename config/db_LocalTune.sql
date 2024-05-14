@@ -75,10 +75,8 @@ CONSTRAINT fk_tipoMusical FOREIGN KEY (cd_tipoMusical) REFERENCES tb_tipoMusical
 
 CREATE TABLE tb_banda (
 cd_banda INT NOT NULL AUTO_INCREMENT, 
-cd_usuario INT,
 
-CONSTRAINT pk_banda PRIMARY KEY (cd_banda),
-CONSTRAINT fk_usuarioBanda FOREIGN KEY (cd_usuario) REFERENCES tb_usuario (cd_usuario)
+CONSTRAINT pk_banda PRIMARY KEY (cd_banda)
 );
 
 CREATE TABLE tb_bandaMembros (

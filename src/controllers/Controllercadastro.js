@@ -12,7 +12,7 @@ const { tb_regsLegal } = require('../models/modeloRegsLegal');
 exports.cadastroUsuario = async (req, res) => {
 
     try {
-        const { nome, email, senha, senha2, musica } = req.body
+        const { nome, email, senha, senha2, musicas} = req.body
 
         // Verificar se o e-mail já está em uso
         const usuarioExistente = await tb_usuario.findOne({ where: { nm_email: email } })
@@ -35,12 +35,22 @@ exports.cadastroUsuario = async (req, res) => {
                     cd_senha: hashSenha // Armazenar o hash da senha
                 })
 
-                const usuTipoMus = await tb_usuTipoMus.create({
-                    cd_tipoMusical: musica,
-                    cd_usuario: userCriado.cd_usuario
-                })
+                if (Array.isArray(musicas)) {
+                    for (const musica of musicas) {
+                        usuTipoMus =  await tb_usuTipoMus.create({
+                        cd_tipoMusical: parseInt(musica, 10),
+                        cd_usuario: userCriado.cd_usuario
+                      });
+                    }
+                  } else if (musicas) {
+                    // Caso apenas um checkbox esteja selecionado, `musicas` não será um array
+                    usuTipoMus =  await tb_usuTipoMus.create({
+                      cd_tipoMusical: parseInt(musicas, 10),
+                      cd_usuario: userCriado.cd_usuario
+                    });
+                  }
 
-                if (usuTipoMus) {
+                if (userCriado) {
                     res.render('login')
                 }
 

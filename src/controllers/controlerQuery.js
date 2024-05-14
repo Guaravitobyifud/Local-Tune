@@ -156,98 +156,114 @@ async function runServer() {
     //         })
 
     //         console.log(resultBuscaUsuO)
-    // const busca = 'c'
-    //         let resultBuscaUsu2 = await tb_usuTipoMus.findAll({
-    //             attributes: [
-    //                  [Sequelize.literal('nm_usuario'), "Usuario"],
-    //                  [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
-    //                  [Sequelize.literal('nr_celular'), "Numero_de_celular"],
-    //                  [Sequelize.literal('nm_endereco'), "Endereco"]
-    //                 ],
-    //                 include: [
-    //                     {
+
+
+
+    // let resultBuscaBanda = await tb_bandaMembros.findAll({
+    //     attributes: [
+    //         [Sequelize.literal('nm_usuario'), "Usuario"],
+    //         [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+    //         [Sequelize.literal('nr_celular'), "Numero_de_celular"],
+    //         [Sequelize.literal('nm_endereco'), "Endereco"]
+    //     ],
+    //     include: [
+    //         {
+    //             model: tb_usuTipoMus,
+    //             required: true,
+    //             attributes: [],
+    //             include: [
+    //                 {
     //                     model: tb_usuario,
     //                     required: true,
     //                     attributes: [],
     //                     include: [
-    //                     {
-    //                         model: tb_contato,
-    //                         required: true,
-    //                         attributes: []
-    //                     },
-    //                     {
-    //                         model: tb_endereco,
-    //                         required: true,
-    //                         attributes: []
-    //                     },
-    //                 ],
-    //                 where: {
-    //                     nm_usuario: {
-    //                         [Op.like]: `${busca}%`
-    //                     },
+    //                         {
+    //                             model: tb_contato,
+    //                             required: true,
+    //                             attributes: []
+    //                         },
+    //                         {
+    //                             model: tb_endereco,
+    //                             required: true,
+    //                             attributes: []
+    //                         },
+    //                     ],
     //                 },
-    //                 },
-    //                     {
-    //                         model: tb_tipoMusical,
-    //                         required: true,
-    //                         attributes: []
-    //                     },
-    //                 ],
-    //                 raw: true
-    //             });
+    //             ],
+    //         },
+    //     ],
+    //     where: {
+    //         cd_banda: {
+    //             [Op.eq]: 1
+    //         },
+    //     },
+    //     raw: true
+    // });
 
-    //             console.log(resultBuscaUsu2);
+    // console.log(resultBuscaBanda);
 
 
-    let resultBuscaUsu2 = await tb_bandaMembros.findAll({
+    const busca = 'c'
+    let resultBuscaUsu2 = await tb_usuTipoMus.findAll({
         attributes: [
             [Sequelize.literal('nm_usuario'), "Usuario"],
-            [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
             [Sequelize.literal('nr_celular'), "Numero_de_celular"],
             [Sequelize.literal('nm_endereco'), "Endereco"]
         ],
         include: [
             {
-                model: tb_usuTipoMus,
+                model: tb_usuario,
                 required: true,
                 attributes: [],
                 include: [
                     {
-                        model: tb_usuario,
+                        model: tb_contato,
                         required: true,
-                        attributes: [],
-                        include: [
-                            {
-                                model: tb_contato,
-                                required: true,
-                                attributes: []
-                            },
-                            {
-                                model: tb_endereco,
-                                required: true,
-                                attributes: []
-                            },
-                        ],
+                        attributes: []
                     },
                     {
-                        model: tb_tipoMusical,
+                        model: tb_endereco,
                         required: true,
                         attributes: []
                     },
                 ],
+                where: {
+                    nm_usuario: {
+                        [Op.like]: `${busca}%`
+                    },
+                },
             },
         ],
-        where: {
-            cd_banda: {
-                [Op.eq]: 1
-            },
-        },
         raw: true
     });
 
     console.log(resultBuscaUsu2);
 
+    let resultBuscaUsuTipoUsu = await tb_usuTipoMus.findAll({
+        attributes: [
+            [Sequelize.literal('ds_descricaoTpMusical'), 'Tipo_Musical'],
+        ],
+        include: [
+            {
+                model: tb_usuario,
+                required: true,
+                attributes: [],
+                where: {
+                    nm_usuario: {
+                        [Op.like]: `${busca}%`
+                    },
+                },
+            },
+            {
+                model: tb_tipoMusical,
+                required: true,
+                attributes: []
+            },
+        ],
+        raw: true
+    })
 
+    console.log(resultBuscaUsuTipoUsu)
 
 }
 
