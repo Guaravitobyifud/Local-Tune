@@ -69,4 +69,15 @@ router.get("/logout", function (req, res) {
     });
 });
 
+router.get("/uploadimg", (req, res) => {
+    if (req.session.user) {
+        res.render('homeUsu', { 
+            username: 'Bem-vindo ' + req.session.user.username,
+            logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
+        });
+    } else {
+        res.redirect('/login'); // Redireciona para a página de login se não houver usuário na sessão
+    }
+});
+
 module.exports = router;

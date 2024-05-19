@@ -21,6 +21,11 @@ nm_endereco VARCHAR(200),
 CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco)
 );
 
+-- CREATE TABLE tb_img (
+--     cd_img INT NOT NULL AUTO_INCREMENT,
+--     img BLOB
+-- );
+
 CREATE TABLE tb_contato (
 cd_contato INT NOT NULL AUTO_INCREMENT,
 nr_Celular VARCHAR(15),

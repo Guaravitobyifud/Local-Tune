@@ -32,7 +32,8 @@ exports.cadastroUsuario = async (req, res) => {
                     nm_usuario: nome,
                     cd_endereco: null,
                     cd_contato: null,
-                    cd_senha: hashSenha // Armazenar o hash da senha
+                    cd_senha: hashSenha, // Armazenar o hash da senha
+                    cd_regsLegal: null
                 })
 
                 if (Array.isArray(musicas)) {
