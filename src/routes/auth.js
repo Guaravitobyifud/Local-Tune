@@ -5,6 +5,10 @@ const authcadastro = require('../controllers/Controllercadastro')
 const pesquisa = require('../controllers/ControllerPesquisa')
 const authUpload = require ('../controllers/controllerIMG')
 
+const multer = require('multer')
+
+const _multer_ProfImgUpload = require('../middleware/multer')
+
 'auth/login'
 router.post("/login", authlogin.login);
 
@@ -21,5 +25,5 @@ router.post("/cadastrostbl", authcadastro.cadastroStbl);
 router.post("/Search", pesquisa.Pesquisa);
 
 'auth/uploadimg'
-router.post("/uploadimg", authUpload.imgUpload)
+router.post("/uploadimg", multer( _multer_ProfImgUpload).single('image'), authUpload.uploadFotoPerfil)
 module.exports = router

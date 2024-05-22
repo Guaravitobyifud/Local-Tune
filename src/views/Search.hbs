@@ -22,7 +22,17 @@
                 <button type="submit">Search</button>
             </form>
                 
-            
+            <script>
+    // Obter o elemento de input e o elemento de resultado
+    const input = document.getElementById('meuInput');
+    const resultado = document.getElementById('resultado');
+
+    // Adicionar um ouvinte de eventos de input ao input
+    input.addEventListener('idbusca', function() {
+        // Atualizar o conteúdo do elemento de resultado com o valor do input
+        resultado.textContent = input.value;
+    });
+</script>
         
     {{#each message}}
     <div class="buxas">
@@ -31,11 +41,11 @@
     <p class="dados">Endereço: {{this.Endereco}}</p>
     </div>
 {{/each}}
-   {{#each message2}}
+   {{!-- {{#each message2}}
    <div class="buxas buxas2">
     <p class=" dados dados2">{{this.Tipo_Musical}}</p>
    </div>
-   {{/each}}
+   {{/each}} --}}
 </div>
     <style>/* Estilo para o cabeçalho */
         *{

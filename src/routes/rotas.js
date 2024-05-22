@@ -3,27 +3,33 @@ const router = express.Router()
 const app = require('../../server');
 const session = require('express-session');
 const multer = require('multer')
-const multerConfig = require('../scripts/multer')
-const PostImg = require('../models/modeloIMG')
+const multerConfig = require('../middleware/multer')
+
+
+const cookie = require('cookie-parser')
 
 function userAuth(req, res, next) {
-    if (req.session.user) {
-      next();
+    // Verifica se o cookie 'cookie_login' está presente
+    if (req.cookies && req.cookies.cookie_login) {
+        next(); // Continua para o próximo middleware
     } else {
-      res.render('index', {message: 'Por favor, faça login'});
+        res.render('index', { message: 'Por favor, faça login' }); // Renderiza a página inicial com uma mensagem de erro
     }
-  }
+}
 
-  router.get("/login", (req, res) => {
-    if (req.session.user) {
+router.get("/login",  (req, res) => {
+    // Verifica se o usuário está autenticado pelo middleware userAuth
+    if (req.cookies && req.cookies.cookie_login) {
+        // Renderiza a página inicial com o nome de usuário extraído do cookie
         res.render('homeUsu', { 
-            username: 'Bem-vindo ' + req.session.user.username,
+            username: 'Bem-vindo ' + JSON.parse(req.cookies.cookie_login).nm_usuario,
             logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
         });
     } else {
-        res.render('login'); // Redireciona para a página de login
+        // Caso contrário, renderiza a página de login
+        res.render('login');
     }
-});
+})
 
 router.get("/cadastro", (req, res) => {
     res.render("cadastro")
@@ -41,9 +47,9 @@ router.get("/Search", (req, res) => {
 
 router.get("/homeUsu", userAuth, (req, res) => {
     // Verifica se há um usuário na sessão
-    if (req.session.user) {
+    if (req.cookies && req.cookies.cookie_login) {
         res.render('homeUsu', { 
-            username: 'Bem-vindo ' + req.session.user.username,
+            username: 'Bem-vindo ' + JSON.parse(req.cookies.cookie_login).nm_usuario,
             logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
         });
     } else {
@@ -81,21 +87,17 @@ router.get("/logout", function (req, res) {
         if(err){
             console.log(err);
         } else {
-            res.clearCookie('connect.sid'); // Limpa o cookie chamado 'cookie_login'
-            res.redirect('/');
+            // Configura o cabeçalho Cache-Control para indicar que a página não deve ser armazenada em cache
+            res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+
+            // Redireciona o usuário para a página de login após o logout
+            res.redirect('/login');
         }
     });
 });
 
 router.get("/uploadimg", (req, res) => {
-    if (req.session.user) {
-        res.render('homeUsu', { 
-            username: 'Bem-vindo ' + req.session.user.username,
-            logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
-        });
-    } else {
-        res.redirect('/login'); // Redireciona para a página de login se não houver usuário na sessão
-    }
-});
+        res.render('uploadimg')
 
+});
 module.exports = router;

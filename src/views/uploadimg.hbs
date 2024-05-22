@@ -1,16 +1,15 @@
-<!-- upload.handlebars -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload de Imagem</title>
+    <title>Upload de Foto de Perfil</title>
 </head>
 <body>
-    <h1>Upload de Imagem</h1>
-    <form action="/uploadimg" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image">
-        <button type="submit">Upload</button>
-    </form>
+    <h1>Upload de Foto de Perfil</h1>
+    <form action="/auth/uploadimg" method="POST" enctype="multipart/form-data">
+    <input type="file" name="imagem" accept="image/*" required>
+    <button type="submit">Enviar</button>
+</form>
 </body>
 </html>
