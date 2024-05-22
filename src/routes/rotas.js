@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 const app = require('../../server');
 const session = require('express-session');
+const multer = require('multer')
+const multerConfig = require('../scripts/multer')
+const PostImg = require('../models/modeloIMG')
 
 function userAuth(req, res, next) {
     if (req.session.user) {
@@ -48,7 +51,22 @@ router.get("/homeUsu", userAuth, (req, res) => {
     }
 });
 
+// router.post("/posts", multer(multerConfig).array('file'), async(req, res)=>{
+//     console.log(req.file)
+//     const post = await PostImg.create({
+//         img: req.file
+//     })
+//     res.json(post)
+// })
 
+router.post("/posts", multer(multerConfig).single('file'), async(req, res) => {
+    console.log(req.file); // Note que agora estamos usando req.files para acessar os arquivos enviados
+    
+    // const imgs = req.files.map(file => ({ img: file.path })); // Armazena apenas o caminho do arquivo
+    
+    
+    
+});
 
 router.get("/cadastroSTBL", (req, res) => {
     res.render("cadastroSTBL")

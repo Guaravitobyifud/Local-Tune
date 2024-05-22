@@ -21,10 +21,13 @@ nm_endereco VARCHAR(200),
 CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco)
 );
 
--- CREATE TABLE tb_img (
---     cd_img INT NOT NULL AUTO_INCREMENT,
---     img BLOB
--- );
+ CREATE TABLE tb_img (
+     cd_img INT NOT NULL AUTO_INCREMENT,
+     img BLOB,
+     cd_user varchar (11),
+     
+     CONSTRAINT pk_img PRIMARY KEY (cd_img)
+ );
 
 CREATE TABLE tb_contato (
 cd_contato INT NOT NULL AUTO_INCREMENT,
@@ -80,6 +83,7 @@ CONSTRAINT fk_tipoMusical FOREIGN KEY (cd_tipoMusical) REFERENCES tb_tipoMusical
 
 CREATE TABLE tb_banda (
 cd_banda INT NOT NULL AUTO_INCREMENT, 
+cd_usuario varchar (11),
 
 CONSTRAINT pk_banda PRIMARY KEY (cd_banda)
 );
