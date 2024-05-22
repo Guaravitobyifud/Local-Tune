@@ -71,6 +71,14 @@ CONSTRAINT fk_regsLegal FOREIGN KEY (cd_regsLegal) REFERENCES tb_regsLegal (cd_r
 CONSTRAINT fk_tipoUsuario FOREIGN KEY (cd_tipoUsuario) REFERENCES tb_tipoUsuario (cd_tipoUsuario)
 );
 
+CREATE TABLE tb_seguindoSeguidor (
+cd_seguindo INT,
+cd_seguidor INT,
+
+CONSTRAINT fk_seguindo FOREIGN KEY (cd_seguindo) REFERENCES tb_usuario(cd_usuario),
+CONSTRAINT fk_seguidor FOREIGN KEY (cd_seguidor) REFERENCES tb_usuario(cd_usuario)
+);
+
 CREATE TABLE tb_usuTipoMus (
 cd_usuTipoMus INT NOT NULL AUTO_INCREMENT,
 cd_usuario INT,
@@ -83,7 +91,6 @@ CONSTRAINT fk_tipoMusical FOREIGN KEY (cd_tipoMusical) REFERENCES tb_tipoMusical
 
 CREATE TABLE tb_banda (
 cd_banda INT NOT NULL AUTO_INCREMENT, 
-cd_usuario varchar (11),
 
 CONSTRAINT pk_banda PRIMARY KEY (cd_banda)
 );
@@ -168,11 +175,31 @@ INSERT INTO tb_usuTipoMus (cd_usuario, cd_tipoMusical) VALUES
 (9, 1),
 (9, 2);
 
-INSERT INTO tb_banda (cd_usuario) VALUES 
-(9);
+INSERT INTO tb_seguindoSeguidor (cd_seguindo, cd_seguidor) VALUES
+(4, 1),
+(5, 1),
+(8, 1),
+(7, 1),
+(1, 3),
+(1, 2),
+(1, 6);
+
+INSERT INTO tb_banda (cd_banda) VALUES 
+(DEFAULT);
 
 INSERT INTO tb_bandaMembros (cd_banda, cd_usuTipoMus) VALUES 
 (1, 1),
 (1, 4),
 (1, 8);
 
+SELECT usu.nm_usuario AS Nome_seguidor 
+FROM tb_usuario AS usu 
+JOIN tb_seguindoSeguidor AS Seg 
+ON seg.cd_seguidor = usu.cd_usuario
+WHERE seg.cd_seguindo = 1;
+
+SELECT usu.nm_usuario AS Nome_seguindo 
+FROM tb_usuario AS usu 
+JOIN tb_seguindoSeguidor AS Seg 
+ON seg.cd_seguindo = usu.cd_usuario
+WHERE seg.cd_seguidor = 1;
