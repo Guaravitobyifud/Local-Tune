@@ -1,6 +1,6 @@
-const { connSequelize } = require('../../config/coneccao')
-const { DataTypes} = require ('sequelize')
-const { _padraoTableBDExistence } = require('../../config/confdobanco')
+const { connSequelize } = require('../../config/coneccao');
+const { DataTypes } = require('sequelize');
+const { _padraoTableBDExistence } = require('../../config/confdobanco');
 
 const tb_img = connSequelize.define('tb_img', {
     cd_img: {
@@ -10,11 +10,19 @@ const tb_img = connSequelize.define('tb_img', {
         autoIncrement: true
     },
     img: {
-        type: DataTypes.BLOB
+        type: DataTypes.BLOB('long'),
+        allowNull: false // Permitindo valores nulos para campos BLOB não é recomendado
+    },
+    nome: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
+    tipo: {
+        type: DataTypes.STRING(255),
+        allowNull: false
     },
     cd_user: {
-        type: DataTypes.STRING(60),
-        allowNull: false,
+        type: DataTypes.STRING(11)
     },
 }, _padraoTableBDExistence('tb_img'));
 
