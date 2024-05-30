@@ -37,14 +37,8 @@ exports.login = async (req, res) => {
                         dadosUsuario.tipoUsuario = 'desconhecido';
                 }
 
-                const dadosUsuarioString = JSON.stringify(dadosUsuario);
-
-                const cookieOptions = {
-                    httpOnly: false, // Permite que o cookie seja acessado por JavaScript no navegador
-                    maxAge: 2 * 60 * 60 * 1000 // Tempo de vida do cookie em milissegundos (2 horas)
-                };
-
-                res.cookie('cookie_login', dadosUsuarioString, cookieOptions);
+                // Store user data in session
+                req.session.dadosUsuario = dadosUsuario;
 
                 res.redirect('/homeUsu'); // Redireciona para a página homeUsu após o login
             } else {

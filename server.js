@@ -7,10 +7,15 @@ const { connSequelize, BD } = require('./config/coneccao');
 // const {query} = require('./src/controllers/controlerQuery')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const imageRouter = require('./src/routes/imageRouter'); // Ajuste o caminho conforme necessário
+
+
 // const {Pesquisa} = require('./src/controllers/ControllerPesquisa')
 
 // Middleware de análise de corpo para dados JSON
 app.use(express.json());
+
+app.use(imageRouter);
 
 // Middleware de análise de corpo para dados codificados em URL
 app.use(express.urlencoded({ extended: true }));
@@ -26,12 +31,12 @@ app.use(session({
 
 })
 )
-app.use(cookieParser())
+// app.use(cookieParser())
 
-app.use((req, res, next) => {
-    console.log(req.cookies);
-    next();
-  });
+// app.use((req, res, next) => {
+//     console.log(req.cookies);
+//     next();
+//   });
 
 // Configuração de diretórios de visualização e mecanismo de visualização
 app.set('views', path.join(__dirname, './src/views'));

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>LocalTune</title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="estilo/style.css">
@@ -64,39 +64,29 @@
             font-family: 'Poppins', sans-serif; /* Fonte */
         }
     </style> --}}
+
+    <meta charset="UTF-8">
+    <title>Home Usuário</title>
 </head>
 <body>
-    <header>
-        <div class="text_left">
-            <h3><a class="bo" href="/logout">Logout</a></h3><!--se logado vira perfil-->
-        </div>
-        <div class="buscar">
-            <input id="idbusca" onkeyup="filtrar()" type="text" placeholder="O que você procura?"/>
-        </div>
-    </header>
-    <div id="grid">
-        <div id="left">
-            {{username}}
-        </div>
-        <form action="/auth/uploadimg" method="post">
-        <input type="file" name="image">
-        <button type="submit">Upload</button>
+    <h1>Bem-vindo, {{username}}!</h1>
+
+    {{#if profilePicture}}
+        <img src="/imagem/{{profilePicture}}" alt="Imagem de Perfil">
+        <h3>Alterar Foto de Perfil</h3>
+        <form action="/auth/alterarFotoPerfil" method="POST" enctype="multipart/form-data">
+            <input type="file" name="imagem" accept="image/*" required>
+            <button type="submit">Alterar</button>
         </form>
-        <div id="right">
-            <!-- Conteúdo da tela direita -->
-            <!--<div class="fundo2">
-                <div class="conta"></div>
-                <div class="juncao">
-                    <div class="post">
-                        <div class="fake-perfil-img2"></div>
-                        <p>Lorem ipsum dtia faciur incidunt. Doloremque temporibus libero vero illo!</p>
-                    </div>
-                    <div class="imgpost">
-                        ============[Colocar imagem]===============
-                    </div>
-                </div>
-            </div>-->
-        </div>
-    </div>
+    {{else}}
+        <h3>Upload de Foto de Perfil</h3>
+        <form action="/auth/uploadimg" method="POST" enctype="multipart/form-data">
+            <input type="file" name="imagem" accept="image/*" required>
+            <button type="submit">Enviar</button>
+        </form>
+    {{/if}}
+
+    <!-- Restante do conteúdo da página -->
+    {{{logout}}}
 </body>
 </html>
