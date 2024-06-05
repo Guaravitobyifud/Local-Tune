@@ -43,7 +43,7 @@ app.set('views', path.join(__dirname, './src/views'));
 app.set('view engine', 'hbs');
 
 // Servir arquivos estáticos
-const publicDirectory = path.join(__dirname, '/src/public');
+const publicDirectory = path.join(__dirname, './src/public');
 app.use(express.static(publicDirectory));
 
 // Importar e usar suas rotas

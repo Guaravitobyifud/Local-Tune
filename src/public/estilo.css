@@ -1,107 +1,92 @@
-body{
-    background: #6d6d6d;
-    margin: 0;
-    align-items: center;
-    align-content: center;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  h1{
-    font-weight: 300;
-    font-size: 2em;
-  }
-  section{
-    align-self: center;
-    max-width: 100%;
-    color: #000;
-    display: flex;
-    flex-direction:column;
-  }
-  .div {
-    padding-bottom: 0;
-    padding-left: 30px;
-    padding-top: 4pxpx;
-    margin: 0;
-  }
-  
-  .nomes {
-    padding-bottom: 5px;
-    padding-left: 30px;
-    font-size: 1.15em;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .inserir {
-    padding: 10px;
-    font-family: sans-serif;
-    font-size: 1.15em;
-    border-radius: 4px;
-    width: 800px;
-    border: 0.5px solid #ccc;
-  }
-  
-  .inserir2 {
-     padding: 10px;
-    width: 800px;
-    font-family: sans-serif;
-    font-size: 1.14em;
-    margin-left: 4.3px;
-    border-radius: 4px;
-    border: 0.5px solid #ccc;
-  }
-  .inserir3 {
-     padding: 10px;
-    width: 800px;
-    height: 200px;
-    font-family: sans-serif;
-    font-size: 1.14em;
-    margin-left: 4.3px;
-    border-radius: 4px;
-    border: 0.5px solid #ccc;
-  }
-  
-  .botao {
-    padding-bottom: 10px;
-    padding-left: 30px;
-  }
-  .enviar{
-    font-size: 1.2em;
-    font-family: Arial;
-    border-radius: 5px;
-    color: #fff;
-    background-color: #42adff;
-    border: none;
-    font-weight: 150;
-    padding: 10px;
-    margin: 10px;
-  }
-  .voltar{
-    font-size: 1.2em;
-    font-family: Arial;
-    color:#fff;
-    border-radius: 5px;
-    background-color: #ff4242;
-    border: none;
-    font-weight: 150;
-    padding: 10px;
-    margin-left: 40px;
-  }
-  .error{
-    list-style: none;
-    font-size: 1.3em;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #ad0000;
-  }
-  .success-message{
-    padding: 30px;
-    color: #10eb00;
-    font-size: 1.3em;
-  }
-   .mensagem{
-     padding-left: 30px;
-     color: red;
-   }
+/* Estilo para o cabeçalho */
+*{
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  background-color: #0a000f;
+}
+.bo2 {
+  text-decoration: none;
+  color: inherit; /* Inherit the color from the parent element */
+}
 
+/* Estilo padrão para os elementos bo1 */
+.bo1 {
+  margin-right: 15px;
+  color: #ffffff;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 0 0 10px rgb(89, 0, 255);
+  box-shadow: 0 0 15px rgb(85, 0, 255), inset 0 0 10px rgb(85, 0, 255);
+  transition: all 0.3s ease; /* Adiciona uma transição suave para o hover */
+  cursor: pointer;
+}
+
+/* Estilo para os elementos bo1 no hover */
+.bo1:hover {
+  color: #ffffff;
+  border: 3px solid rgb(255, 255, 255);
+  text-shadow: 0 0 15px rgb(255, 187, 0);
+  box-shadow: 0 0 20px rgb(255, 210, 86), inset 0 0 10px rgb(255, 210, 86);
+}
+
+header {
+  background-color: #0a000f;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text_left {
+  display: flex;
+}
+
+.text_left h3 {
+  margin-right: 20px;
+}
+
+.buscar input {
+  color: #fff;
+  padding: 8px;
+  border: 3px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  width: 200px;
+  margin-right: 20px;
+  text-shadow: 0 0 15px rgb(85, 0, 255);
+  box-shadow: 0 0 15px rgb(85, 0, 255);
+  margin: 5px;
+}
+
+.buscar button {
+  padding: 8px 20px;
+  border: #ffffff solid 2px;
+  text-shadow: 0 0 15px rgb(255, 208, 0);
+  box-shadow: 0 0 15px rgb(255, 210, 86), inset 0 0 5px rgba(255, 210, 86, 0.486);
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.buscar label{
+  color: #fff;
+  text-shadow: 0 0 15px rgb(85, 0, 255);
+}
+
+.buscar button:hover {
+  
+  border: #ffffff solid 2px;
+  text-shadow: 0 0 20px rgb(255, 208, 0);
+  box-shadow: 0 0 20px rgb(255, 210, 86), inset 0 0 10px rgba(255, 210, 86, 0.726);
+}
+
+/* Estilo para a mensagem */
+.message {
+  text-align: center;
+  padding: 20px;
+  background-color: #f2c8fa;
+  color: #46346e;
+  margin-top: 20px;
+}
