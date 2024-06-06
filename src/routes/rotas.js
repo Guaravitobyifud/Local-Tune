@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const multerConfig = require('../middleware/multer');
 const { tb_usuario } = require('../models/modeloUsuario');
-const uploadController = require('../controllers/ControllerIMG');
+const uploadController = require('../controllers/controllerIMG');
 const session = require('express-session');
 
 // Middleware para verificar a autenticação do usuário
@@ -17,11 +17,7 @@ function userAuth(req, res, next) {
 
 router.get("/login", (req, res) => {
     if (req.session && req.session.dadosUsuario) {
-        res.render('homeUsu', { 
-            username: 'Bem-vindo ' + req.session.dadosUsuario.nm_usuario,
-            profilePicture: req.session.dadosUsuario.cd_usuario, // Passa o ID do usuário para gerar a URL da imagem
-            logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
-        });
+        res.render('homeUsu');
     } else {
         res.render('login');
     }
@@ -44,10 +40,11 @@ router.get("/homeUsu", userAuth, async (req, res) => {
         try {
             const usuario = await tb_usuario.findOne({ where: { cd_usuario: req.session.dadosUsuario.cd_usuario } });
             if (usuario) {
+                console.log('Profile Picture:', usuario.nm_imagem); // Log para depuração
                 res.render('homeUsu', { 
                     username: 'Bem-vindo ' + usuario.nm_usuario,
-                    profilePicture: usuario.cd_usuario, // Passa o ID do usuário para gerar a URL da imagem
-                    logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
+                    profilePicture: usuario.nm_imagem, // Passa o caminho da imagem do usuário
+                    logout: '<div class="bo1"><h3><a class="bo2" href="/logout">logout</a></h3></div>' 
                 });
             } else {
                 res.redirect('/login');
@@ -90,20 +87,14 @@ router.get("/uploadimg", (req, res) => {
 });
 
 // Adiciona a rota para o controlador de upload
-router.post("/uploadFotoPerfil", multer(multerConfig).single('file'), async (req, res, next) => {
+router.post("/alterarFotoPerfil", multer(multerConfig).single('imagem'), async (req, res, next) => {
     try {
-        console.log("Dados da sessão no início do upload:", req.session.dadosUsuario);
-
-        await uploadController.uploadFotoPerfil(req, res);
-
-        // Atualiza a sessão com a nova imagem do perfil
-        req.session.dadosUsuario.nm_imagem = req.file.filename;
-        console.log("Dados da sessão após upload:", req.session.dadosUsuario);
-
+        await authUpload.alterarFotoPerfil(req, res);
+        req.session.dadosUsuario.nm_imagem = req.file.filename; // Atualiza a sessão com o novo nome de arquivo
         res.redirect('/homeUsu');
     } catch (erro) {
-        console.error("Erro ao tentar fazer upload da foto de Perfil:", erro);
-        res.send(`Erro ao tentar fazer upload da foto de Perfil: ${erro}`);
+        console.error("Erro ao tentar alterar a foto de Perfil:", erro);
+        res.send(`Erro ao tentar alterar a foto de Perfil: ${erro}`);
     }
 });
 

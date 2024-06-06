@@ -24,7 +24,8 @@ router.post("/alterarFotoPerfil", multer(multerConfig).single('imagem'), async (
 
         // Chama a função para alterar a foto de perfil após o upload ser processado
         await authUpload.alterarFotoPerfil(req, res);
-
+        res.render("/homeUsu")
+        
     } catch (erro) {
         console.error("Erro ao tentar alterar a foto de Perfil:", erro);
         res.send(`Erro ao tentar alterar a foto de Perfil: ${erro}`);
