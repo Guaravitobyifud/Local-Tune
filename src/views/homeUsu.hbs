@@ -1,92 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="estilo/style.css">
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <link rel="stylesheet" type="text/css" href="homeusu.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    {{!-- <style>
-        /* Estilos para o header */
-        *{
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            margin: 0;
-        }
-        header {
-            background-color: #46346e; /* Cor de fundo do cabeçalho */
-            color: #fff; /* Cor do texto no cabeçalho */
-            padding: 20px; /* Espaçamento interno do cabeçalho */
-            display: flex; /* Define o layout do cabeçalho como flexível */
-            justify-content: space-between; /* Alinha os itens do cabeçalho nas extremidades */
-            align-items: center; /* Centraliza os itens verticalmente no cabeçalho */
-        }
-        .bo{
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .text_left {
-            margin-left: 20px; /* Espaçamento à esquerda */
-        }
-
-        .buscar {
-            margin-right: 20px; /* Espaçamento à direita */
-        }
-
-        .buscar input[type="text"] {
-            padding: 8px; /* Espaçamento interno */
-            border-radius: 20px; /* Bordas arredondadas */
-            border: none; /* Remove a borda */
-            font-size: 16px; /* Tamanho da fonte */
-        }
-
-        /* Estilos para o grid */
-        #grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Duas colunas */
-        }
-
-        #left, #right {
-            padding: 20px; /* Espaçamento interno */
-        }
-
-        /* Estilos para o texto esquerdo */
-        #left p {
-            color: #000; /* Cor do texto */
-            font-family: 'Poppins', sans-serif; /* Fonte */
-        }
-
-        /* Estilos para o texto direito */
-        #right p {
-            color: #363636; /* Cor do texto */
-            font-family: 'Poppins', sans-serif; /* Fonte */
-        }
-    </style> --}}
-
-    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
     <title>Home Usuário</title>
 </head>
 <body>
-    <h1>Bem-vindo, {{username}}!</h1>
+    <div class="container">
+        {{#if profilePicture}}
+            <div class="ft_perfil">
+                <img class="img_perfil" src="{{profilePicture}}" alt="Imagem de Perfil">
+            </div>
+            <h1>{{username}}!</h1>
+            <h3>Alterar Foto de Perfil</h3>
+            <form action="/uploadFotoPerfil" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <button type="submit">Alterar</button>
+            </form>
+        {{else}}
+         <div class="ft_perfil">
+            <img class="img_perfil" src="dflt.jpeg" alt="Imagem Default de Perfil">
+        </div>
 
-    {{#if profilePicture}}
-        <img src="/imagem/{{profilePicture}}" alt="Imagem de Perfil">
-        <h3>Alterar Foto de Perfil</h3>
-        <form action="/auth/alterarFotoPerfil" method="POST" enctype="multipart/form-data">
-            <input type="file" name="imagem" accept="image/*" required>
-            <button type="submit">Alterar</button>
-        </form>
-    {{else}}
-        <h3>Upload de Foto de Perfil</h3>
-        <form action="/auth/uploadimg" method="POST" enctype="multipart/form-data">
-            <input type="file" name="imagem" accept="image/*" required>
-            <button type="submit">Enviar</button>
-        </form>
-    {{/if}}
-
-    <!-- Restante do conteúdo da página -->
-    {{{logout}}}
+            <h1>{{username}}!</h1>
+            <h3>Upload de Foto de Perfil</h3>
+            <form action="/uploadFotoPerfil" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept="image/*" required>
+                <button type="submit">Enviar</button>
+            </form>
+        {{/if}}
+        {{{logout}}}
+    </div>
 </body>
 </html>

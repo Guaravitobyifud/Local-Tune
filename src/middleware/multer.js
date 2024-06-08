@@ -2,38 +2,28 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs')
 
-// Certifique-se de que o diretório de upload existe
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Configuração do armazenamento de arquivos
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDir);
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../uploads'));
     },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + '-' + file.originalname);
     }
 });
 
-// Configuração do filtro de tipos de arquivo
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-        cb(null, true);
-    } else {
-        cb(new Error('O arquivo enviado não é uma imagem.'), false);
-    }
-};
-
-// Configuração do Multer
-const upload = multer({
+const multerConfig = multer({
     storage: storage,
-    fileFilter: fileFilter,
-    limits: {
-        fileSize: 500 * 1024 * 1024 // Limite de 500MB para o tamanho do arquivo
+    fileFilter: (req, file, cb) => {
+        const filetypes = /jpeg|jpg|png|gif/;
+        const mimetype = filetypes.test(file.mimetype);
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        if (mimetype && extname) {
+            return cb(null, true);
+        } else {
+            cb('Error: Arquivos de imagem apenas!');
+        }
     }
 });
 
-module.exports = upload;
+module.exports = multerConfig;

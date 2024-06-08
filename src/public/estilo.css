@@ -4,6 +4,9 @@
   margin: 0;
   background-color: #0a000f;
 }
+h3{
+  margin: 0;
+}
 .bo2 {
   text-decoration: none;
   color: inherit; /* Inherit the color from the parent element */
@@ -20,7 +23,7 @@
   text-shadow: 0 0 10px rgb(89, 0, 255);
   box-shadow: 0 0 15px rgb(85, 0, 255), inset 0 0 10px rgb(85, 0, 255);
   transition: all 0.3s ease; /* Adiciona uma transição suave para o hover */
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 /* Estilo para os elementos bo1 no hover */

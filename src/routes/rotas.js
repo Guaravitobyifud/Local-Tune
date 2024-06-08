@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const multerConfig = require('../middleware/multer');
 const { tb_usuario } = require('../models/modeloUsuario');
+const { tb_img } = require('../models/modeloIMG');
 const uploadController = require('../controllers/ControllerIMG');
 const session = require('express-session');
 
@@ -19,7 +20,7 @@ router.get("/login", (req, res) => {
     if (req.session && req.session.dadosUsuario) {
         res.render('homeUsu', { 
             username: 'Bem-vindo ' + req.session.dadosUsuario.nm_usuario,
-            profilePicture: req.session.dadosUsuario.cd_usuario, // Passa o ID do usuário para gerar a URL da imagem
+            profilePicture: `/imagem/${req.session.dadosUsuario.cd_usuario}`, // Passa a URL da imagem
             logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
         });
     } else {
@@ -43,10 +44,12 @@ router.get("/homeUsu", userAuth, async (req, res) => {
     if (req.session && req.session.dadosUsuario) {
         try {
             const usuario = await tb_usuario.findOne({ where: { cd_usuario: req.session.dadosUsuario.cd_usuario } });
+            const img = await tb_img.findOne({ where: { cd_user: req.session.dadosUsuario.cd_usuario } });
+            
             if (usuario) {
                 res.render('homeUsu', { 
                     username: 'Bem-vindo ' + usuario.nm_usuario,
-                    profilePicture: usuario.cd_usuario, // Passa o ID do usuário para gerar a URL da imagem
+                    profilePicture: img ? `/imagem/${req.session.dadosUsuario.cd_usuario}` : null, // Passa a URL para a imagem
                     logout: '<h3><a class="bo" href="/logout">logout</a></h3>' 
                 });
             } else {
@@ -63,6 +66,7 @@ router.get("/homeUsu", userAuth, async (req, res) => {
 
 router.post("/posts", multer(multerConfig).single('file'), async (req, res) => {
     console.log(req.file);
+    // O trecho comentado abaixo foi removido para evitar confusões, já que não é necessário para este exemplo.
     // const imgs = req.files.map(file => ({ img: file.path }));
 });
 
@@ -94,13 +98,9 @@ router.post("/uploadFotoPerfil", multer(multerConfig).single('file'), async (req
     try {
         console.log("Dados da sessão no início do upload:", req.session.dadosUsuario);
 
-        await uploadController.uploadFotoPerfil(req, res);
+        await uploadController.alterarFotoPerfil(req, res);
 
-        // Atualiza a sessão com a nova imagem do perfil
-        req.session.dadosUsuario.nm_imagem = req.file.filename;
         console.log("Dados da sessão após upload:", req.session.dadosUsuario);
-
-        res.redirect('/homeUsu');
     } catch (erro) {
         console.error("Erro ao tentar fazer upload da foto de Perfil:", erro);
         res.send(`Erro ao tentar fazer upload da foto de Perfil: ${erro}`);
@@ -110,7 +110,4 @@ router.post("/uploadFotoPerfil", multer(multerConfig).single('file'), async (req
 // Rota para servir as imagens do banco de dados
 router.get("/imagem/:cd_usuario", uploadController.getFotoPerfil);
 
-// Adiciona a rota para o controlador de alterar foto de perfil
-
-
-module.exports = router;
+module.exports = router

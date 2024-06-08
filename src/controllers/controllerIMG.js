@@ -1,5 +1,6 @@
 const { tb_img } = require('../models/modeloIMG.js');
-const { tb_usuario } = require('../models/modeloUsuario.js');
+const path = require('path');
+const fs = require('fs');
 
 module.exports = {
     uploadFotoPerfil: async (req, res) => {
@@ -14,50 +15,43 @@ module.exports = {
 
             console.log(MENSAGENS.FILE_FOUND, req.file);
 
-            const fotoUsuarioArmazenada = req.file.buffer;
-
-            const cd_usuario = req.session.dadosUsuario.cd_usuario;
+            const nm_imagem = req.file.filename;
+            const uploadDir = path.join(__dirname, '../uploads');
+            const fotoUsuarioArmazenada = fs.readFileSync(path.join(uploadDir, nm_imagem));
 
             // Insere a imagem no modelo tb_img
-            await tb_img.create({
+            const imagemInserida = await tb_img.create({
                 img: fotoUsuarioArmazenada,
-                nome: req.file.originalname,
+                nome: nm_imagem,
                 tipo: req.file.mimetype,
-                cd_user: cd_usuario
+                cd_user: req.session.dadosUsuario.cd_usuario // Usa os dados da sessão para associar a imagem ao usuário
             });
-
-            // Atualiza o campo de imagem do usuário no modelo tb_usuario
-            const dadosAuthUser = await tb_usuario.findOne({ where: { cd_usuario } });
-            dadosAuthUser.nm_imagem = req.file.originalname; // ou qualquer identificador único
-            await dadosAuthUser.save();
 
             // Atualiza a sessão com a nova imagem do perfil
-            req.session.dadosUsuario.nm_imagem = req.file.originalname;
+            req.session.dadosUsuario.nm_imagem = nm_imagem;
 
-            return res.json({
-                status_upload: MENSAGENS.UPLOAD_SUCCEEDED,
-                nm_imagem: req.file.originalname
-            });
+            return res.redirect('/homeUsu');
         } catch (erro) {
             console.log(erro);
             return res.send(`Erro ao tentar fazer upload da foto de Perfil: ${erro}`);
         }
     },
 
-    getFotoPerfil: async (req, res) => {
+     getFotoPerfil: async (req, res) => {
         try {
-            const cd_usuario = req.params.cd_usuario;
-            const imgRecord = await tb_img.findOne({ where: { cd_user: cd_usuario } });
+            const img = await tb_img.findOne({ 
+                where: { cd_user: req.session.dadosUsuario.cd_usuario }
+            });
 
-            if (!imgRecord) {
-                return res.status(404).send('Imagem não encontrada');
+            if (img) {
+                res.contentType(img.tipo);
+                res.send(img.img);
+            } else {
+                res.status(404).send('Imagem não encontrada');
             }
-
-            res.contentType(imgRecord.tipo);
-            return res.send(imgRecord.img);
-        } catch (erro) {
-            console.log(erro);
-            return res.status(500).send(`Erro ao tentar buscar a imagem: ${erro}`);
+        } catch (error) {
+            console.error('Erro ao buscar imagem:', error);
+            res.status(500).send('Erro ao buscar imagem');
         }
     },
 
@@ -67,28 +61,29 @@ module.exports = {
             FILE_FOUND: 'Arquivo encontrado no corpo da Requisição:',
             UPLOAD_SUCCEEDED: 'Alteração de imagem realizada com sucesso.'
         };
-    
+
         try {
             if (!req.file) return res.send(MENSAGENS.NO_FILE_FOUND);
-    
+
             console.log(MENSAGENS.FILE_FOUND, req.file);
-    
-            const fotoUsuarioArmazenada = req.file.buffer;
-    
+
+            const nm_imagem = req.file.filename;
+            const uploadDir = path.join(__dirname, '../uploads');
+            const fotoUsuarioArmazenada = fs.readFileSync(path.join(uploadDir, nm_imagem));
             const cd_usuario = req.session.dadosUsuario.cd_usuario;
-    
+
+            // Verifica se já existe uma imagem associada ao usuário
             const imgRecord = await tb_img.findOne({ where: { cd_user: cd_usuario } });
-    
-            // Se houver uma imagem anterior, atualiza-a; caso contrário, insere uma nova
+
             if (imgRecord) {
-                // Atualiza a imagem existente no modelo tb_img
+                // Atualiza a imagem existente
                 await imgRecord.update({
                     img: fotoUsuarioArmazenada,
                     nome: req.file.originalname,
                     tipo: req.file.mimetype
                 });
             } else {
-                // Insere a imagem no modelo tb_img
+                // Cria uma nova imagem
                 await tb_img.create({
                     img: fotoUsuarioArmazenada,
                     nome: req.file.originalname,
@@ -96,19 +91,16 @@ module.exports = {
                     cd_user: cd_usuario
                 });
             }
-            
-            // Atualiza o campo de imagem do usuário no modelo tb_usuario
-            const dadosAuthUser = await tb_usuario.findOne({ where: { cd_usuario } });
-            dadosAuthUser.nm_imagem = req.file.originalname; // ou qualquer identificador único
-            await dadosAuthUser.save();
-            
+
             // Atualiza a sessão com a nova imagem do perfil
             req.session.dadosUsuario.nm_imagem = req.file.originalname;
-            
-            return res.render('/homeUsu'); // Redireciona o usuário para a página homeUsu
+
+            return res.redirect('/homeUsu');
         } catch (erro) {
             console.log(erro);
-            return res.send(`Erro ao tentar fazer upload da foto de Perfil: ${erro}`);
+            if (!res.headersSent) {
+                return res.send(`Erro ao tentar fazer upload da foto de Perfil: ${erro}`);
+            }
         }
     }
-}
+};

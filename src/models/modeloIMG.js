@@ -22,7 +22,8 @@ const tb_img = connSequelize.define('tb_img', {
         allowNull: false
     },
     cd_user: {
-        type: DataTypes.STRING(11)
+        type: DataTypes.STRING(11),
+        unique: true
     },
 }, _padraoTableBDExistence('tb_img'));
 
