@@ -91,7 +91,7 @@ module.exports = {
                     cd_user: cd_usuario
                 });
             }
-
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
             // Atualiza a sessão com a nova imagem do perfil
             req.session.dadosUsuario.nm_imagem = req.file.originalname;
 
