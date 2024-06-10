@@ -21,12 +21,12 @@ nm_endereco VARCHAR(200),
 CONSTRAINT pk_endereco PRIMARY KEY (cd_endereco)
 );
 
-CREATE TABLE tb_img_temp (
+CREATE TABLE tb_img (
      cd_img INT NOT NULL AUTO_INCREMENT,
      img LONGBLOB,  -- Alterado para LONGBLOB para suportar tamanho maior
      nome VARCHAR(255) NOT NULL,
      tipo VARCHAR(255) NOT NULL,
-     cd_user VARCHAR(11),
+     cd_user VARCHAR(11) unique,
      PRIMARY KEY (cd_img)
 );
 
