@@ -1,6 +1,6 @@
+const fs = require('fs')
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -26,4 +26,22 @@ const multerConfig = multer({
     }
 });
 
+
+const multerConfig2 = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        // Permitir tanto imagens quanto vídeos
+        const filetypes = /jpeg|jpg|png|gif|mp4|mov|avi|wmv/;
+        const mimetype = filetypes.test(file.mimetype);
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+        if (mimetype && extname) {
+            return cb(null, true);
+        } else {
+            cb('Error: Arquivos de imagem ou vídeo apenas!');
+        }
+    }
+});
+
 module.exports = multerConfig;
+
+module.exports = multerConfig2;

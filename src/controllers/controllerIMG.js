@@ -19,15 +19,13 @@ module.exports = {
             const uploadDir = path.join(__dirname, '../uploads');
             const fotoUsuarioArmazenada = fs.readFileSync(path.join(uploadDir, nm_imagem));
 
-            // Insere a imagem no modelo tb_img
             const imagemInserida = await tb_img.create({
                 img: fotoUsuarioArmazenada,
                 nome: nm_imagem,
                 tipo: req.file.mimetype,
-                cd_user: req.session.dadosUsuario.cd_usuario // Usa os dados da sessão para associar a imagem ao usuário
+                cd_user: req.session.dadosUsuario.cd_usuario
             });
 
-            // Atualiza a sessão com a nova imagem do perfil
             req.session.dadosUsuario.nm_imagem = nm_imagem;
 
             return res.redirect('/homeUsu');
@@ -37,9 +35,9 @@ module.exports = {
         }
     },
 
-     getFotoPerfil: async (req, res) => {
+    getFotoPerfil: async (req, res) => {
         try {
-            const img = await tb_img.findOne({ 
+            const img = await tb_img.findOne({
                 where: { cd_user: req.session.dadosUsuario.cd_usuario }
             });
 
@@ -72,28 +70,24 @@ module.exports = {
             const fotoUsuarioArmazenada = fs.readFileSync(path.join(uploadDir, nm_imagem));
             const cd_usuario = req.session.dadosUsuario.cd_usuario;
 
-            // Verifica se já existe uma imagem associada ao usuário
             const imgRecord = await tb_img.findOne({ where: { cd_user: cd_usuario } });
 
             if (imgRecord) {
-                // Atualiza a imagem existente
                 await imgRecord.update({
                     img: fotoUsuarioArmazenada,
-                    nome: req.file.originalname,
+                    nome: nm_imagem,
                     tipo: req.file.mimetype
                 });
             } else {
-                // Cria uma nova imagem
                 await tb_img.create({
                     img: fotoUsuarioArmazenada,
-                    nome: req.file.originalname,
+                    nome: nm_imagem,
                     tipo: req.file.mimetype,
                     cd_user: cd_usuario
                 });
             }
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            // Atualiza a sessão com a nova imagem do perfil
-            req.session.dadosUsuario.nm_imagem = req.file.originalname;
+
+            req.session.dadosUsuario.nm_imagem = nm_imagem;
 
             return res.redirect('/homeUsu');
         } catch (erro) {

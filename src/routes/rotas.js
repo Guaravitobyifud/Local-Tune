@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const multerConfig = require('../middleware/multer');
+const multerConfig2 = require('../middleware/multer');
 const { tb_usuario } = require('../models/modeloUsuario');
 const { tb_img } = require('../models/modeloIMG');
 const uploadController = require('../controllers/ControllerIMG');
 const session = require('express-session');
+const PubliController = require('../controllers/controllerPost.js');
 
 // Middleware para verificar a autenticação do usuário
 function userAuth(req, res, next) {
@@ -98,6 +100,18 @@ router.post("/uploadFotoPerfil", multer(multerConfig).single('file'), async (req
     try {
         console.log("Dados da sessão no início do upload:", req.session.dadosUsuario);
 
+        await uploadController.uploadFotoPerfil(req, res);
+
+        console.log("Dados da sessão após upload:", req.session.dadosUsuario);
+    } catch (erro) {
+        console.error("Erro ao tentar fazer upload da foto de Perfil:", erro);
+        res.send(`Erro ao tentar fazer upload da foto de Perfil: ${erro}`);
+    }
+});
+router.post("/alteraFotoPerfil", multer(multerConfig).single('file'), async (req, res, next) => {
+    try {
+        console.log("Dados da sessão no início do upload:", req.session.dadosUsuario);
+
         await uploadController.alterarFotoPerfil(req, res);
 
         console.log("Dados da sessão após upload:", req.session.dadosUsuario);
@@ -106,6 +120,9 @@ router.post("/uploadFotoPerfil", multer(multerConfig).single('file'), async (req
         res.send(`Erro ao tentar fazer upload da foto de Perfil: ${erro}`);
     }
 });
+
+router.post('/uploadArquivos', (multerConfig2).array('files', 5), PubliController.uploadArquivos);
+
 
 // Rota para servir as imagens do banco de dados
 router.get("/imagem/:cd_usuario", uploadController.getFotoPerfil);

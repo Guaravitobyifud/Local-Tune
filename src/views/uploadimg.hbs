@@ -6,10 +6,10 @@
     <title>Upload de Foto de Perfil</title>
 </head>
 <body>
-    <h1>Upload de Foto de Perfil</h1>
-    <form action="/auth/uploadimg" method="POST" enctype="multipart/form-data">
-        <input type="file" name="imagem" accept="image/*" required>
-        <button type="submit">Enviar</button>
-    </form>
+    <form action="/uploadArquivos" method="POST" enctype="multipart/form-data">
+    <input type="file" name="files" accept="image/*,video/*" multiple required>
+    <button type="submit">Enviar</button>
+</form>
+    
 </body>
 </html>
