@@ -1,6 +1,4 @@
-* {
-    color: #fff;
-}
+
 
 body {
     display: flex;
@@ -69,4 +67,87 @@ body {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.publicacao_img {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 5px;
+}
+
+.modal-body img,
+.modal-body video {
+    max-height: 500px;
+    margin: auto;
+}
+
+#publicacoes-container {
+    padding: 20px;
+}
+
+#publicacoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.publicacao {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: calc(33.333% - 40px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.publicacao_content {
+    text-align: center;
+}
+
+.publicacao_img, .publicacao_video {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.dados {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Estilização do modal */
+.modal-header {
+    background: #007bff;
+    color: #fff;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.carousel-item {
+    text-align: center;
+}
+
+.carousel-item img, .carousel-item video {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .publicacao {
+        width: calc(50% - 40px);
+    }
+}
+
+@media (max-width: 768px) {
+    .publicacao {
+        width: calc(100% - 40px);
+    }
 }

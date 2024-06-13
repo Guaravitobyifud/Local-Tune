@@ -8,10 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    {{!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --}}
+
     <title>Home Usuário</title>
-    <style>
-        
-    </style>
 </head>
 <body>
     <div class="container">
@@ -21,7 +20,7 @@
             </div>
             <h1>{{username}}!</h1>
             <h3>Alterar Foto de Perfil</h3>
-            <form action="/alteraFotoPerfil" method="POST" enctype="multipart/form-data">
+            <form action="/auth/alteraFotoPerfil" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file" accept="image/*" required>
                 <button type="submit">Alterar</button>
             </form>
@@ -31,11 +30,10 @@
             </div>
             <h1>{{username}}!</h1>
             <h3>Upload de Foto de Perfil</h3>
-            <form action="/uploadFotoPerfil" method="POST" enctype="multipart/form-data">
+            <form action="/auth/uploadFotoPerfil" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file" accept="image/*" required>
                 <button type="submit">Enviar</button>
             </form>
-            
         {{/if}}
         {{{logout}}}
 
@@ -44,14 +42,83 @@
         <div id="uploadModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <form action="/uploadArquivos" method="POST" enctype="multipart/form-data">
+                <form action="/auth/uploadArquivos" method="POST" enctype="multipart/form-data">
                     <input type="file" name="files" accept="image/*,video/*" multiple required>
                     <button type="submit">Enviar</button>
                 </form>
                 {{message}}
             </div>
         </div>
+
+       
+     <div id="publicacoes-container">
+            <h2>Publicações</h2>
+            <div id="publicacoes">
+                {{#each publicacoes}}
+                    <div class="publicacao">
+                        <div class="publicacao_content">
+                            {{#each tb_publicacao_arquivos}}
+                                {{#if (eq this.tipo 'image')}}
+                                    <img class="publicacao_img" src="/publicacoes/{{dataUri}}" alt="Imagem da Publicação" data-toggle="modal" data-target="#modalCarousel{{../cd_publicacao}}">
+                                {{/if}}
+                                {{#if (eq this.tipo 'video')}}
+                                    <video class="publicacao_video" controls>
+                                        <source src="{{dataUri}}" type="{{this.tipo_arquivo}}">
+                                        Seu navegador não suporta o elemento de vídeo.
+                                    </video>
+                                {{/if}}
+                            {{/each}}
+                            <p class="dados">{{ds_publicacao}}</p>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalCarousel{{cd_publicacao}}" tabindex="-1" aria-labelledby="modalLabel{{cd_publicacao}}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalLabel{{cd_publicacao}}">Publicação</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="carousel{{cd_publicacao}}" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                {{#each tb_publicacao_arquivos}}
+                                                    <div class="carousel-item {{#if @first}}active{{/if}}">
+                                                        {{#if (eq this.tipo 'image')}}
+                                                            <img src="{{this.dataUri}}" class="d-block w-100" alt="Imagem da Publicação">
+                                                        {{/if}}
+                                                        {{#if (eq this.tipo 'video')}}
+                                                            <video class="d-block w-100" controls>
+                                                                <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
+                                                                Seu navegador não suporta o elemento de vídeo.
+                                                            </video>
+                                                        {{/if}}
+                                                    </div>
+                                                {{/each}}
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carousel{{cd_publicacao}}" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carousel{{cd_publicacao}}" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
         var modal = document.getElementById("uploadModal");

@@ -17,6 +17,7 @@ body {
     border-radius: 10px; /* Bordas arredondadas */
     color: #fff;
     box-shadow: 0 0 15px rgb(85, 0, 255);
+    background-color: #220042;
 }
 
 form {
@@ -34,6 +35,7 @@ input, button {
     padding: 10px;
     width: 100%; /* Faz com que os inputs ocupem toda a largura disponível */
     max-width: 300px; /* Limita a largura máxima */
+    background-color: #220042;
 }
 
 

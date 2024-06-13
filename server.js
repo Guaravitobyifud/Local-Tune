@@ -1,60 +1,44 @@
 const express = require('express');
-const app = express();
 const path = require('path');
-const hbs = require('hbs');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const { connSequelize, BD } = require('./config/coneccao');
-// const {query} = require('./src/controllers/controlerQuery')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
-const imageRouter = require('./src/routes/imageRouter'); // Ajuste o caminho conforme necessário
-
-
-// const {Pesquisa} = require('./src/controllers/ControllerPesquisa')
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const imageRouter = require('./src/routes/imageRouter');
+const exphbs = require('express-handlebars');
+const authRouter = require('./src/routes/auth');
 
 // Middleware de análise de corpo para dados JSON
+const app = express();
 app.use(express.json());
-
-app.use(imageRouter);
-
-// Middleware de análise de corpo para dados codificados em URL
 app.use(express.urlencoded({ extended: true }));
-
-app.use(cookieParser(
-
-
-))
+app.use(cookieParser());
 app.use(session({
     secret: 'Fridinha_Fofinha',
     saveUninitialized: false,
     resave: false,
-
-})
-)
-// app.use(cookieParser())
-
-// app.use((req, res, next) => {
-//     console.log(req.cookies);
-//     next();
-//   });
+}));
 
 // Configuração de diretórios de visualização e mecanismo de visualização
-app.set('views', path.join(__dirname, './src/views'));
+const hbs = exphbs.create({
+    helpers: {
+        eq: (a, b) => a === b
+    },
+    layoutsDir: path.join(__dirname, './src/views'), // Caminho para o diretório de layouts
+    defaultLayout: false // Desabilitar o layout padrão
+});
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, './src/views'));
 
 // Servir arquivos estáticos
 const publicDirectory = path.join(__dirname, './src/public');
 app.use(express.static(publicDirectory));
 
-// Importar e usar suas rotas
-const rotas = require('./src/routes/rotas');
-const authRouter = require('./src/routes/auth');
-
-
-
 // Usar as rotas
-app.use('/', rotas);
+app.use('/', require('./src/routes/rotas'));
 app.use('/auth', authRouter);
+app.use(imageRouter);
 
 // Sincronizar o Sequelize com o banco de dados e iniciar o servidor
 connSequelize.sync()

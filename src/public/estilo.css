@@ -1,29 +1,53 @@
 /* Estilo para o cabeçalho */
-*{
+body{
   font-family: "Poppins", sans-serif;
   margin: 0;
-  background-color: #0a000f;
+  background-color: #747474;
 }
-h3{
+.bo3 {
   margin: 0;
 }
 .bo2 {
+  display: flex; /* Usar flexbox para alinhamento */
+  align-items: center; /* Alinhar verticalmente ao centro */
+  justify-content: center; /* Alinhar horizontalmente ao centro */
   text-decoration: none;
-  color: inherit; /* Inherit the color from the parent element */
+  color: inherit; /* Herdar a cor do elemento pai */
+  width: 100%;
+  height: 100%;
+  margin: 0; /* Garantir que não há margens */
+  padding: 10px;
 }
 
 /* Estilo padrão para os elementos bo1 */
 .bo1 {
+  display: flex; /* Usar flexbox para alinhamento */
+  align-items: center; /* Alinhar verticalmente ao centro */
+  justify-content: center; /* Alinhar horizontalmente ao centro */
+  background-color: #252525;
   margin-right: 15px;
   color: #ffffff;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 10px;
-  padding: 10px;
+  /* padding: 15px;  */
   text-align: center;
-  text-shadow: 0 0 10px rgb(89, 0, 255);
-  box-shadow: 0 0 15px rgb(85, 0, 255), inset 0 0 10px rgb(85, 0, 255);
   transition: all 0.3s ease; /* Adiciona uma transição suave para o hover */
-  /* cursor: pointer; */
+  overflow: hidden; /* Garante que o conteúdo não ultrapasse o contêiner */
+}
+
+.bo1a {
+  display: flex; /* Usar flexbox para alinhamento */
+  align-items: center; /* Alinhar verticalmente ao centro */
+  justify-content: center; /* Alinhar horizontalmente ao centro */
+  background-color: #fffb00;
+  margin-right: 15px;
+  color: #000000;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  /* padding: 15px;  */
+  text-align: center;
+  transition: all 0.3s ease; /* Adiciona uma transição suave para o hover */
+  overflow: hidden; /* Garante que o conteúdo não ultrapasse o contêiner */
 }
 
 /* Estilo para os elementos bo1 no hover */
@@ -34,8 +58,11 @@ h3{
   box-shadow: 0 0 20px rgb(255, 210, 86), inset 0 0 10px rgb(255, 210, 86);
 }
 
+/* Remover margens dos h3 dentro dos links */
+
+
 header {
-  background-color: #0a000f;
+  background-color: #252525;
   color: #fff;
   padding: 20px;
   display: flex;
@@ -45,37 +72,36 @@ header {
 
 .text_left {
   display: flex;
+  background-color: #252525;
 }
 
-.text_left h3 {
-  margin-right: 20px;
+.buscar{
+  display: flex;
+  flex-direction: row;
 }
 
 .buscar input {
-  color: #fff;
+  color: #000;
   padding: 8px;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 10px;
   width: 200px;
   margin-right: 20px;
-  text-shadow: 0 0 15px rgb(85, 0, 255);
-  box-shadow: 0 0 15px rgb(85, 0, 255);
   margin: 5px;
+  background-color: #252525;
 }
 
 .buscar button {
   padding: 8px 20px;
   border: #ffffff solid 2px;
-  text-shadow: 0 0 15px rgb(255, 208, 0);
-  box-shadow: 0 0 15px rgb(255, 210, 86), inset 0 0 5px rgba(255, 210, 86, 0.486);
   color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
+  background-color: #252525;
 }
 .buscar label{
   color: #fff;
-  text-shadow: 0 0 15px rgb(85, 0, 255);
 }
 
 .buscar button:hover {

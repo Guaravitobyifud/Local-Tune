@@ -1,6 +1,7 @@
 const { connSequelize } = require('../../config/coneccao');
 const { DataTypes } = require('sequelize');
 const { _padraoTableBDExistence } = require('../../config/confdobanco');
+const { tb_publicacao } = require('./modeloPubli.js');
 
 const tb_publicacao_arquivos = connSequelize.define('tb_publicacao_arquivos', {
     cd_arquivo: {
@@ -26,6 +27,9 @@ const tb_publicacao_arquivos = connSequelize.define('tb_publicacao_arquivos', {
         allowNull: false
     }
 }, _padraoTableBDExistence('tb_publicacao_arquivos'));
+
+// Defina a associação corretamente, usando o mesmo alias
+tb_publicacao.hasMany(tb_publicacao_arquivos, { foreignKey: 'cd_publicacao', as: 'tb_publicacao_arquivos' });
 
 module.exports = {
     tb_publicacao_arquivos
