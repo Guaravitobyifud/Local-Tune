@@ -1,81 +1,121 @@
-/* Estilo para o cabeçalho */
-body{
+body {
   font-family: "Poppins", sans-serif;
   margin: 0;
-  background-color: #747474;
+  background-color: #424242;
+  background-size: 50px 50px;
+  background-image: 
+      linear-gradient(to right, grey 1px, transparent 1px),
+      linear-gradient(to bottom, grey 1px, transparent 1px);
+  display: flex;
+  flex-direction: column;
 }
-.bo3 {
+
+.menu-button {
+  font-size: 40px;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  border: none;
+  margin-bottom: 0;
+  transition: 0.3s ease;
+}
+.menu-button:hover {
+  color: rgb(114, 0, 190);
+  text-shadow: 0 0 15px rgb(132, 0, 255);
+}
+
+.open-menu-button {
+  font-size: 35px;
+  cursor: pointer;
+  color: white;
+  background-color: transparent;
+  border: none;
+  margin-left:51px;
+  margin-bottom: 0;
+  
+  transition: 0.3s ease;
+}
+.open-menu-button:hover {
+  color: rgb(114, 0, 190);
+  text-shadow: 0 0 50px rgba(132, 0, 255, 0.8);
+}
+
+.lateral-menu {
+  width: 200px;
+  height: 100vh;
+  background-color: #252525;
+  position: fixed;
+  top: 0;
+  left: -250px; /* Inicia o menu fora da tela à esquerda */
+  transition: left 0.5s ease;
+  display: none; /* Inicia oculto */
+  flex-direction: column;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.lateral-menu.show {
+  transition: left 0.5s ease;
+  left: 0; /* Mostra o menu deslizando para dentro */
+  display: flex; /* Mostra o menu */
+}
+
+.menu-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  align-items: end;
+  margin-top: 0;
+}
+
+.menu-header h2 {
+  color: #fff;
   margin: 0;
 }
-.bo2 {
-  display: flex; /* Usar flexbox para alinhamento */
-  align-items: center; /* Alinhar verticalmente ao centro */
-  justify-content: center; /* Alinhar horizontalmente ao centro */
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.menu-item {
+  margin-bottom: 20px;
+
+}
+
+.menu-item a {
   text-decoration: none;
-  color: inherit; /* Herdar a cor do elemento pai */
-  width: 100%;
-  height: 100%;
-  margin: 0; /* Garantir que não há margens */
-  padding: 10px;
-}
-
-/* Estilo padrão para os elementos bo1 */
-.bo1 {
-  display: flex; /* Usar flexbox para alinhamento */
-  align-items: center; /* Alinhar verticalmente ao centro */
-  justify-content: center; /* Alinhar horizontalmente ao centro */
-  background-color: #252525;
-  margin-right: 15px;
   color: #ffffff;
-  border: 3px solid rgb(255, 255, 255);
-  border-radius: 10px;
-  /* padding: 15px;  */
-  text-align: center;
-  transition: all 0.3s ease; /* Adiciona uma transição suave para o hover */
-  overflow: hidden; /* Garante que o conteúdo não ultrapasse o contêiner */
+  font-size: 18px;
+  transition: color 0.3s;
+  font-size: 25px;
 }
 
-.bo1a {
-  display: flex; /* Usar flexbox para alinhamento */
-  align-items: center; /* Alinhar verticalmente ao centro */
-  justify-content: center; /* Alinhar horizontalmente ao centro */
-  background-color: #fffb00;
-  margin-right: 15px;
-  color: #000000;
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 10px;
-  /* padding: 15px;  */
-  text-align: center;
-  transition: all 0.3s ease; /* Adiciona uma transição suave para o hover */
-  overflow: hidden; /* Garante que o conteúdo não ultrapasse o contêiner */
+.menu-item a:hover {
+  color: #b668ff;
+  text-shadow: 0 0 15px rgb(132, 0, 255);
+  z-index: 10000;
+  left: 100;
 }
-
-/* Estilo para os elementos bo1 no hover */
-.bo1:hover {
-  color: #ffffff;
-  border: 3px solid rgb(255, 255, 255);
-  text-shadow: 0 0 15px rgb(255, 187, 0);
-  box-shadow: 0 0 20px rgb(255, 210, 86), inset 0 0 10px rgb(255, 210, 86);
-}
-
-/* Remover margens dos h3 dentro dos links */
-
 
 header {
-  background-color: #252525;
   color: #fff;
-  padding: 20px;
+  padding: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .text_left {
   display: flex;
-  background-color: #252525;
+}
+.logo{
+  align-self: center;
 }
 
-.buscar{
+.buscar {
   display: flex;
   flex-direction: row;
 }
@@ -100,18 +140,60 @@ header {
   transition: all 0.3s ease;
   background-color: #252525;
 }
-.buscar label{
+
+.buscar label {
   color: #fff;
 }
 
 .buscar button:hover {
-  
   border: #ffffff solid 2px;
   text-shadow: 0 0 20px rgb(255, 208, 0);
   box-shadow: 0 0 20px rgb(255, 210, 86), inset 0 0 10px rgba(255, 210, 86, 0.726);
 }
 
-/* Estilo para a mensagem */
+.bo1, .bo1a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  color: #ffffff;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.bo1 {
+  background-color: #252525;
+}
+
+.bo1a {
+  background-color: #fffb00;
+  color: #000000;
+  transition: all 0.3s ease;
+}
+
+.bo1:hover {
+  text-shadow: 0 0 15px rgb(255, 187, 0);
+  box-shadow: 0 0 20px rgb(255, 210, 86), inset 0 0 10px rgb(255, 210, 86);
+}
+
+.bo2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+.bo3 {
+  margin: 0;
+}
+
 .message {
   text-align: center;
   padding: 20px;
