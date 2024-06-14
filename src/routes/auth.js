@@ -7,7 +7,7 @@ const PubliController = require('../controllers/controllerPost');
 const authlogin = require('../controllers/Controllerlogin');
 const authcadastro = require('../controllers/Controllercadastro');
 const pesquisa = require('../controllers/ControllerPesquisa');
-const authUpload = require('../controllers/controllerIMG');
+const uploadController = require('../controllers/controllerIMG');
 
 // Rota para login
 router.post("/login", authlogin.login);
@@ -25,7 +25,7 @@ router.post("/cadastrostbl", authcadastro.cadastroStbl);
 router.post("/Search", pesquisa.Pesquisa);
 
 // Rota para upload de imagem
-router.post("/uploadimg", multer(multerConfig).single('imagem'), authUpload.uploadFotoPerfil);
+router.post("/uploadimg", multer(multerConfig).single('imagem'), uploadController.uploadFotoPerfil);
 
 // Rota para alterar a foto do perfil
 router.post("/alterarFotoPerfil", multer(multerConfig).single('imagem'), async (req, res, next) => {

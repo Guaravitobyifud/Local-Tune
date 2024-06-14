@@ -9,8 +9,8 @@
 <body>
     <section class="lateral-menu" id="lateralMenu" {{#if menuHidden}}hidden{{/if}}>
         <div class="menu-header">
-            <div id="menuButton" class="menu-button">x</div>
-            <br>
+            {{!-- <div id="menuButton" class="menu-button">x</div> --}}
+            {{!-- <br> --}}
             <h2 class="menu-titulo">LocalTune</h2>
         </div>
         <div class="menu-content">
@@ -22,7 +22,7 @@
     </section>
     <header>
         <div class="text_left">
-            <div id="openMenuButton" class="open-menu-button">☰</div>
+            {{!-- <div id="openMenuButton" class="open-menu-button">☰</div> --}}
             
         </div>
         <img src="/images/baixados.svg" class="logo">
@@ -31,23 +31,32 @@
             <div class="bo1a"><a class="bo2" href="/cadastro"><h3 class="bo3">Cadastro</h3></a></div>
         </div>
     </header>
+<section>
+    <div class="publicacao">
+        <div class="user-publicacao"></div>
+        <div class="publicacao-conteu">
+            <img src="/images/dflt.jpeg" alt="">
+            <p class="publicacao-descricao">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni rem repudiandae officiis minus, perferendis et non temporibus inventore odit atque eum recusandae! Culpa veniam voluptatibus praesentium impedit aliquam exercitationem deleniti.</p>
+        </div>
+    </div>
+</section>
     {{!-- <div class="message">
         {{message}}
     </div> --}}
     <script>
-        document.getElementById("openMenuButton").addEventListener("click", function() {
-            var menu = document.getElementById("lateralMenu");
-            menu.removeAttribute('hidden');
-            setTimeout(() => menu.classList.add('show'), 10); // Delay to allow transition
-        });
+        //document.getElementById("openMenuButton").addEventListener("click", function() {
+          //  var menu = document.getElementById("lateralMenu");
+            //menu.removeAttribute('hidden');
+  //          setTimeout(() => menu.classList.add('show'), 10); // Delay to allow transition
+    //    });
 
-        document.getElementById("menuButton").addEventListener("click", function() {
-            var menu = document.getElementById("lateralMenu");
-            menu.classList.remove('show');
-            menu.addEventListener('transitionend', function() {
-                menu.setAttribute('hidden', '');
-            }, { once: true });
-        });
+      //  document.getElementById("menuButton").addEventListener("click", function() {
+        //    var menu = document.getElementById("lateralMenu");
+          //  menu.classList.remove('show');
+            //menu.addEventListener('transitionend', function() {
+              //  menu.setAttribute('hidden', '');
+          //  }, { once: true });
+        //});
     </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 body {
   font-family: "Poppins", sans-serif;
   margin: 0;
-  background-color: #424242;
-  background-size: 50px 50px;
+  background-color: #2B282B;
+  background-size: 25px 25px;
   background-image: 
       linear-gradient(to right, grey 1px, transparent 1px),
       linear-gradient(to bottom, grey 1px, transparent 1px);
@@ -11,7 +11,7 @@ body {
 }
 
 .menu-button {
-  font-size: 40px;
+  font-size: 60px;
   cursor: pointer;
   color: rgb(255, 255, 255);
   background-color: transparent;
@@ -25,7 +25,7 @@ body {
 }
 
 .open-menu-button {
-  font-size: 35px;
+  font-size: 60px;
   cursor: pointer;
   color: white;
   background-color: transparent;
@@ -46,12 +46,11 @@ body {
   background-color: #252525;
   position: fixed;
   top: 0;
-  left: -250px; /* Inicia o menu fora da tela à esquerda */
+  left: 0; /* Inicia o menu fora da tela à esquerda */
   transition: left 0.5s ease;
-  display: none; /* Inicia oculto */
+  display: flex; /* Inicia oculto */
   flex-direction: column;
   padding: 20px;
-  z-index: 1000;
 }
 
 .lateral-menu.show {
@@ -63,8 +62,8 @@ body {
 .menu-header {
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
-  align-items: end;
+  margin-bottom: 100px;
+  align-items: center;
   margin-top: 0;
 }
 
@@ -97,15 +96,19 @@ body {
   text-shadow: 0 0 15px rgb(132, 0, 255);
   z-index: 10000;
   left: 100;
+  font-size: 5em;
 }
 
 header {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   color: #fff;
   padding: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  background-color: #252525;
+  height: 100px;
 }
 
 .text_left {
@@ -113,6 +116,7 @@ header {
 }
 .logo{
   align-self: center;
+  width: 300px;
 }
 
 .buscar {
@@ -168,14 +172,14 @@ header {
 }
 
 .bo1a {
-  background-color: #fffb00;
+  background-color: rgb(255, 211, 77);
   color: #000000;
   transition: all 0.3s ease;
 }
 
 .bo1:hover {
-  text-shadow: 0 0 15px rgb(255, 187, 0);
-  box-shadow: 0 0 20px rgb(255, 210, 86), inset 0 0 10px rgb(255, 210, 86);
+  text-shadow: 0 0 15px rgb(255, 211, 77);
+  box-shadow: 0 0 20px rgb(255, 211, 77), inset 0 0 10px rgb(255, 211, 77);
 }
 
 .bo2 {
@@ -192,6 +196,7 @@ header {
 
 .bo3 {
   margin: 0;
+  font-size: 2em;
 }
 
 .message {
