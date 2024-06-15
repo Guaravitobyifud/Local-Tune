@@ -30,6 +30,9 @@ CREATE TABLE tb_img (
      PRIMARY KEY (cd_img)
 );
 
+
+
+
 CREATE TABLE tb_contato (
 cd_contato INT NOT NULL AUTO_INCREMENT,
 nr_Celular VARCHAR(15),
@@ -70,6 +73,28 @@ CONSTRAINT fk_endereco FOREIGN KEY (cd_endereco) REFERENCES tb_endereco(cd_ender
 CONSTRAINT fk_contato FOREIGN KEY (cd_contato) REFERENCES tb_contato(cd_contato),
 CONSTRAINT fk_regsLegal FOREIGN KEY (cd_regsLegal) REFERENCES tb_regsLegal (cd_regsLegal),
 CONSTRAINT fk_tipoUsuario FOREIGN KEY (cd_tipoUsuario) REFERENCES tb_tipoUsuario (cd_tipoUsuario)
+);
+
+
+CREATE TABLE tb_publicacao (
+    cd_publicacao INT NOT NULL AUTO_INCREMENT,
+    cd_usuario INT NOT NULL,
+    ds_publicacao TEXT,
+    dt_publicacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ds_arquivos VARCHAR(255), -- Coluna para armazenar nomes dos arquivos como JSON
+    
+    PRIMARY KEY (cd_publicacao),
+    CONSTRAINT fk_cd_udusario FOREIGN KEY (cd_usuario) REFERENCES tb_usuario (cd_usuario)
+);
+
+CREATE TABLE tb_publicacao_arquivos (
+    cd_arquivo INT NOT NULL AUTO_INCREMENT,
+    cd_publicacao INT NOT NULL,
+    arquivos LONGBLOB,
+    tipo_arquivo VARCHAR(255),
+    
+    PRIMARY KEY (cd_arquivo),
+    FOREIGN KEY (cd_publicacao) REFERENCES tb_publicacao(cd_publicacao)
 );
 
 CREATE TABLE tb_seguindoSeguidor (
