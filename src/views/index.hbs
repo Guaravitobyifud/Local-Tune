@@ -31,15 +31,76 @@
             <div class="bo1a"><a class="bo2" href="/cadastro"><h3 class="bo3">Cadastro</h3></a></div>
         </div>
     </header>
-<section>
-    <div class="publicacao">
-        <div class="user-publicacao"></div>
-        <div class="publicacao-conteu">
-            <img src="/images/dflt.jpeg" alt="">
-            <p class="publicacao-descricao">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni rem repudiandae officiis minus, perferendis et non temporibus inventore odit atque eum recusandae! Culpa veniam voluptatibus praesentium impedit aliquam exercitationem deleniti.</p>
-        </div>
-    </div>
-</section>
+ <section class="conteudo">
+        <h1>Publicações Recentes</h1>
+        {{#each publicacoes}}
+            <div class="publicacao">
+                <div class="publi-ft-perfil">
+                    <img src="{{usuario.fotoPerfilUri}}" class="img-perfil-publi">
+                    <p>{{usuario.nm_usuario}}</p>
+                </div>
+                <div id="carrosselPublicacao{{@index}}" class="carousel">
+                    {{#each tb_publicacao_arquivos}}
+                        <div class="carousel-item {{#if @first}}active{{/if}}">
+                            {{#if (eq this.tipo 'image')}}
+                                <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
+                            {{/if}}
+                            {{#if (eq this.tipo 'video')}}
+                                <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
+                                    <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
+                                    Seu navegador não suporta o elemento de vídeo.
+                                </video>
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                </div>
+                <p>{{ds_publicacao}}</p>
+                <button class="back-button" onclick="window.history.back()">Voltar</button>
+            </div>
+        {{/each}}
+    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const prevButton = document.querySelector('.carousel-control-prev');
+            const nextButton = document.querySelector('.carousel-control-next');
+            const carouselInner = document.querySelector('.carousel-inner');
+            const items = document.querySelectorAll('.carousel-item');
+            let currentIndex = 0;
+
+            if (items.length <= 1) {
+                prevButton.classList.add('hidden');
+                nextButton.classList.add('hidden');
+            }
+
+            function updateCarousel() {
+                const offset = -currentIndex * 100;
+                carouselInner.style.transform = `translateX(${offset}%)`;
+            }
+
+            prevButton.addEventListener('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = items.length - 1;
+                }
+                updateCarousel();
+            });
+
+            nextButton.addEventListener('click', function() {
+                if (currentIndex < items.length - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                updateCarousel();
+            });
+
+            updateCarousel();
+        });
+    </script>
+</body>
+</html>
+
     {{!-- <div class="message">
         {{message}}
     </div> --}}
@@ -58,5 +119,4 @@
           //  }, { once: true });
         //});
     </script>
-</body>
-</html>
+

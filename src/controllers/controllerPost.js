@@ -45,27 +45,27 @@ module.exports = {
     },
     getPublicacoes: async (req, res) => {
         try {
+            const cd_usuario = req.session.dadosUsuario.cd_usuario;
+    
             const publicacoes = await tb_publicacao.findAll({
                 include: [{
                     model: tb_publicacao_arquivos,
-                    as: 'tb_publicacao_arquivos',
-                    where: {
-                        cd_usuario: req.params.cd_usuario
-                    }
+                    as: 'tb_publicacao_arquivos'
                 }],
-                where: { cd_usuario: req.params.cd_usuario }
+                where: { cd_usuario: cd_usuario }
             });
     
             const publicacoesComTipo = publicacoes.map(publi => {
                 const arquivosComTipo = publi.tb_publicacao_arquivos.map(arquivo => {
+                    const base64Data = Buffer.from(arquivo.arquivos).toString('base64');
+                    const dataUri = `data:${arquivo.tipo_arquivo};base64,${base64Data}`;
                     if (arquivo.tipo_arquivo.startsWith('image/')) {
-                        arquivo.tipo = 'image';
+                        return { ...arquivo.toJSON(), tipo: 'image', dataUri };
                     } else if (arquivo.tipo_arquivo.startsWith('video/')) {
-                        arquivo.tipo = 'video';
+                        return { ...arquivo.toJSON(), tipo: 'video', dataUri };
                     } else {
-                        arquivo.tipo = 'unknown';
+                        return { ...arquivo.toJSON(), tipo: 'unknown', dataUri };
                     }
-                    return arquivo;
                 });
     
                 return {
@@ -74,11 +74,50 @@ module.exports = {
                 };
             });
     
-            res.json(publicacoesComTipo); // Enviar uma resposta JSON
-    
+            res.render('homeUsu', { publicacoes: publicacoesComTipo });
         } catch (error) {
             console.error('Erro ao buscar publicações:', error);
-            res.status(500).send('Erro ao buscar publicações'); // Enviar uma resposta de erro
+            res.status(500).send('Erro ao buscar publicações');
+        }
+    },
+    getPublicacaoCompleta: async (req, res) => {
+        try {
+            const cd_publicacao = req.params.cd_publicacao;
+    
+            const publicacao = await tb_publicacao.findOne({
+                where: { cd_publicacao },
+                include: [{
+                    model: tb_publicacao_arquivos,
+                    as: 'tb_publicacao_arquivos'
+                }]
+            });
+    
+            if (!publicacao) {
+                return res.status(404).send('Publicação não encontrada');
+            }
+    
+            const arquivosComTipoEDataUri = publicacao.tb_publicacao_arquivos.map(arquivo => {
+                const base64Data = Buffer.from(arquivo.arquivos).toString('base64');
+                const dataUri = `data:${arquivo.tipo_arquivo};base64,${base64Data}`;
+    
+                if (arquivo.tipo_arquivo.startsWith('image/')) {
+                    return { ...arquivo.toJSON(), tipo: 'image', dataUri };
+                } else if (arquivo.tipo_arquivo.startsWith('video/')) {
+                    return { ...arquivo.toJSON(), tipo: 'video', dataUri };
+                } else {
+                    return { ...arquivo.toJSON(), tipo: 'unknown', dataUri };
+                }
+            });
+    
+            const publicacaoCompleta = {
+                ...publicacao.toJSON(),
+                tb_publicacao_arquivos: arquivosComTipoEDataUri
+            };
+    
+            res.render('publicacaoCompleta', { publicacao: publicacaoCompleta });
+        } catch (error) {
+            console.error('Erro ao buscar a publicação completa:', error);
+            res.status(500).send('Erro ao buscar a publicação completa');
         }
     }
 };

@@ -71,5 +71,5 @@ tb_regsLegal.hasMany(tb_usuario, {foreignKey: 'cd_regsLegal'});
 tb_usuario.belongsTo(tb_regsLegal, {foreignKey: 'cd_regsLegal'});
 
 module.exports = {
-    tb_usuario
+    tb_usuario,
 };

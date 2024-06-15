@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicação Completa</title>
+    {{!-- <!-- Adicione seus links de estilo e scripts aqui -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --}}
+    
+    <link rel="stylesheet" type="text/css" href="/publi.css">
+    <link rel="stylesheet" type="text/css" href="/estilo.css">
+</head>
+<body>
+    <div class="publicacao_completa">
+        <h2>Publicação</h2>
+        <button class="back-button" onclick="window.history.back()">Voltar</button>
+        <div id="carrosselPublicacao" class="carousel">
+            <button class="carousel-control-prev" role="button">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </button>
+            <div class="carousel-inner">
+                {{#each publicacao.tb_publicacao_arquivos}}
+                    <div class="carousel-item {{#if @first}}active{{/if}}">
+                        {{#if (eq this.tipo 'image')}}
+                            <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
+                        {{/if}}
+                        {{#if (eq this.tipo 'video')}}
+                            <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
+                                <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
+                                Seu navegador não suporta o elemento de vídeo.
+                            </video>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            </div>
+            <button class="carousel-control-next" role="button">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </button>
+        </div>
+        <p>{{publicacao.ds_publicacao}}</p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const prevButton = document.querySelector('.carousel-control-prev');
+            const nextButton = document.querySelector('.carousel-control-next');
+            const carouselInner = document.querySelector('.carousel-inner');
+            const items = document.querySelectorAll('.carousel-item');
+            let currentIndex = 0;
+
+            if (items.length <= 1) {
+                prevButton.classList.add('hidden');
+                nextButton.classList.add('hidden');
+            }
+
+            function updateCarousel() {
+                const offset = -currentIndex * 100;
+                carouselInner.style.transform = `translateX(${offset}%)`;
+            }
+
+            prevButton.addEventListener('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = items.length - 1;
+                }
+                updateCarousel();
+            });
+
+            nextButton.addEventListener('click', function() {
+                if (currentIndex < items.length - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0;
+                }
+                updateCarousel();
+            });
+
+            updateCarousel();
+        });
+    </script>
+</body>
+</html>
