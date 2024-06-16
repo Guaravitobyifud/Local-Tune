@@ -29,6 +29,9 @@ const tb_usuario = connSequelize.define('tb_usuario', {
     nm_usuario:{
         type:DataTypes.TEXT(30),
     } ,
+    nm_cidade:{
+        type:DataTypes.TEXT(60),
+    } ,
     cd_endereco: {
         type: DataTypes.INTEGER,
         allowNull: true,

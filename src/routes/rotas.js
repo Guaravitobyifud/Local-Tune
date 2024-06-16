@@ -10,6 +10,7 @@ const { tb_publicacao } = require('../models/modeloPubli');
 const { tb_publicacao_arquivos } = require('../models/modeloPubliArquivos');
 const { Model, Op, Sequelize } = require('sequelize')
 const { connSequelize } = require('../../config/coneccao')
+const { tb_curtida } = require('../models/modeloCurtida');
 
 
 // Middleware para verificar a autenticação do usuário
@@ -23,11 +24,7 @@ function userAuth(req, res, next) {
 
 router.get("/login", (req, res) => {
     if (req.session && req.session.dadosUsuario) {
-        res.render('homeUsu', {
-            username: 'Bem-vindo ' + req.session.dadosUsuario.nm_usuario,
-            profilePicture: `/imagem/${req.session.dadosUsuario.cd_usuario}`,
-            logout: '<h3><a class="bo" href="/logout">logout</a></h3>'
-        });
+        res.get('/homeUsu');
     } else {
         res.render('login');
     }
@@ -102,63 +99,110 @@ router.post("/posts", multer(multerConfig).single('file'), async (req, res) => {
 });
 
 
-router.get("/cadastroSTBL", (req, res) => res.render("cadastroSTBL"));
+router.get("/cadastroSTBL",  (req, res) => res.render("cadastroSTBL"));
 
-async function getFotoPerfilUri(cd_usuario) {
-    const img = await tb_img.findOne({ where: { cd_user: cd_usuario } });
-    if (img) {
-        const base64Data = Buffer.from(img.img).toString('base64');
-        return `data:${img.tipo};base64,${base64Data}`;
-    }
-    return null;
-}
-router.get("/", async (req, res) => {
+router.get("/feed_user", userAuth, async (req, res) =>{
     try {
-        const publicacoes = await tb_publicacao.findAll({
-            order: connSequelize.random(), // Use sequelize.random() para MySQL ou Sequelize.fn('RANDOM') para SQLite/Postgres
-            limit: 10,
-            include: [
-                {
-                    model: tb_usuario,
-                    as: 'usuario',
-                    attributes: ['nm_usuario', 'cd_usuario']
-                },
-                {
-                    model: tb_publicacao_arquivos,
-                    as: 'tb_publicacao_arquivos'
-                }
-            ]
-        });
+        // Verifique se o usuário está autenticado e obtenha a cidade da sessão do usuário
+        if (req.session && req.session.dadosUsuario && req.session.dadosUsuario.nm_cidade) {
+            req.session.dadosUsuario.cidade;
 
-        const publicacoesComTipoEArquivos = await Promise.all(publicacoes.map(async (publi) => {
-            const arquivosComTipo = publi.tb_publicacao_arquivos.map(arquivo => {
-                const base64Data = Buffer.from(arquivo.arquivos).toString('base64');
-                const dataUri = `data:${arquivo.tipo_arquivo};base64,${base64Data}`;
-                if (arquivo.tipo_arquivo.startsWith('image/')) {
-                    return { ...arquivo.toJSON(), tipo: 'image', dataUri };
-                } else if (arquivo.tipo_arquivo.startsWith('video/')) {
-                    return { ...arquivo.toJSON(), tipo: 'video', dataUri };
-                } else {
-                    return { ...arquivo.toJSON(), tipo: 'unknown', dataUri };
-                }
+            const publicacoes = await tb_publicacao.findAll({
+                include: [
+                    {
+                        model: tb_usuario,
+                        as: 'usuario',
+                        attributes: ['nm_usuario', 'cd_usuario', 'nm_cidade'],
+                        where: { nm_cidade: req.session.dadosUsuario.nm_cidade } // Filtro para cidade
+                    },
+                    {
+                        model: tb_publicacao_arquivos,
+                        as: 'tb_publicacao_arquivos'
+                    }
+                ]
             });
 
-            const fotoPerfilUri = await getFotoPerfilUri(publi.usuario.cd_usuario);
-            return {
-                ...publi.toJSON(),
-                tb_publicacao_arquivos: arquivosComTipo,
-                usuario: {
-                    ...publi.usuario.toJSON(),
-                    fotoPerfilUri
-                }
-            };
-        }));
+            const publicacoesComTipoEArquivos = await Promise.all(publicacoes.map(async (publi) => {
+                const arquivosComTipo = publi.tb_publicacao_arquivos.map(arquivo => {
+                    const base64Data = Buffer.from(arquivo.arquivos).toString('base64');
+                    const dataUri = `data:${arquivo.tipo_arquivo};base64,${base64Data}`;
+                    if (arquivo.tipo_arquivo.startsWith('image/')) {
+                        return { ...arquivo.toJSON(), tipo: 'image', dataUri };
+                    } else if (arquivo.tipo_arquivo.startsWith('video/')) {
+                        return { ...arquivo.toJSON(), tipo: 'video', dataUri };
+                    } else {
+                        return { ...arquivo.toJSON(), tipo: 'unknown', dataUri };
+                    }
+                });
 
-        res.render('index', { publicacoes: publicacoesComTipoEArquivos });
+                const fotoPerfilUri = await getFotoPerfilUri(publi.usuario.cd_usuario);
+                return {
+                    ...publi.toJSON(),
+                    tb_publicacao_arquivos: arquivosComTipo,
+                    usuario: {
+                        ...publi.usuario.toJSON(),
+                        fotoPerfilUri
+                    }
+                };
+            }));
+
+            res.render('feed_user', { publicacoes: publicacoesComTipoEArquivos });
+        } else {
+            res.render('login');
+        }
     } catch (error) {
-        console.error('Erro ao buscar publicações aleatórias:', error);
-        res.status(500).send('Erro ao buscar publicações aleatórias');
+        console.error('Erro ao buscar publicações:', error);
+        res.status(500).send('Erro ao buscar publicações');
     }
+});
+
+
+router.get("/", async (req, res) => {
+    try {
+    const publicacoes = await tb_publicacao.findAll({
+        include: [
+            {
+                model: tb_usuario,
+                as: 'usuario',
+                attributes: ['nm_usuario', 'cd_usuario']
+                
+            },
+            {
+                model: tb_publicacao_arquivos,
+                as: 'tb_publicacao_arquivos'
+            }
+        ]
+    });
+
+    const publicacoesComTipoEArquivos = await Promise.all(publicacoes.map(async (publi) => {
+        const arquivosComTipo = publi.tb_publicacao_arquivos.map(arquivo => {
+            const base64Data = Buffer.from(arquivo.arquivos).toString('base64');
+            const dataUri = `data:${arquivo.tipo_arquivo};base64,${base64Data}`;
+            if (arquivo.tipo_arquivo.startsWith('image/')) {
+                return { ...arquivo.toJSON(), tipo: 'image', dataUri };
+            } else if (arquivo.tipo_arquivo.startsWith('video/')) {
+                return { ...arquivo.toJSON(), tipo: 'video', dataUri };
+            } else {
+                return { ...arquivo.toJSON(), tipo: 'unknown', dataUri };
+            }
+        });
+
+        const fotoPerfilUri = await getFotoPerfilUri(publi.usuario.cd_usuario);
+        return {
+            ...publi.toJSON(),
+            tb_publicacao_arquivos: arquivosComTipo,
+            usuario: {
+                ...publi.usuario.toJSON(),
+                fotoPerfilUri
+            }
+        };
+    }));
+
+    res.render('index', { publicacoes: publicacoesComTipoEArquivos });
+} catch (error) {
+    console.error('Erro ao buscar publicações aleatórias:', error);
+    res.status(500).send('Erro ao buscar publicações aleatórias');
+}
 });
 
 router.get("/uploadimg", (req, res) => res.render('uploadimg'));
@@ -207,6 +251,34 @@ router.get('/publicacao/:cd_publicacao', async (req, res) => {
     } catch (error) {
         console.error('Erro ao buscar a publicação completa:', error);
         res.status(500).send('Erro ao buscar a publicação completa');
+    }
+});
+
+router.post('/curtir/:cd_publicacao', async (req, res) => {
+    const cd_publicacao = req.params.cd_publicacao;
+    const cd_usuario = req.session.dadosUsuario.cd_usuario;
+
+    try {
+        const curtidaExistente = await tb_curtida.findOne({
+            where: {
+                cd_publicacao,
+                cd_usuario
+            }
+        });
+
+        if (curtidaExistente) {
+            await curtidaExistente.destroy();
+            res.json({ message: 'Curtida removida' });
+        } else {
+            await tb_curtida.create({
+                cd_publicacao: cd_publicacao,
+                cd_usuario: cd_usuario
+            });
+            res.json({ message: 'Curtida adicionada' });
+        }
+    } catch (error) {
+        console.error('Erro ao curtir/descurtir a publicação:', error);
+        res.status(500).json({ message: 'Erro ao curtir/descurtir a publicação' });
     }
 });
 module.exports = router;

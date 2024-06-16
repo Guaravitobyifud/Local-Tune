@@ -12,7 +12,7 @@ const { tb_regsLegal } = require('../models/modeloRegsLegal');
 exports.cadastroUsuario = async (req, res) => {
 
     try {
-        const { nome, email, senha, senha2, musicas} = req.body
+        const { nome, email, senha, senha2, musicas, endereco} = req.body
 
         // Verificar se o e-mail já está em uso
         const usuarioExistente = await tb_usuario.findOne({ where: { nm_email: email } })
@@ -24,13 +24,15 @@ exports.cadastroUsuario = async (req, res) => {
                 // Criptografar a senha
                 const hashSenha = await bcrypt.hash(senha, 10)
 
-
+                const enderecoCriado = await tb_endereco.create({
+                    nm_endereco: endereco
+                });
 
                 const userCriado = await tb_usuario.create({
                     cd_tipoUsuario: 1,
                     nm_email: email,
                     nm_usuario: nome,
-                    cd_endereco: null,
+                    cd_endereco: enderecoCriado.cd_endereco,
                     cd_contato: null,
                     cd_senha: hashSenha, // Armazenar o hash da senha
                     cd_regsLegal: null
@@ -100,12 +102,16 @@ exports.cadastroMusico = async (req, res) => {
                         nr_celular: cellfone
                     })
 
+                    const enderecoCriado = await tb_endereco.create({
+                        nm_endereco: endereco
+                    });
+
                     const userCriado = await tb_usuario.create({
                         cd_tipoUsuario: 2,
                         nm_email: email,
                         nm_usuario: nome,
                         cd_regsLegal: registroLegal.cd_regsLegal,
-                        cd_endereco: null,
+                        cd_endereco: enderecoCriado.cd_endereco,
                         cd_contato: contatoCriado.cd_contato,
                         cd_senha: hashSenha // Armazenar o hash da senha
                     })

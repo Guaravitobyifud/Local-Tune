@@ -36,13 +36,13 @@ const videoFileFilter = (req, file, cb) => {
 const multerConfig = multer({
     storage: storage,
     fileFilter: imageFileFilter,
-    limits: { fileSize: 10 * 1024 * 1024 } // Limite de 10MB por arquivo
+    limits: { fileSize: 500 * 1024 * 1024 } // Limite de 10MB por arquivo
 });
 
 const multerConfig2 = multer({
     storage: storage,
     fileFilter: videoFileFilter,
-    limits: { fileSize: 10 * 1024 * 1024 } // Limite de 10MB por arquivo
+    limits: { fileSize: 500 * 1024 * 1024 } // Limite de 10MB por arquivo
 });
 
 module.exports = { multerConfig, multerConfig2 };

@@ -28,6 +28,8 @@ module.exports = {
 
             req.session.dadosUsuario.nm_imagem = nm_imagem;
 
+            
+
             return res.redirect('/homeUsu');
         } catch (erro) {
             console.log(erro);

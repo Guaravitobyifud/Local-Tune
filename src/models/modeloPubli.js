@@ -1,6 +1,7 @@
 const { connSequelize } = require('../../config/coneccao');
 const { DataTypes } = require('sequelize');
 const { _padraoTableBDExistence } = require('../../config/confdobanco');
+const { tb_usuario } = require('./modeloUsuario');
 
 const tb_publicacao = connSequelize.define('tb_publicacao', {
     cd_publicacao: {
@@ -13,7 +14,7 @@ const tb_publicacao = connSequelize.define('tb_publicacao', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'tb_usuario',
+            model: tb_usuario,
             key: 'cd_usuario'
         }
     },
@@ -31,6 +32,10 @@ const tb_publicacao = connSequelize.define('tb_publicacao', {
         allowNull: true
     }
 }, _padraoTableBDExistence('tb_publicacao'));
+
+// Definir as associações com alias diferentes dos atributos
+tb_usuario.hasMany(tb_publicacao, { foreignKey: 'cd_usuario', as: 'publicacoes' });
+tb_publicacao.belongsTo(tb_usuario, { foreignKey: 'cd_usuario', as: 'usuario' });
 
 module.exports = {
     tb_publicacao

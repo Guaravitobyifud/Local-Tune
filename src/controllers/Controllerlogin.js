@@ -17,7 +17,8 @@ exports.login = async (req, res) => {
                     logado: true,
                     cd_usuario: usuario.cd_usuario, // Corrigido para usar a propriedade do objeto usuário
                     nm_usuario: usuario.nm_usuario,
-                    cd_tipoUsuario: usuario.cd_tipoUsuario // Certifique-se que este campo existe na tabela tb_usuario
+                    cd_tipoUsuario: usuario.cd_tipoUsuario, // Certifique-se que este campo existe na tabela tb_usuario
+                    nm_cidade: usuario.nm_cidade
                 };
 
                 switch (dadosUsuario.cd_tipoUsuario) {
@@ -39,8 +40,8 @@ exports.login = async (req, res) => {
 
                 // Store user data in session
                 req.session.dadosUsuario = dadosUsuario;
-
-                res.redirect('/homeUsu'); // Redireciona para a página homeUsu após o login
+                console.log(dadosUsuario)
+                res.redirect('/feed_user'); // Redireciona para a página homeUsu após o login
             } else {
                 return res.render('login', { message: 'Email ou senha incorretos' });
             }

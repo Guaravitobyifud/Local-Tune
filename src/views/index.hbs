@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalTune</title>
     <link rel="stylesheet" href="/estilo.css">
+    <link rel="stylesheet" href="/publi.css">
 </head>
 <body>
     <section class="lateral-menu" id="lateralMenu" {{#if menuHidden}}hidden{{/if}}>
@@ -33,31 +34,38 @@
     </header>
  <section class="conteudo">
         <h1>Publicações Recentes</h1>
-        {{#each publicacoes}}
-            <div class="publicacao">
-                <div class="publi-ft-perfil">
-                    <img src="{{usuario.fotoPerfilUri}}" class="img-perfil-publi">
-                    <p>{{usuario.nm_usuario}}</p>
+{{#each publicacoes}}
+    <div class="publicacao_completa">
+        <div class="publi-ft-perfil">
+            <img src="{{usuario.fotoPerfilUri}}" class="img-perfil-publi">
+            <p>{{usuario.nm_usuario}}</p>
+        </div>
+        <div id="carrosselPublicacao{{@index}}" class="carousel">
+             <button class="carousel-control-prev" role="button">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </button>
+            {{#each tb_publicacao.tb_publicacao_arquivos}}
+                <div class="carousel-item {{#if @first}}active{{/if}}">
+                    {{#if (eq this.tipo 'image')}}
+                        <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
+                    {{/if}}
+                    {{#if (eq this.tipo 'video')}}
+                        <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
+                            <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
+                            Seu navegador não suporta o elemento de vídeo.
+                        </video>
+                    {{/if}}
                 </div>
-                <div id="carrosselPublicacao{{@index}}" class="carousel">
-                    {{#each tb_publicacao_arquivos}}
-                        <div class="carousel-item {{#if @first}}active{{/if}}">
-                            {{#if (eq this.tipo 'image')}}
-                                <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
-                            {{/if}}
-                            {{#if (eq this.tipo 'video')}}
-                                <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
-                                    <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
-                                    Seu navegador não suporta o elemento de vídeo.
-                                </video>
-                            {{/if}}
-                        </div>
-                    {{/each}}
-                </div>
-                <p>{{ds_publicacao}}</p>
-                <button class="back-button" onclick="window.history.back()">Voltar</button>
-            </div>
-        {{/each}}
+            {{/each}}
+             <button class="carousel-control-next" role="button">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </button>
+        </div>
+        <p>{{ds_publicacao}}</p>
+    </div>
+{{/each}}
     </section>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -96,6 +104,51 @@
             });
 
             updateCarousel();
+        });
+    </script>
+    <script>
+        async function toggleCurtida(cd_publicacao) {
+            try {
+                const response = await fetch(`/curtir/${cd_publicacao}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                alert(data.message);
+                // Atualize o estado do botão (curtido/não curtido) conforme necessário
+                updateCurtidaButton(cd_publicacao);
+            } catch (error) {
+                console.error('Erro ao curtir/descurtir a publicação:', error);
+            }
+        }
+
+        function updateCurtidaButton(cd_publicacao) {
+            // Aqui você pode atualizar a aparência do botão com base na curtida
+            const button = document.getElementById(`curtida-btn-${cd_publicacao}`);
+            if (button) {
+                button.textContent = button.textContent === 'Curtir' ? 'Descurtir' : 'Curtir';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulando a renderização de algumas publicações
+            const publicacoes = [
+                { cd_publicacao: 1, conteudo: 'Publicação 1' },
+                { cd_publicacao: 2, conteudo: 'Publicação 2' },
+                { cd_publicacao: 3, conteudo: 'Publicação 3' }
+            ];
+
+            const publicacoesContainer = document.getElementById('publicacoes');
+            publicacoes.forEach(pub => {
+                const publiDiv = document.createElement('div');
+                publiDiv.innerHTML = `
+                    <p>${pub.conteudo}</p>
+                    <button id="curtida-btn-${pub.cd_publicacao}" onclick="toggleCurtida(${pub.cd_publicacao})">Curtir</button>
+                `;
+                publicacoesContainer.appendChild(publiDiv);
+            });
         });
     </script>
 </body>
