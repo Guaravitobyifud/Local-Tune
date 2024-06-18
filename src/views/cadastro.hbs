@@ -8,86 +8,201 @@
   <link rel="icon" type="images/logo_topo.png" href="/images/logo_topo.png">
   <link href="../public/cadastro.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0"></script>
-  {{!-- <style>
-    /* Estilos adicionais */
+  <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
-    }
+  font-family: 'Poppins', sans-serif;
+  background-image: url('/images/cell-light.702c828c.svg');
+  background-repeat: repeat;
+  background-size: 35px 35px;
+  background-color: #2B282B;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evitar overflow horizontal */
+  box-sizing: border-box;
+}
 
-    header {
-      background-color: #46346e;
-      color: #fff;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
 
-    .voltar {
-      margin-right: 20px;
-    }
+/* Menu Lateral */
+.lateral-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #ffcc00;
+    color: #000;
+    padding-top: 20px;
+    border-right: 5px solid #000;
+    transition: transform 0.3s ease;
+}
 
-    #cadastro {
-      max-width: 500px;
-      margin: 20px auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+.lateral-menu .menu-header {
+    text-align: center;
+    padding-bottom: 20px;
+}
 
-    h1 {
-      color: #46346e;
-      margin-bottom: 20px;
-      text-align: center;
-    }
+.lateral-menu .logo {
+    width: 100px;
+    height: auto;
+    border: 3px solid #000;
+    border-radius: 10px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 5px;
-      color: #46346e;
-      font-weight: bold;
-    }
+.lateral-menu .menu-content {
+    padding: 0 20px;
+}
 
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 95%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
-    }
+.lateral-menu .menu-item {
+    margin-bottom: 20px;
+}
 
-    button[type="submit"] {
-      width: 100%;
-      padding: 10px;
-      background-color: #46346e;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+.lateral-menu .menu-item a {
+    color: #000;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+}
 
-    button[type="submit"]:hover {
-      background-color: #7f3eb4;
-    }
+.lateral-menu .menu-item a:hover {
+    text-decoration: underline;
+}
 
-    .message {
-      text-align: center;
-      color: #46346e;
-    }
-    a{
-            color: #fff;
-            text-decoration: none;
-        }
-  </style> --}}
+/* Container */
+.container {
+    margin-left: 270px;
+    padding: 20px;
+}
+
+/* Perfil */
+.perfil2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.perfil {
+    background-color: #fff;
+    border: 3px solid #000;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 0 #000;
+}
+
+.perfil .img_per/* Estilo geral */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cabeçalho */
+header {
+  width: 100%;
+    background-color: #303440;
+    color: rgb(255, 247, 240);
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header a {
+  padding: 5px;
+  text-decoration: none;
+  color: #fff;
+  margin: 10px;
+  text-decoration: none;
+  border: 2px solid #FFF;
+  border-radius: 7px;
+  background: #2B282B;
+  transition: background-color 0.3s ease;
+}
+
+header a:hover {
+  color: #2B282B;
+  background: #fff;
+}
+
+section {
+  margin-top: 2vh;
+    margin-left: 25%;
+    max-width: 50%;
+    padding: 20px;
+    background-color: #fff;
+    border: 5px solid #000;
+    border-radius: 20px;
+    box-shadow: 10px 10px 0 #000;
+}
+
+section h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+  margin-top: 5px;
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 3px solid #000;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #ffcc00;
+    border: 3px solid #000;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Mensagem de erro */
+.erroContainer {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 3px solid #f5c6cb;
+    border-radius: 10px;
+    display: none;
+}
+
+/* Mensagem de sucesso */
+.message {
+    font-size: 16px;
+    color: green;
+}
+
+
+  </style>
   <script>
   window.onload = function() {
     var cellField = document.getElementById('cellfone');
