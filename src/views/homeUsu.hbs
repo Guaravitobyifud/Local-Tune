@@ -15,11 +15,35 @@
 </head>
 
 <body>
+     <section class="lateral-menu" id="lateralMenu" {{#if menuHidden}}hidden{{/if}}>
+        <div class="menu-header">
+        <img src="/images/baixados.svg" class="logo">
+        </div>
+        <div class="menu-content">
+            <div class="menu-item"><a href="/homeusu">Perfil</a></div>
+            <div class="menu-item"><a href="/Search">Pesquisar</a></div>
+            <div class="menu-item"><a href="/settings">Configurações</a></div>
+            <div class="menu-item"><a href="/about">Sobre</a></div>
+        </div>
+    </section>
+    <header>
+        <div class="text_left"></div>
+        <img src="/images/baixados.svg" class="logo">
+        <div class="buscar">
+            <div class="bo1a"><a class="bo2" href="/logout"><h3 class="bo3">Logout</h3></a></div>
+        </div>
+    </header>
     <div class="container">
+        <div class="perfil2">
+
+        <div class="perfil">
+            
         {{#if profilePicture}}
         <div class="ft_perfil">
             <img class="img_perfil" src="{{profilePicture}}" alt="Imagem de Perfil">
         </div>
+        <div class="ft_perfil2"></div>
+        <div class="itens">
         <h1>{{username}}!</h1>
         <h3>Alterar Foto de Perfil</h3>
         <form action="/auth/alteraFotoPerfil" method="POST" enctype="multipart/form-data">
@@ -30,6 +54,8 @@
         <div class="ft_perfil">
             <img class="img_perfil" src="/images/dflt.jpeg" alt="Imagem Default de Perfil">
         </div>
+        <div class="ft_perfil2"></div>
+        <div class="itens">
         <h1>{{username}}!</h1>
         <h3>Upload de Foto de Perfil</h3>
         <form action="/auth/uploadFotoPerfil" method="POST" enctype="multipart/form-data">
@@ -37,8 +63,12 @@
             <button type="submit">Enviar</button>
         </form>
         {{/if}}
-        {{{logout}}}
-
+        <button class="logout-button"><a href="/logout">Logout</a></button>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="publicar">
         <button id="uploadButton">Upload de Arquivos</button>
 
         <div id="uploadModal" class="modal">
@@ -46,12 +76,15 @@
                 <span class="close">&times;</span>
                 <form action="/auth/uploadArquivos" method="POST" enctype="multipart/form-data">
                     <input type="file" name="files" accept="image/*,video/*" multiple required>
+
+
+
                     <button type="submit">Enviar</button>
                 </form>
                 {{message}}
             </div>
         </div>
-
+        </div>
         <div id="publicacoes-container">
             <h2>Publicações</h2>
             <div id="publicacoes">
@@ -69,7 +102,6 @@
                                     </video>
                                 {{/if}}
                             {{/if}}
-                            <p class="dados">{{ds_publicacao}}</p>
                         </div>
                     </div>
                 {{/each}}

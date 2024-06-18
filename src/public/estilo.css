@@ -41,7 +41,7 @@ body {
 }
 
 .lateral-menu {
-  width: 150px;
+  width: 11vw;
   height: 100vh;
   background-color: #252525;
   position: fixed;
@@ -51,7 +51,7 @@ body {
   display: flex; /* Inicia oculto */
   flex-direction: column;
   padding: 20px;
-  z-index: 1;
+  z-index: 101;
 }
 
 .lateral-menu.show {
@@ -78,6 +78,7 @@ body {
   flex-direction: column;
   text-align: right;
   justify-content: end;
+  margin-left: 15px;
 }
 
 .menu-item {
@@ -119,6 +120,7 @@ header {
   background-color: #252525;
   height: 100px;
   position: fixed;
+  z-index: 100;
 }
 
 .text_left {
@@ -126,7 +128,7 @@ header {
 }
 .logo{
   align-self: center;
-  width: 300px;
+  width: 190px;
 }
 
 .buscar {
@@ -148,15 +150,25 @@ header {
 .buscar button {
   padding: 8px 20px;
   border: #ffffff solid 2px;
-  color: #ffffff;
+  color: #000000;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background-color: #252525;
+  background-color: #dadada;
+}
+.buscar button:hover {
+  padding: 8px 20px;
+  border: #ffffff solid 2px;
+  color: #000000;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #dadada;
+  transform: translate(10px, 10px);
 }
 
 .buscar label {
-  color: #fff;
+  color: #000000;
 }
 
 .buscar button:hover {
@@ -186,6 +198,7 @@ header {
   color: #000000;
   transition: all 0.3s ease;
 }
+
 
 .bo1:hover {
   text-shadow: 0 0 15px rgb(255, 211, 77);
@@ -218,10 +231,10 @@ header {
 }
 
 .conteudo{
-  margin-left: 200px;
+  margin-left: 240px;
   margin-top: 120px;
   display: block;
-  margin-right: 20px;
+  margin-right: 40px;
 }
 .publicacao{
   background-color: rgb(255, 211, 77);
@@ -231,10 +244,45 @@ header {
 }
 
 .publi-ft-perfil{
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 100%;
   display: block;
+  margin: 5px;
+}
+.publi-perfil{
+  width: 300px;
+  height: 100px;
+  display: block;
+  background-color: #fff;
+  z-index: 20;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  /* justify-content: center; */
+  margin-left: 20px;
+  transform: translateX(30px); /* Ajuste a quantidade de pixels conforme necessário */
+  transform: translateY(30px);
+  font-size: 2em;
+}
+.publi-perfil-2{
+  width: 300px;
+  height: 100px;
+  display: block;
+  background-color: #8400ff;
+  z-index: 19;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: flex-start;
+  /* justify-content: center; */
+  margin-left: 10px;
+  
+  transform: translateX(-15px); /* Ajuste a quantidade de pixels conforme necessário */
+  transform: translateY(-60px);
+  font-size: 2em;
+  position: relative; /* Adiciona esta linha */
 }
 
 .img-perfil-publi{
@@ -242,4 +290,21 @@ header {
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.descricao{
+  width: 500px;
+  min-height: 50px;
+  display: block;
+  background-color: #fff;
+  z-index: 20;
+  display: flex;
+  flex-direction: row;
+  transform: translateY(-30px);
+  border: #000 solid 1px;
+  border-radius: 20px;
+}
+
+.descricao p{
+  margin: 10px;
 }

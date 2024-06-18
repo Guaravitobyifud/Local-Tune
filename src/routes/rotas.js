@@ -11,6 +11,7 @@ const { tb_publicacao_arquivos } = require('../models/modeloPubliArquivos');
 const { Model, Op, Sequelize } = require('sequelize')
 const { connSequelize } = require('../../config/coneccao')
 const { tb_curtida } = require('../models/modeloCurtida');
+const session = require('express-session');
 
 
 // Middleware para verificar a autenticação do usuário
@@ -158,14 +159,18 @@ router.get("/feed_user", userAuth, async (req, res) =>{
 
 
 router.get("/", async (req, res) => {
-    try {
+
+try {
+    if (req.session && req.session.dadosUsuario) {
+        return res.redirect('feed_user');
+    }
+
     const publicacoes = await tb_publicacao.findAll({
         include: [
             {
                 model: tb_usuario,
                 as: 'usuario',
                 attributes: ['nm_usuario', 'cd_usuario']
-                
             },
             {
                 model: tb_publicacao_arquivos,
@@ -175,9 +180,10 @@ router.get("/", async (req, res) => {
     });
 
     const publicacoesComTipoEArquivos = await Promise.all(publicacoes.map(async (publi) => {
-        const arquivosComTipo = publi.tb_publicacao_arquivos.map(arquivo => {
+        const arquivosComTipoEDataUri = publi.tb_publicacao_arquivos.map(arquivo => {
             const base64Data = Buffer.from(arquivo.arquivos).toString('base64');
             const dataUri = `data:${arquivo.tipo_arquivo};base64,${base64Data}`;
+
             if (arquivo.tipo_arquivo.startsWith('image/')) {
                 return { ...arquivo.toJSON(), tipo: 'image', dataUri };
             } else if (arquivo.tipo_arquivo.startsWith('video/')) {
@@ -188,9 +194,10 @@ router.get("/", async (req, res) => {
         });
 
         const fotoPerfilUri = await getFotoPerfilUri(publi.usuario.cd_usuario);
+
         return {
             ...publi.toJSON(),
-            tb_publicacao_arquivos: arquivosComTipo,
+            tb_publicacao_arquivos: arquivosComTipoEDataUri,
             usuario: {
                 ...publi.usuario.toJSON(),
                 fotoPerfilUri
@@ -280,5 +287,15 @@ router.post('/curtir/:cd_publicacao', async (req, res) => {
         console.error('Erro ao curtir/descurtir a publicação:', error);
         res.status(500).json({ message: 'Erro ao curtir/descurtir a publicação' });
     }
+});
+
+router.get('/logout', async (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Erro ao destruir a sessão:', err);
+            return res.status(500).send('Erro ao fazer logout');
+        }
+        res.redirect('/');
+    });
 });
 module.exports = router;
