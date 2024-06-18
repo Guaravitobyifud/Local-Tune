@@ -1,311 +1,357 @@
-/*==================[Web Desktop]====================*/
-
-
-/*======================[Body]=======================*/
-body {
+*, *:before, *:after {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/*======================[Fim Body]==================*/
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: rgb(255, 247, 240);
+}
 
-
-/*=======================[Header]===================*/
 header {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  text-align: right;
   position: fixed;
-  background-color: antiquewhite;
-}
-#searchForm{
+  z-index: 100;
+  background-color: #303440;
+  color: rgb(255, 247, 240);
+  padding: 10px 20px;
+  text-align: left;
   display: flex;
-  height: 30px;
-  font-size: 1.3em;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+}
+
+.title img {
+  width: 200px; 
+}
+
+.auth-links {
+  display: flex;
+}
+
+.login a, .cadastro a {
+  display: inline-block;
+  margin: 0 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 15px;
+}
+
+.login a {
+  margin: 10px;
+  text-decoration: none;
+  color: #FFF;
+  border: 2px solid #FFF;
+  border-radius: 7px;
+  background: #2B282B;
+  transition: background-color 0.3s ease;
+}
+
+.login a:hover {
+  color: #2B282B;
+  background: #fff;
+}
+
+.cadastro a {
+  margin: 10px;
+  text-decoration: none;
+  color: #2B282B;
+  border: 2px solid #FFF;
+  border-radius: 7px;
+  background: #FFD34D;
+  transition: background-color 0.3s ease;
+}
+
+.cadastro a:hover {
+  color: rgb(255, 247, 240);
+  background: #303440;
+}
+
+#img_topo img {
+  width: 100%;
+  height: 100%;
+  background: #303440;
+}
+
+.menu {
+  background: none;
+  width: 60px;
+  height: 60px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.hamburguer {
+  position: relative;
+  display: block;
+  background: rgb(255, 247, 240);
+  width: 30px;
+  height: 2px;
+  left: 15px;
+  transition: 0.5s ease-in-out;
+}
+
+.hamburguer:before,
+.hamburguer:after {
+  background: rgb(255, 247, 240);
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
   position: absolute;
+  transition: 0.3s ease-in-out;
+}
+
+.hamburguer:before {
+  top: -10px;
+}
+
+.hamburguer:after {
+  bottom: -10px;
+}
+
+.menu.active .hamburguer {
+  transform: rotate(45deg);
+}
+
+.menu.active .hamburguer:before {
+  transform: rotate(90deg);
   top: 0;
+}
+
+.menu.active .hamburguer:after {
+  transform: rotate(90deg);
+  bottom: 0;
+}
+
+.avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+#esquerda {
+  margin-top: 5.5%;
+  position: fixed;
+  background-color: #303440;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  max-width: 100%;
+  transition: width 0.5s;
+  z-index: 999;
+  overflow: hidden;
+  border-right: 2px solid #303440;
+}
+
+.botao {
+  top: 5px;
+  background-color: white;
+  border: none;
+  font-size: 14px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.botao-fechar {
+  display: none;
+  right: 5px;
+}
+
+.botao-abrir {
   right: 0;
 }
 
-/*================[Fim Header]=====================*/
-
-
-/*=============[ Grid Barra lateral ]=============*/
-
-  #grid {
-  height: 100vh;
+.botao:hover {
+  background-color: lightgray;
 }
-  
-  #left {
-  padding: 5%;
-  text-align: center; 
-  background:navajowhite;    
-}
-  
-  #right {
-  display: flex;
-  padding: 0;
-  text-align: center; 
-  background: navajowhite;
-}
-.hidden {
+
+#conteudo-barra {
   display: none;
-}
-  #grid {
-  transition: 30ms;
-  display: grid;
-  grid-template-columns: 60px auto;
-}
-  
-  #grid:has(#left:hover) {
-  grid-template-columns: 15% auto;
-}
-  
-  #grid {
-  transition: 300ms;
-  display: grid;
-  grid-template-columns: var(--left, 60px) auto;
-}
-  
-  #grid:has(#left:hover) {
-  --left: 40%;
-  .text_left{
-  display: block;
-  }
-}
-
-  .text_left{
-    padding-right: 750px;
-  background: #eee;
-  align-items: center;
-  display: flex;
-  text-align: left;
-  padding-left: 10px;
-}
-
-  /*==========[Fim Grid Barra lateral ]==================*/
-  
-/*=================[Estilo grid Right]===================*/
-
-.fundo1{
-  padding: 50px;
-  flex-wrap: wrap;
-  display: flex;
-  background-color: #9b9b9b;
-  width: auto;
-  height: auto;
-  margin-top: 50px;
-  margin-left: 25px;
-  margin-right: 5px;
-  border-radius: 30px 30px 0px 0px;
-  border: 3px solid #424242;
-}
-
-.fundo2{
-  display: flex;
-  flex-direction: column;
-  margin-left: 20px;
-  margin-right: 25px;
-}
-
-.juncao{
-  display: flex;
-  background-color: #9b9b9b;
-  width: auto;
-  height: auto;
-  border: 3px solid #424242;
-  border-top-width: 0px;
-}
-
-.post{
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: 3px solid #424242;
-  background-color: #D9D9D9;
-  margin-left: auto;
-  width: 215px;
-  height: 500px;
-  border-radius: 10px 0px 0px 10px;
-  border-right-width: 0px;
-}
-
-.imgpost{
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: 3px solid #424242;
-  background-color: #bcbcbc;
-  margin-right: auto;
-  width: 215px;
-  height: 500px;
-  border-radius: 0px 10px 10px 0px;
-  border-left-width: 0px;
-}
-
-.conta{
-  flex-wrap: wrap;
-  border-radius: 30px 30px 0px 0px;
-  border: 3px solid #424242;
-  background: #BCBCBC;
-  width: 541px;
-  height: 120px;
-  flex-shrink: 0;
-}
-
-#right{
-  align-content: center;
-} 
-
-.publi-basic{
-  margin-bottom: 50px;
-  text-align: left;
-  width: auto;
-  height: 300px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-.perfil{
-  width: 210px;
-  height: 178px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: row;
   text-align: center;
-  border-radius: 10px 10px 0px 0px;
-  border: 3px solid #424242;
-  background: #BCBCBC;
+  color: rgb(255, 247, 240);
 }
 
-.fake-perfil-img {
-  margin-top: 150px;
-  border: 3px solid #424242;
-  background-color: #D9D9D9;
-  height: 50px;
-  width: 50px;
-  border-radius: 100%;
-  margin-left: auto;
-  margin-right: auto;
+#conteudo-barra ul {
+  grid-template-columns: repeat(1, 1fr);
+  padding-left: 85%;
 }
 
-.fake-perfil-img2 {
-  margin-top: 15px;
-  border: 3px solid #424242;
-  background-color: #D9D9D9;
-  height: 70px;
-  width: 70px;
-  border-radius: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.perfil2 {
-  margin-top: 150px;
-  height: 50px;
-  width: 50px;
-  border-radius: 10px 0px 0px 10px;
-  border: 3px solid #424242;
-  background: #D9D9D9;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.false-img{
-  padding-left: 10px;
-  padding-right: 10px;
-  width: 190px;
-  height: 120px;
+#conteudo-barra a, #conteudo-barra li {
+  color: rgb(255, 250, 245);
+  text-decoration: none;
   flex-shrink: 0;
-  display: flex;
-  border-radius: 0px 0px 10px 10px;
-  border: 3px solid #424242;
-  background: #D9D9D9;
-  border-top-width: 0px;
-  }
-
-/*==========[Fim Estilo grid Right]==================*/
-
-/*==========[Textos]=================================*/
-
-p{    
-  margin-top: 30px;
-  height: 80px;
-  color: #000;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-ul{
-  list-style: none;
-}
-/*===========[Barra de pesquisa]==========*/
-
-.buscar {
-  width: 100%;
-  background: #eee;
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-input{
-  width: 90%;
-  height: 50px;
-  padding-left: 20px;
-  font-size: 22px;
-  border:1px solid #ddd;
-  margin: 15px;
-  border-radius: 10px;
-}
-
-img {
-  max-width: 70px;
-}
-
-#Lista{
-  display: none;
-  width: 90%;
-  background: #fff;
+  border-radius: 5px;
   list-style-type: none;
+}
+
+body ul {
+  display: grid;
+  grid-gap: 15px;
+}
+
+.grid-container {
+  padding: 20px;
+  padding-left: 70px;
+  padding-right: 26%;
   margin: 0;
-  padding: 0;
-  position: absolute;
-  top: 75px;
 }
-#Lista li a{
-  display: flex;
-  align-items: center;
+
+.grid-container img {
+  width: 100%;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 5px 5px 0 0;
+}
+
+.postagem {
+  box-shadow: rgb(30, 34, 40) 0px 10px 0px;
+  padding-bottom: 10px;
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  flex-shrink: 0;
+  border: 2px solid #303440;
+  border-radius: 6.5px;
+  background: rgb(255, 247, 240);
+  color: #303440;
   text-decoration: none;
-  font-size: 18px;
-  color: black;
-  border:1px solid #ddd;
-  margin-bottom: 5px;
-  padding: 8px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-#Lista li a:hover{
-  transition: 0.3s;
-  background: #d6d6d6;
-}
-h1, p{
-  margin-left: 5%;
+.postagem:hover {
+  box-shadow: rgb(30, 34, 40) 0px 0px 0px;
+  color: rgb(255, 247, 240);
+  background: #303440;
+  transform: translate(0%, 10%);
 }
 
-.testo{
-  margin-left: 5px;
+.info_post {
+  display: inline-block;
+  flex-direction: column;
+  padding-left: calc(5px + 0.5vw);
+  padding-right: calc(5px + 0.5vw);
+  margin: 0;
 }
-  /**/
-.bo{
-  text-align: center;
+
+#topo {
+  overflow: hidden;
+  width: 100%;
+  cursor: pointer;
+  transition-duration: .15s;
+  transition-timing-function: cubic-bezier(.05,0,0,1);
+  will-change: transform;
+  display: flex;      
+  justify-content: center; 
+  align-items: center;      
+  white-space: nowrap;
+}
+
+#topo a {
+  margin: 10px;
+  text-decoration: none;
+  color: #303440;
+  box-shadow: rgb(30, 34, 40) 0px 10px 0px;
+  border: 2px solid #303440;
+  border-radius: 7px;
+  background: rgb(255, 247, 240);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+#topo a:hover {
+  box-shadow: rgb(30, 34, 40) 0px 0px 0px;
+  color: rgb(255, 247, 240);
+  background: #303440;
+  transform: translate(0%, 10%);
+}
+
+iron-selector {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+iron-selector a {
   padding: 10px;
-border-radius: 20px;
-border: 2px solid #000;
-background: #D9D9D9;
+  display: inline-block;
+}
+
+.usuario {
+  margin-top: 5.5%;
+  position: fixed;
+  background-color: #303440;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  max-width: 100%;
+  z-index: 999;
+  overflow: hidden;
+}
+
+.usuario_avatar {
+  text-align: center;
+  box-shadow: rgb(30, 34, 40) 0px 10px 0px;
+  padding: 10px;
+  margin: 10%;
+  width: 80%;
+  height: 60%;
+  max-height: 300px;
+  border: 2px solid #303440;
+  border-radius: 6.5px;
+  background: rgb(255, 247, 240);
+  color: #303440;
+  text-decoration: none;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+@media (min-width: 550px) {
+  body ul {
+    grid-template-columns: repeat(1, 0.73fr);
+  }
+  .postagem {
+    max-width: none;
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #topo {
+    flex-direction: column;
+    text-align: center;
   }
 
-a {
-  text-decoration: none;
-  color: black;
+  #topo a {
+    margin: 10px 0;
+  }
+}
+
+@media (min-width: 992px) {
+  body ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .postagem {
+    max-width: none;
+    max-height: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  body ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .postagem {
+    max-width: none;
+    max-height: none;
+  }
 }
