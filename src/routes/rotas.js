@@ -11,8 +11,11 @@ const { tb_publicacao_arquivos } = require('../models/modeloPubliArquivos');
 const { Model, Op, Sequelize } = require('sequelize')
 const { connSequelize } = require('../../config/coneccao')
 const { tb_curtida } = require('../models/modeloCurtida');
+const { tb_seguindoSeguidor } = require('../models/modeloSeguindo');
 const session = require('express-session');
 
+const pesquisa = require('../controllers/ControllerPesquisa');
+router.post("/pesquisa", pesquisa.Pesquisa);
 
 // Middleware para verificar a autenticação do usuário
 function userAuth(req, res, next) {
@@ -69,7 +72,7 @@ router.get("/homeUsu", userAuth, async (req, res) => {
             });
 
             res.render('homeUsu', {
-                username: 'Bem-vindo ' + usuario.nm_usuario,
+                username: usuario.nm_usuario,
                 profilePicture: img ? (await getFotoPerfilUri(req.session.dadosUsuario.cd_usuario)) : null,
                 logout: '<h3><a class="bo" href="/logout">logout</a></h3>',
                 publicacoes: publicacoesComTipoEArquivos
@@ -102,11 +105,12 @@ router.post("/posts", multer(multerConfig).single('file'), async (req, res) => {
 
 router.get("/cadastroSTBL",  (req, res) => res.render("cadastroSTBL"));
 
-router.get("/feed_user", userAuth, async (req, res) =>{
+router.get("/feed_user", userAuth, async (req, res) => {
     try {
-        // Verifique se o usuário está autenticado e obtenha a cidade da sessão do usuário
         if (req.session && req.session.dadosUsuario && req.session.dadosUsuario.nm_cidade) {
-            req.session.dadosUsuario.cidade;
+            const usuarioId = req.session.dadosUsuario.cd_usuario;
+
+            const img = await tb_img.findOne({ where: { cd_user: usuarioId } });
 
             const publicacoes = await tb_publicacao.findAll({
                 include: [
@@ -114,7 +118,7 @@ router.get("/feed_user", userAuth, async (req, res) =>{
                         model: tb_usuario,
                         as: 'usuario',
                         attributes: ['nm_usuario', 'cd_usuario', 'nm_cidade'],
-                        where: { nm_cidade: req.session.dadosUsuario.nm_cidade } // Filtro para cidade
+                        where: { nm_cidade: req.session.dadosUsuario.nm_cidade }
                     },
                     {
                         model: tb_publicacao_arquivos,
@@ -136,6 +140,14 @@ router.get("/feed_user", userAuth, async (req, res) =>{
                     }
                 });
 
+                // Verificar se o usuário curtiu a publicação
+                const curtido = await tb_curtida.findOne({
+                    where: {
+                        cd_publicacao: publi.cd_publicacao,
+                        cd_usuario: usuarioId
+                    }
+                });
+
                 const fotoPerfilUri = await getFotoPerfilUri(publi.usuario.cd_usuario);
                 return {
                     ...publi.toJSON(),
@@ -143,11 +155,16 @@ router.get("/feed_user", userAuth, async (req, res) =>{
                     usuario: {
                         ...publi.usuario.toJSON(),
                         fotoPerfilUri
-                    }
+                    },
+                    curtido: !!curtido // true se curtido, false se não curtido
                 };
             }));
 
-            res.render('feed_user', { publicacoes: publicacoesComTipoEArquivos });
+            res.render('feed_user', { 
+                publicacoes: publicacoesComTipoEArquivos,
+                img: img ? (await getFotoPerfilUri(usuarioId)) : null,
+                cd_user: usuarioId
+            });
         } else {
             res.render('login');
         }
@@ -266,6 +283,7 @@ router.post('/curtir/:cd_publicacao', async (req, res) => {
     const cd_usuario = req.session.dadosUsuario.cd_usuario;
 
     try {
+        // Verifica se já existe uma curtida para evitar inserções duplicadas
         const curtidaExistente = await tb_curtida.findOne({
             where: {
                 cd_publicacao,
@@ -275,19 +293,63 @@ router.post('/curtir/:cd_publicacao', async (req, res) => {
 
         if (curtidaExistente) {
             await curtidaExistente.destroy();
-            res.json({ message: 'Curtida removida' });
+            res.json({ message: 'Curtida removida', action: 'unlike' });
         } else {
             await tb_curtida.create({
-                cd_publicacao: cd_publicacao,
-                cd_usuario: cd_usuario
+                cd_usuario: cd_usuario,
+                cd_publicacao: cd_publicacao
             });
-            res.json({ message: 'Curtida adicionada' });
+            res.json({ message: 'Curtida adicionada', action: 'like' });
         }
     } catch (error) {
         console.error('Erro ao curtir/descurtir a publicação:', error);
         res.status(500).json({ message: 'Erro ao curtir/descurtir a publicação' });
     }
 });
+
+router.post('/seguir/:cd_usuario', async (req, res) => {
+    const cd_user = req.params.cd_usuario;
+    const cd_usuari = req.session.dadosUsuario.cd_usuario;
+
+    try {
+        // Verificar se usuário está autenticado
+        if (!cd_usuari) {
+            return res.status(401).json({ message: 'Usuário não autenticado.' });
+        }
+
+        // Verificar se cd_usuario está presente
+        if (!cd_user) {
+            return res.status(400).json({ message: 'Parâmetros inválidos.' });
+        }
+
+        // Verificar se já está seguindo o usuário
+        const seguindo = await tb_seguindoSeguidor.findOne({
+            where: {
+                cd_seguindo: cd_user,
+                cd_seguidor: cd_usuari
+            }
+        });
+
+        if (seguindo) {
+            await seguindo.destroy();
+            res.json({ action: 'unfollow' });
+        }
+
+        // Criar uma nova entrada na tabela de seguindo/seguidor
+        await tb_seguindoSeguidor.create({
+            cd_seguindo: cd_usuario,
+            cd_seguidor: usuarioLogado.cd_usuario
+        });
+
+        res.status(201).json({ message: 'Agora você está seguindo este usuário.' });
+    } catch (error) {
+        console.error('Erro ao tentar seguir o usuário:', error);
+        res.status(500).json({ message: 'Erro ao tentar seguir o usuário.' });
+    }
+});
+
+
+module.exports = router;
 
 router.get('/logout', async (req, res) => {
     req.session.destroy((err) => {
@@ -296,6 +358,7 @@ router.get('/logout', async (req, res) => {
             return res.status(500).send('Erro ao fazer logout');
         }
         res.redirect('/');
+        console.log(req.session.dadosUsuario)
     });
 });
 module.exports = router;

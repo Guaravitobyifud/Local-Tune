@@ -13,6 +13,7 @@ body {
     
 }
 .buscar {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,6 +22,17 @@ body {
     color: #000000;
     background-color: #ffd000;
     transform: translate(10px, 10px);
+}
+.cadastras{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; /* Organiza os filhos em coluna */
+        padding: 20px; /* Espaçamento interno */
+        color: #000000;
+        background-color: #ffd000;
+        transform: translate(10px, 10px);
+
 }
 
 form {

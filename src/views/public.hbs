@@ -12,68 +12,11 @@ body, html {
 }
 
 header {
-  width: 100%;
-  position: fixed;
-  z-index: 100;
   background-color: #303440;
   color: rgb(255, 247, 240);
   padding: 10px 20px;
   text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.title {
-  display: flex;
-  align-items: center;
-}
-
-.title img {
-  width: 200px; 
-}
-
-.auth-links {
-  display: flex;
-}
-
-.login a, .cadastro a {
-  display: inline-block;
-  margin: 0 10px;
-  text-decoration: none;
-  border-radius: 20px;
-  padding: 5px 15px;
-  font-size: 15px;
-}
-
-.login a{
-  margin: 10px;
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 7px;
-  background: #2B282B;
-  transition: background-color 0.3s ease;;
-}
-
-.login a:hover {
-  color: #2B282B;
-  background: #fff;
-}
-
-.cadastro a{
-  margin: 10px;
-  text-decoration: none;
-  color: #2B282B;
-  border: 2px solid #FFF;
-  border-radius: 7px;
-  background: #FFD34D;
-  transition: background-color 0.3s ease;;
-}
-
-.cadastro a:hover {
-  color: rgb(255, 247, 240);
-  background: #303440;
+  position: relative;
 }
 
 #img_topo img{
@@ -141,7 +84,6 @@ header {
 }
 
 #esquerda {
-  margin-top: 4%;
   position: fixed;
   background-color: #303440;
   top: 0;
@@ -157,7 +99,7 @@ header {
 
 .botao {
   top: 5px;
-  background-color: rgb(255, 255, 255);
+  background-color: white;
   border: none;
   font-size: 14px;
   padding: 5px;
@@ -174,7 +116,7 @@ header {
 }
 
 .botao:hover {
-  background-color: rgb(255, 255, 255);
+  background-color: lightgray;
 }
 
 #conteudo-barra {
@@ -245,45 +187,7 @@ body ul {
   margin: 0;
 }
 
-.fa-magnifying-glass:before, .fa-search:before {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  content: "\f002";
-}
-
-.search-button {
-  padding: 5px 10px;
-  margin: 10px;
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 7px;
-  background: #2B282B;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px; /* Ajuste o tamanho do ícone, se necessário */
-}
-
-.search-button:hover {
-  color: #2B282B;
-  background: #fff;
-}
-
-.search-button .fa-search {
-  color: inherit;
-  transition: color 0.3s ease;
-}
-
-.search-button a {
-  text-decoration: none;
-  font-size: 16px;
-}
-
   #topo {
-    padding-right: 20%;
-    padding-top: 5%;
     overflow: hidden;
     width: 100%;
     cursor: pointer;
@@ -324,7 +228,6 @@ iron-selector a {
 }
 
 .usuario{
-  margin-top: 4%;
   position: fixed;
   background-color: #303440;
   top: 0;
@@ -342,7 +245,7 @@ iron-selector a {
   padding: 10px;
   margin: 10%;
   width: 80%;
-  height: 60%;
+  height: 40%;
   max-height: 300px;
   border: 2px solid #303440;
   border-radius: 6.5px;
@@ -383,162 +286,10 @@ iron-selector a {
 
 @media (min-width: 1200px) {
   body ul {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
   .postagem {
       max-width: none;
       max-height: none;
-  }
-}
-
-.estradinha {
-  top: -15%;
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-}
-.nomes{
-  margin-top: calc(32% - 1vh);
-  position: absolute;
-  border: 3px solid #000;
-  background: rgb(255, 255, 255)F;
-}
-
-.nomes h1{
-  color: #000;
-  font-family: "Krona One";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.intro{
-  right: calc(17.5% - 2vh);
-  margin-top: calc(28% - 1vh);
-  position: absolute;
-  border: 3px solid #000;
-  background: rgb(255, 255, 255);
-}
-
-.intro h1{
-  color: #000;
-  font-family: "Krona One";
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.texto_intro{
-  padding-right: 5%;
-  width: 30%;
-  color: rgb(255, 255, 255);
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.videos_intro {
-  display: flex;
-  padding: 2vh;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 55%;
-  height: auto;
-  border: 3px solid #000;
-  background: #FFD34D;
-}
-
-.cria{
-  padding-top: 5%;
-  padding-left: 5%;
-  color: #FFF;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-video{
-  display: flex;
-  padding: 2vh;
-  border: 3px solid #000;
-  background: #FFD34D;
-  width: 55%;
-}
-
-.container1{
-  padding-top: 5%;
-  padding-left: 5%;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: auto; 
-}
-
-.container2{
-  padding-top: 2%;
-  padding-left: 5%;
-  display: flex;
-  flex-direction: row;
-  width: 95%;
-  height: auto;
-
-}
-
-.criadores_intro{
-  display: flex;
-  margin: 20px;
-  padding: 2vh;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 20%;
-  height: auto;
-  border: 3px solid #000;
-  background: #FFD34D;
-}
-
-.criadores_intro img{
-  width: 100%;
-  height: 100%;
-}
-
-
-@media (max-width: 600px) {
-  header, .title, .auth-links, .estradinha, .intro, .texto_intro, .cria, .videos_intro {
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
-      width: 100%;
-  }
-
-  .title img, .videos_intro video {
-      max-width: 100%;
-      height: auto;
-  }
-
-  .login a, .cadastro a {
-      font-size: 1.2rem; /* Aumentar o tamanho para telas menores */
-  }
-
-  .texto_intro, .cria {
-      width: 90%; /* Ajustar a largura para o contêiner */
-      text-align: center; /* Centralizar o texto */
-  }
-
-  .intro h1, .texto_intro h1, .cria h1 {
-      font-size: 1.5rem; /* Aumentar o tamanho da fonte */
-  }
-
-  .container1{
-    padding-top: 10%;
-    padding-left: 5%;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-
   }
 }

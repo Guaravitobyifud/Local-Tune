@@ -6,29 +6,42 @@ const {tb_usuario} = require ('./modeloUsuario')
 
  
 const tb_curtida = connSequelize.define('tb_curtida', {
-    cd_publicacao: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'tb_publicacao',
-            key: 'cd_publicacao'
-        },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-    },
     cd_curtida: {
-        type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+    },
+    cd_usuario: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
         references: {
             model: 'tb_usuario',
             key: 'cd_usuario'
         },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    },
+    cd_publicacao: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'tb_publicacao',
+            key: 'cd_publicacao'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     }
-}, {
-    tableName: 'tb_curtida',
-    timestamps: false
-});
+},_padraoTableBDExistence('tb_curtida'));
 
-module.exports = {tb_curtida};
+// Relacionamento entre tb_usuario e tb_curtida
+tb_usuario.hasMany(tb_curtida, { foreignKey: 'cd_usuario' });
+tb_curtida.belongsTo(tb_usuario, { foreignKey: 'cd_usuario' });
+
+// Relacionamento entre tb_publicacao e tb_curtida
+tb_publicacao.hasMany(tb_curtida, { foreignKey: 'cd_publicacao' });
+tb_curtida.belongsTo(tb_publicacao, { foreignKey: 'cd_publicacao' });
+
+module.exports = {
+    tb_curtida
+};

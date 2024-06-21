@@ -24,15 +24,14 @@ exports.cadastroUsuario = async (req, res) => {
                 // Criptografar a senha
                 const hashSenha = await bcrypt.hash(senha, 10)
 
-                const enderecoCriado = await tb_endereco.create({
-                    nm_endereco: endereco
-                });
+                
 
                 const userCriado = await tb_usuario.create({
                     cd_tipoUsuario: 1,
                     nm_email: email,
                     nm_usuario: nome,
-                    cd_endereco: enderecoCriado.cd_endereco,
+                    cd_endereco: null,
+                    nm_cidade: endereco,
                     cd_contato: null,
                     cd_senha: hashSenha, // Armazenar o hash da senha
                     cd_regsLegal: null
@@ -78,7 +77,7 @@ exports.cadastroUsuario = async (req, res) => {
 exports.cadastroMusico = async (req, res) => {
 
     try {
-        const { nome, email, senhaM, senhaM2, cpf, cellfone, option } = req.body
+        const { nome, email, senhaM, senhaM2, cpf, cellfone, option, endereco } = req.body
 
         // Verificar se o e-mail já está em uso
         const usuarioExistente = await tb_usuario.findOne({ where: { nm_email: email } })
@@ -102,14 +101,13 @@ exports.cadastroMusico = async (req, res) => {
                         nr_celular: cellfone
                     })
 
-                    const enderecoCriado = await tb_endereco.create({
-                        nm_endereco: endereco
-                    });
+                    
 
                     const userCriado = await tb_usuario.create({
                         cd_tipoUsuario: 2,
                         nm_email: email,
                         nm_usuario: nome,
+                        nm_cidade: endereco,
                         cd_regsLegal: registroLegal.cd_regsLegal,
                         cd_endereco: enderecoCriado.cd_endereco,
                         cd_contato: contatoCriado.cd_contato,
@@ -148,7 +146,7 @@ exports.cadastroMusico = async (req, res) => {
 exports.cadastroStbl = async (req, res) => {
 
     try {
-        const { nome, email, senha, senha2, cnpj, endereco, cellfone, option } = req.body
+        const { nome, email, senha, senha2, cnpj, endereco, cellfone, option, cidade } = req.body
 
         // Verificar se o e-mail já está em uso
         const usuarioExistente = await tb_usuario.findOne({ where: { nm_email: email } })
@@ -180,6 +178,7 @@ exports.cadastroStbl = async (req, res) => {
                         cd_tipoUsuario: 3,
                         nm_email: email,
                         nm_usuario: nome,
+                        nm_cidade: cidade,
                         cd_endereco: enderecoCriado.cd_endereco,
                         cd_regsLegal: registroLegal.cd_regsLegal,
                         cd_contato: contatoCriado.cd_contato,

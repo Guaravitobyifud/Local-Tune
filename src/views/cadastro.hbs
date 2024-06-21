@@ -1,230 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>LocalTune</title>
   <link rel="icon" type="images/logo_topo.png" href="/images/logo_topo.png">
-  <link href="../public/cadastro.css" rel="stylesheet">
+  <link href="./cadastro.css" rel="stylesheet">
+  <link href="./estilo.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.2.0"></script>
-  <style>
-    body {
-  font-family: 'Poppins', sans-serif;
-  background-image: url('/images/cell-light.702c828c.svg');
-  background-repeat: repeat;
-  background-size: 35px 35px;
-  background-color: #2B282B;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Evitar overflow horizontal */
-  box-sizing: border-box;
-}
 
-
-/* Menu Lateral */
-.lateral-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 250px;
-    background-color: #ffcc00;
-    color: #000;
-    padding-top: 20px;
-    border-right: 5px solid #000;
-    transition: transform 0.3s ease;
-}
-
-.lateral-menu .menu-header {
-    text-align: center;
-    padding-bottom: 20px;
-}
-
-.lateral-menu .logo {
-    width: 100px;
-    height: auto;
-    border: 3px solid #000;
-    border-radius: 10px;
-}
-
-.lateral-menu .menu-content {
-    padding: 0 20px;
-}
-
-.lateral-menu .menu-item {
-    margin-bottom: 20px;
-}
-
-.lateral-menu .menu-item a {
-    color: #000;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.lateral-menu .menu-item a:hover {
-    text-decoration: underline;
-}
-
-/* Container */
-.container {
-    margin-left: 270px;
-    padding: 20px;
-}
-
-/* Perfil */
-.perfil2 {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.perfil {
-    background-color: #fff;
-    border: 3px solid #000;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 10px 10px 0 #000;
-}
-
-.perfil .img_per/* Estilo geral */
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
-    color: #000;
-    margin: 0;
-    padding: 0;
-}
-
-/* Cabeçalho */
-header {
-  width: 100%;
-    background-color: #303440;
-    color: rgb(255, 247, 240);
-    padding: 20px;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header a {
-  padding: 5px;
-  text-decoration: none;
-  color: #fff;
-  margin: 10px;
-  text-decoration: none;
-  border: 2px solid #FFF;
-  border-radius: 7px;
-  background: #2B282B;
-  transition: background-color 0.3s ease;
-}
-
-header a:hover {
-  color: #2B282B;
-  background: #fff;
-}
-
-section {
-  margin-top: 2vh;
-    margin-left: 25%;
-    max-width: 50%;
-    padding: 20px;
-    background-color: #fff;
-    border: 5px solid #000;
-    border-radius: 20px;
-    box-shadow: 10px 10px 0 #000;
-}
-
-section h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-    border-bottom: 3px solid #000;
-    padding-bottom: 10px;
-}
-
-/* Formulário */
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-form label {
-  margin-top: 5px;
-    font-size: 18px;
-    margin-bottom: 5px;
-    font-weight: 700;
-}
-
-form input[type="text"],
-form input[type="email"],
-form input[type="password"],
-form select {
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 3px solid #000;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
-form button {
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: 700;
-    background-color: #ffcc00;
-    border: 3px solid #000;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-form button:hover {
-    background-color: #000;
-    color: #fff;
-}
-
-/* Mensagem de erro */
-.erroContainer {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 3px solid #f5c6cb;
-    border-radius: 10px;
-    display: none;
-}
-
-/* Mensagem de sucesso */
-.message {
-    font-size: 16px;
-    color: green;
-}
-
-
-  </style>
   <script>
-  window.onload = function() {
-    var cellField = document.getElementById('cellfone');
-    VMasker(cellField).maskPattern("(99) 99999-9999");
-  }
-</script>
+    window.onload = function() {
+      var cellField = document.getElementById('cellfone');
+      VMasker(cellField).maskPattern("(99) 99999-9999");
+    }
+  </script>
 </head>
 
 <body>
   <header>
-    <div class="voltar">
-      <a href="/">Voltar</a>
+    <button class="bo1" onclick="window.history.back()">Voltar</button>
+    <div class="bo1">
+      <a href="/cadastroMusico" class="bo2">Cadastro Musico</a>
     </div>
-    <div class="voltar">
-      <a href="/cadastroMusico">Cadastro Musico</a>
+    <div class="bo1">
+      <a href="/cadastroSTBL" class="bo2">Cadastro Estabelecimento</a>
     </div>
-    <div class="voltar">
-      <a href="/cadastroSTBL">Cadastro Estabelecimento</a>
-    </div>
+     <img src="/images/baixados.svg" class="logo">
   </header>
 
-  <section id="cadastro">
+  <section id="cadastro" class="cadastras">
     <div id="erroContainer" class="erroContainer"></div>
     <h1>Cadastro de Usuário</h1>
     <form action="/auth/cadastrouser" method="POST" id="cadastro-form">
@@ -235,27 +41,33 @@ form button:hover {
       <input type="email" id="email" name="email" required>
       <br>
       <label for="cellfone">Telefone:</label>
-      <input type="text" id="cellfone" name="cellfone"required>
-      <label for="cellfone">Cidade:</label>
-      <input type="text" id="Cidade" name="endereco"required>
-       <br>
-        <input type="checkbox"  value = "1" name="musicas">Rock
-        <input type="checkbox" value = "2" name="musicas">Jazz
-        <input type="checkbox" value = "3" name="musicas">Samba
-        <input type="checkbox" value = "4" name="musicas">MPB
-        
-      </select>
+      <input type="text" id="cellfone" name="cellfone" required>
+      <br>
+      <label for="Cidade">Cidade:</label>
+      <input type="text" id="Cidade" name="endereco" required>
+      <br>
+      <label for="musicas">Gêneros Musicais:</label>
+      <div>
+      <input type="checkbox" value="1" name="musicas">Rock
+      <input type="checkbox" value="2" name="musicas">Jazz
+      <input type="checkbox" value="3" name="musicas">Samba
+      <input type="checkbox" value="4" name="musicas">MPB
+      </div>
       <br>
       <label for="senha">Senha:</label>
       <input type="password" id="senha" name="senha" required>
       <br>
-      <label for="senha">Confirmar Senha:</label>
-      <input type="password" id="senha" name="senha2" required>
+      <label for="senha2">Confirmar Senha:</label>
+      <input type="password" id="senha2" name="senha2" required>
       <br>
       <button type="submit">Cadastrar</button>
     </form>
     <p>{{message}}</p>
   </section>
+
+  <script>
+    // Se houver scripts adicionais, coloque aqui
+  </script>
 </body>
 
 </html>

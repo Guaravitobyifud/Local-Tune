@@ -102,15 +102,17 @@ CREATE TABLE tb_publicacao_arquivos (
 );
 
 CREATE TABLE tb_curtida(
-	cd_publicacao INT,
-    cd_curtida INT,
-
-	PRIMARY KEY (cd_publicacao, cd_curtida),
+    cd_curtida INT NOT NULL AUTO_INCREMENT,
+    cd_publicacao INT,
+    cd_usuario INT,
+    
+    PRIMARY KEY (cd_curtida),
 	CONSTRAINT fk_publicacao FOREIGN KEY (cd_publicacao) REFERENCES tb_publicacao(cd_publicacao) ON DELETE CASCADE,
-    CONSTRAINT fk_curtida FOREIGN KEY (cd_curtida) REFERENCES tb_usuario(cd_usuario) ON DELETE CASCADE
+    CONSTRAINT fk_curtida FOREIGN KEY (cd_usuario) REFERENCES tb_usuario(cd_usuario) ON DELETE CASCADE
 );
 
 CREATE TABLE tb_seguindoSeguidor (
+id INT NOT NULL AUTO_INCREMENT primary key,
 cd_seguindo INT,
 cd_seguidor INT,
 

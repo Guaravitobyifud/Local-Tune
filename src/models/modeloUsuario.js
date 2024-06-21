@@ -73,6 +73,7 @@ tb_usuario.belongsTo(tb_contato, {foreignKey: 'cd_contato'});
 tb_regsLegal.hasMany(tb_usuario, {foreignKey: 'cd_regsLegal'});
 tb_usuario.belongsTo(tb_regsLegal, {foreignKey: 'cd_regsLegal'});
 
+
 module.exports = {
     tb_usuario,
 };

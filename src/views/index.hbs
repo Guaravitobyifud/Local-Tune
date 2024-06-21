@@ -3,158 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Principal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-  <div id="esquerda">
-
-    <button id="menu-hamburguer" class="menu" onclick="barra()">
-       <span class="hamburguer"></span>
-     </button>
-    
-    <div id="conteudo-barra">
-
-    <div class="avatar">
-      <img src="avatar.png">
-    </div>
-    <li><a class="cadastro" href="cadastro.html"> cadastro</a> </li>
-    <li><a class="login" href="login.html"> Login </a></li>
-      
-    </div>
-    </div>
-
-  <div id="direita">
-    <main>
-      <div id="divcao">
-        
-        <section id="home">
-          <header>
-              <div class="title">
-                  <img src="Local-Tune.png" alt="Local-Tune">
-              </div>
-              <div class="auth-links">
-                  <div class="login">
-                      <a href="#">Login</a>
-                  </div>
-                  <div class="cadastro">
-                      <a href="#">Cadastro</a>
-                  </div>
-              </div>
-          </header>
-          <div id="img_topo">
-          </div>
-          <div id="topo">
-            <iron-selector selected="0" class="carousel" role="navigation">
-              <a href="#" class="drag-item">Tudo</a>
-              <a href="#" class="drag-item">Musicos</a>
-              <a href="#" class="drag-item">Locais</a>
-              <a href="#" class="drag-item">fã base</a>
-            </iron-selector>
-          </div>
-          
-          <ul class="grid-container">
-
-            <!-- modelo de postagem  -->
-            
-              <a class="postagem" href="#">
-                <div class="imagem">
-                  <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Imagem 1">  
-                </div>
-                <div class="info_post">
-                  <h6>Nome de quem publicou</h6>
-                  <h6>Título da Postagem</h6>
-                  <p>Descrição da postagem Descrição da postagem
-                  Descrição da postagemDescrição da postagem
-                  vv
-                  vvDescrição da postagem</p>
-                </div>
-              </a>
-
-
-           
-          </ul>
-        </section>
-        <div class="usuario">
-          <div class="usuario_avatar">
-            <img src="avatar.png">
-          </div>
-        </div>
-       </main>
-</div>
-{{!-- ------------------------------------------------------------------------------------------- --}}
-  <script>
-    function barra() {
-    var menu = document.getElementById('menu-hamburguer');
-    menu.classList.toggle('active');
-
-    if (menu.classList.contains('active')) {
-        document.getElementById("esquerda").style.width = "calc(40% - 100px)";
-      document.getElementById("esquerda").style.background = "#FFD34D";
-        document.getElementById("conteudo-barra").style.display = "block";
-    } else {
-        document.getElementById("esquerda").style.width = "60px";
-      document.getElementById("esquerda").style.background = "#303440";
-        document.getElementById("conteudo-barra").style.display = "none";
-    }
-}
-// -=====================================================-
-
-let isDragging = false;
-let startDragX = 0;
-let currentTransform = 0;
-
-const carousel = document.querySelector('.carousel');
-const dragItems = document.querySelectorAll('.drag-item');
-
-dragItems.forEach(item => {
-  item.addEventListener('mousedown', function(event) {
-    // Impede ação padrão de drag do navegador
-    event.preventDefault();
-    isDragging = true;
-    startDragX = event.clientX;
-    document.addEventListener('mousemove', dragging);
-  });
-});
-
-window.addEventListener('mouseup', function(event) {
-  if (isDragging) {
-    document.removeEventListener('mousemove', dragging);
-    let dragDistance = event.clientX - startDragX;
-    currentTransform += dragDistance;
-    carousel.style.transform = `translateX(${currentTransform}px)`;
-    isDragging = false;
-  }
-});
-
-function dragging(event) {
-  if (isDragging) {
-    let dragDistance = event.clientX - startDragX;
-    let newTransform = currentTransform + dragDistance;
-    carousel.style.transform = `translateX(${newTransform}px)`;
-  }
-}
-  </script>
-</body>
-</html>
-
-<!-- <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LocalTune</title>
     <link rel="stylesheet" href="/estilo.css">
     <link rel="stylesheet" href="/publi.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <section class="lateral-menu" id="lateralMenu" {{#if menuHidden}}hidden{{/if}}>
         <div class="menu-header">
-            {{!-- <div id="menuButton" class="menu-button">x</div> --}}
-            {{!-- <br> --}}
-            <h2 class="menu-titulo">LocalTune</h2>
+        <img src="/images/baixados.svg" class="logo">
         </div>
         <div class="menu-content">
             <div class="menu-item"><a href="/home">Home</a></div>
@@ -164,93 +22,98 @@ function dragging(event) {
         </div>
     </section>
     <header>
-         <div class="title">
-                  <img src="Local-Tune.png" alt="Local-Tune">
-              </div>
-              <div class="auth-links">
-                  <div class="login">
-                      <a href="#">Login</a>
-                  </div>
-                  <div class="cadastro">
-                      <a href="#">Cadastro</a>
-                  </div>
-              </div>
-    </header>
- <section class="conteudo">
-        <h1>Publicações Recentes</h1>
-{{#each publicacoes}}
-    <div class="publicacao_completa">
-        <div class="publi-ft-perfil">
-            <img src="{{usuario.fotoPerfilUri}}" class="img-perfil-publi">
-            <p>{{usuario.nm_usuario}}</p>
+        <div class="text_left"></div>
+        <div class="buscar">
+            <div class="bo1"><a class="bo2" href="/login"><p class="bo3">Login</p></a></div>
+            <div class="bo1a"><a class="bo2" href="/cadastro"><p class="bo3">Cadastro</p></a></div>
         </div>
-        <div id="carrosselPublicacao{{@index}}" class="carousel">
-             <button class="carousel-control-prev" role="button">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </button>
-            {{#each tb_publicacao.tb_publicacao_arquivos}}
-                <div class="carousel-item {{#if @first}}active{{/if}}">
-                    {{#if (eq this.tipo 'image')}}
-                        <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
-                    {{/if}}
-                    {{#if (eq this.tipo 'video')}}
-                        <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
-                            <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
-                            Seu navegador não suporta o elemento de vídeo.
-                        </video>
-                    {{/if}}
+    </header>
+    <section class="conteudo">
+        {{#each publicacoes}}
+            <div class="publicacao_completa">
+                <div class="publi-perfil">
+                    <div class="publi-ft-perfil"> 
+                        {{#if usuario.fotoPerfilUri}}
+                            <img src="{{usuario.fotoPerfilUri}}" class="img-perfil-publi">
+                        {{else}}
+                            <img src="./images/dflt.jpeg" class="img-perfil-publi">
+                        {{/if}}
+                    </div>
+                    <p>{{usuario.nm_usuario}}</p>
                 </div>
-            {{/each}}
-             <button class="carousel-control-next" role="button">
+                <div class="publi-perfil-2"></div>
+                <div id="carrosselPublicacao{{@index}}" class="carousel">
+                    <button class="carousel-control-prev" role="button" data-target="#carrosselPublicacao{{@index}}" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                    <div class="carousel-inner">
+                        {{#each tb_publicacao_arquivos}}
+                            <div class="carousel-item {{#if @first}}active{{/if}}">
+                                {{#if (eq this.tipo 'image')}}
+                                    <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
+                                {{/if}}
+                                {{#if (eq this.tipo 'video')}}
+                                    <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
+                                        <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
+                                        Seu navegador não suporta o elemento de vídeo.
+                                    </video>
+                                {{/if}}
+                            </div>
+                        {{/each}}
+                    </div>
+                    <button class="carousel-control-next" role="button">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
-            </button>
-        </div>
-        <p>{{ds_publicacao}}</p>
-    </div>
-{{/each}}
+                    </button>
+                </div>
+                <div class="descricao">
+                    <p>{{ds_publicacao}}</p>
+                </div>
+            </div>
+        {{/each}}
     </section>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const prevButton = document.querySelector('.carousel-control-prev');
-            const nextButton = document.querySelector('.carousel-control-next');
-            const carouselInner = document.querySelector('.carousel-inner');
-            const items = document.querySelectorAll('.carousel-item');
-            let currentIndex = 0;
+            document.querySelectorAll('.carousel').forEach(carousel => {
+                const prevButton = carousel.querySelector('.carousel-control-prev');
+                const nextButton = carousel.querySelector('.carousel-control-next');
+                const items = carousel.querySelectorAll('.carousel-item');
+                let currentIndex = 0;
 
-            if (items.length <= 1) {
-                prevButton.classList.add('hidden');
-                nextButton.classList.add('hidden');
-            }
-
-            function updateCarousel() {
-                const offset = -currentIndex * 100;
-                carouselInner.style.transform = `translateX(${offset}%)`;
-            }
-
-            prevButton.addEventListener('click', function() {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                } else {
-                    currentIndex = items.length - 1;
+                if (items.length <= 1) {
+                    prevButton.style.display = 'none';
+                    nextButton.style.display = 'none';
                 }
+
+                function updateCarousel() {
+                    items.forEach((item, index) => {
+                        item.classList.toggle('active', index === currentIndex);
+                    });
+                }
+
+                prevButton.addEventListener('click', function() {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                    } else {
+                        currentIndex = items.length - 1;
+                    }
+                    updateCarousel();
+                });
+
+                nextButton.addEventListener('click', function() {
+                    if (currentIndex < items.length - 1) {
+                        currentIndex++;
+                    } else {
+                        currentIndex = 0;
+                    }
+                    updateCarousel();
+                });
+
                 updateCarousel();
             });
-
-            nextButton.addEventListener('click', function() {
-                if (currentIndex < items.length - 1) {
-                    currentIndex++;
-                } else {
-                    currentIndex = 0;
-                }
-                updateCarousel();
-            });
-
-            updateCarousel();
         });
-    </script>
-    <script>
+
         async function toggleCurtida(cd_publicacao) {
             try {
                 const response = await fetch(`/curtir/${cd_publicacao}`, {
@@ -261,7 +124,6 @@ function dragging(event) {
                 });
                 const data = await response.json();
                 alert(data.message);
-                // Atualize o estado do botão (curtido/não curtido) conforme necessário
                 updateCurtidaButton(cd_publicacao);
             } catch (error) {
                 console.error('Erro ao curtir/descurtir a publicação:', error);
@@ -269,33 +131,11 @@ function dragging(event) {
         }
 
         function updateCurtidaButton(cd_publicacao) {
-            // Aqui você pode atualizar a aparência do botão com base na curtida
             const button = document.getElementById(`curtida-btn-${cd_publicacao}`);
             if (button) {
                 button.textContent = button.textContent === 'Curtir' ? 'Descurtir' : 'Curtir';
             }
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Simulando a renderização de algumas publicações
-            const publicacoes = [
-                { cd_publicacao: 1, conteudo: 'Publicação 1' },
-                { cd_publicacao: 2, conteudo: 'Publicação 2' },
-                { cd_publicacao: 3, conteudo: 'Publicação 3' }
-            ];
-
-            const publicacoesContainer = document.getElementById('publicacoes');
-            publicacoes.forEach(pub => {
-                const publiDiv = document.createElement('div');
-                publiDiv.innerHTML = `
-                    <p>${pub.conteudo}</p>
-                    <button id="curtida-btn-${pub.cd_publicacao}" onclick="toggleCurtida(${pub.cd_publicacao})">Curtir</button>
-                `;
-                publicacoesContainer.appendChild(publiDiv);
-            });
-        });
     </script>
 </body>
-</html> -->
-
-
+</html>

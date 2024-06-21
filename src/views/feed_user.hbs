@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
     <link rel="stylesheet" href="/estilo.css">
     <link rel="stylesheet" href="/publi.css">
 </head>
+
 <body>
     <section class="lateral-menu" id="lateralMenu" {{#if menuHidden}}hidden{{/if}}>
         <div class="menu-header">
-        <img src="/images/baixados.svg" class="logo">
+            <img src="/images/baixados.svg" class="logo">
         </div>
         <div class="menu-content">
             <div class="menu-item"><a href="/homeusu">Perfil</a></div>
@@ -22,117 +24,169 @@
     <header>
         <div class="text_left"></div>
         <div class="buscar">
-            <div class="bo1a"><a class="bo2" href="/logout"><h3 class="bo3">Logout</h3></a></div>
+            <div class="publi-ft-perfil2"><a href="/homeUsu">{{#if img}}
+                    <img src="{{img}}" class="img-perfil-publi">
+                    {{else}}
+                    <img src="./images/dflt.jpeg" class="img-perfil-publi">
+                    {{/if}}</a></div>
+            <br><br>
         </div>
     </header>
     <section class="conteudo">
         {{#each publicacoes}}
-            <div class="publicacao_completa">
-                <div class="publi-perfil">
-                    <div class="publi-ft-perfil"> 
-                        {{#if usuario.fotoPerfilUri}}
-                            <img src="{{usuario.fotoPerfilUri}}" class="img-perfil-publi">
-                        {{else}}
-                            <img src="./images/dflt.jpeg" class="img-perfil-publi">
+        <div class="publicacao_completa">
+            <div class="publi-perfil">
+                <div class="publi-ft-perfil">
+                    {{#if usuario.fotoPerfilUri}}
+                    <img src="{{usuario.fotoPerfilUri}}" class="img-perfil-publi">
+                    {{else}}
+                    <img src="./images/dflt.jpeg" class="img-perfil-publi">
+                    {{/if}}
+                </div>
+                <p>{{usuario.nm_usuario}}</p>
+{{#if (eq usuario.cd_usuario cd_user)}}
+    <!-- Não mostra o botão de seguir -->
+{{else}}
+    <!-- Mostra o botão de seguir -->
+    <button id="seguir-btn-{{ cd_usuario }}" onclick="toggleSeguir({{ cd_usuario }})">
+    Seguir
+</button>
+{{/if}}
+            </div>
+            <div class="publi-perfil-2"></div>
+            <div id="carrosselPublicacao{{@index}}" class="carousel">
+                <button class="carousel-control-prev" role="button" data-target="#carrosselPublicacao{{@index}}"
+                    data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </button>
+                <div class="carousel-inner">
+                    {{#each tb_publicacao_arquivos}}
+                    <div class="carousel-item {{#if @first}}active{{/if}}">
+                        {{#if (eq this.tipo 'image')}}
+                        <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
+                        {{/if}}
+                        {{#if (eq this.tipo 'video')}}
+                        <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
+                            <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
+                            Seu navegador não suporta o elemento de vídeo.
+                        </video>
                         {{/if}}
                     </div>
-                    <p>{{usuario.nm_usuario}}</p>
+                    {{/each}}
                 </div>
-                <div class="publi-perfil-2"></div>
-                <div id="carrosselPublicacao{{@index}}" class="carousel">
-                    <button class="carousel-control-prev" role="button" data-target="#carrosselPublicacao{{@index}}" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </button>
-                    <div class="carousel-inner">
-                        {{#each tb_publicacao_arquivos}}
-                            <div class="carousel-item {{#if @first}}active{{/if}}">
-                                {{#if (eq this.tipo 'image')}}
-                                    <img src="{{this.dataUri}}" alt="Imagem da Publicação" class="publi_arq">
-                                {{/if}}
-                                {{#if (eq this.tipo 'video')}}
-                                    <video class="publicacao_video publi_arq" autoplay controlsList="nodownload">
-                                        <source src="{{this.dataUri}}" type="{{this.tipo_arquivo}}">
-                                        Seu navegador não suporta o elemento de vídeo.
-                                    </video>
-                                {{/if}}
-                            </div>
-                        {{/each}}
-                    </div>
-                    <button class="carousel-control-next" role="button" data-target="#carrosselPublicacao{{@index}}" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </button>
-                </div>
-                <div class="descricao">
-                    <p>{{ds_publicacao}}</p>
-                </div>
+                <button class="carousel-control-next" role="button" data-target="#carrosselPublicacao{{@index}}"
+                    data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </button>
             </div>
+            <div class="descricao">
+                <button id="curtida-btn-{{cd_publicacao}}" class="curtida-btn"
+                    onclick="toggleCurtida({{cd_publicacao}})">
+                    {{#if curtido}}Descurtir{{else}}Curtir{{/if}}
+                </button>
+                <p>{{ds_publicacao}}</p>
+            </div>
+        </div>
         {{/each}}
     </section>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.carousel').forEach(carousel => {
-                const prevButton = carousel.querySelector('.carousel-control-prev');
-                const nextButton = carousel.querySelector('.carousel-control-next');
-                const items = carousel.querySelectorAll('.carousel-item');
-                let currentIndex = 0;
+         document.addEventListener('DOMContentLoaded', function() {
+    const prevButton = document.querySelector('.carousel-control-prev');
+    const nextButton = document.querySelector('.carousel-control-next');
+    const carouselInner = document.querySelector('.carousel-inner');
+    const items = document.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
 
-                if (items.length <= 1) {
-                    prevButton.style.display = 'none';
-                    nextButton.style.display = 'none';
-                }
+    if (items.length <= 1) {
+        prevButton.classList.add('hidden');
+        nextButton.classList.add('hidden');
+    }
 
-                function updateCarousel() {
-                    items.forEach((item, index) => {
-                        item.classList.toggle('active', index === currentIndex);
-                    });
-                }
+    function updateCarousel() {
+        const offset = -currentIndex * 100;
+        carouselInner.style.transform = `translateX(${offset}%)`;
+    }
 
-                prevButton.addEventListener('click', function() {
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                    } else {
-                        currentIndex = items.length - 1;
-                    }
-                    updateCarousel();
-                });
+    prevButton.addEventListener('click', function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = items.length - 1;
+        }
+        updateCarousel();
+    });
 
-                nextButton.addEventListener('click', function() {
-                    if (currentIndex < items.length - 1) {
-                        currentIndex++;
-                    } else {
-                        currentIndex = 0;
-                    }
-                    updateCarousel();
-                });
+    nextButton.addEventListener('click', function() {
+        if (currentIndex < items.length - 1) {
+            currentIndex++;
+        } else {
+            currentIndex = 0;
+        }
+        updateCarousel();
+    });
 
-                updateCarousel();
-            });
-        });
+    updateCarousel();
+});
+
+
+
+
 
         async function toggleCurtida(cd_publicacao) {
-            try {
-                const response = await fetch(`/curtir/${cd_publicacao}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const data = await response.json();
-                alert(data.message);
-                updateCurtidaButton(cd_publicacao);
-            } catch (error) {
-                console.error('Erro ao curtir/descurtir a publicação:', error);
+    try {
+        const response = await fetch(`/curtir/${cd_publicacao}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             }
-        }
+        });
+        const data = await response.json();
+        updateCurtidaButton(cd_publicacao, data.action); // Atualiza o texto do botão após a interação
+    } catch (error) {
+        console.error('Erro ao curtir/descurtir a publicação:', error);
+    }
+}
 
-        function updateCurtidaButton(cd_publicacao) {
-            const button = document.getElementById(`curtida-btn-${cd_publicacao}`);
-            if (button) {
-                button.textContent = button.textContent === 'Curtir' ? 'Descurtir' : 'Curtir';
+function updateCurtidaButton(cd_publicacao, action) {
+    const button = document.getElementById(`curtida-btn-${cd_publicacao}`);
+    if (button) {
+        console.log(`Botão encontrado para cd_publicacao ${cd_publicacao}:`, button);
+        button.textContent = action === 'like' ? 'Descurtir' : 'Curtir';
+    } else {
+        console.log(`Botão não encontrado para cd_publicacao ${cd_publicacao}`);
+    }
+}
+</script>
+<script>
+    async function toggleSeguir(cd_usuario) {
+    try {
+        const response = await fetch(`/seguir/${cd_usuario}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             }
-        }
-    </script>
+        });
+        const data = await response.json();
+        alert(data.message); // Exibe a mensagem retornada pelo servidor
+
+        // Atualiza o texto do botão após a interação
+        updateSeguirButton(cd_usuario, data.action);
+    } catch (error) {
+        console.error('Erro ao seguir/desseguir o usuário:', error);
+    }
+}
+
+function updateSeguirButton(cd_usuario, action) {
+    const button = document.getElementById(`seguir-btn-${cd_usuario}`);
+    if (button) {
+        button.textContent = action === 'follow' ? 'Seguindo' : 'Seguir';
+    }
+}
+</script>
+
+    
 </body>
+
 </html>

@@ -14,9 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-    secret: 'Fridinha_Fofinha',
-    saveUninitialized: false,
+    secret: 'fridinha_fofinha',
     resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Se estiver usando HTTPS, configure para true
 }));
 
 // Configuração de diretórios de visualização e mecanismo de visualização
