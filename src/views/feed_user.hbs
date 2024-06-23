@@ -161,29 +161,26 @@ function updateCurtidaButton(cd_publicacao, action) {
 </script>
 <script>
     async function toggleSeguir(cd_usuario) {
-    try {
-        const response = await fetch(`/seguir/${cd_usuario}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const data = await response.json();
-        alert(data.message); // Exibe a mensagem retornada pelo servidor
-
-        // Atualiza o texto do botão após a interação
-        updateSeguirButton(cd_usuario, data.action);
-    } catch (error) {
-        console.error('Erro ao seguir/desseguir o usuário:', error);
+        try {
+            const response = await fetch(`/seguir/${cd_usuario}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            updateSeguirButton(cd_usuario, data.action);
+        } catch (error) {
+            console.error('Erro ao seguir/desseguir o usuário:', error);
+        }
     }
-}
 
-function updateSeguirButton(cd_usuario, action) {
-    const button = document.getElementById(`seguir-btn-${cd_usuario}`);
-    if (button) {
-        button.textContent = action === 'follow' ? 'Seguindo' : 'Seguir';
+    function updateSeguirButton(cd_usuario, action) {
+        const button = document.getElementById(`seguir-btn-${cd_usuario}`);
+        if (button) {
+            button.textContent = action === 'follow' ? 'Seguindo' : 'Seguir';
+        }
     }
-}
 </script>
 
     

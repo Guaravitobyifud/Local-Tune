@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { multerConfig } = require('../middleware/multer');
+const { multerConfig, multerConfig2 } = require('../middleware/multer');
 const uploadController = require('../controllers/ControllerIMG');
 const PubliController = require('../controllers/controllerPost');
 const { tb_usuario } = require('../models/modeloUsuario');
@@ -11,7 +11,7 @@ const { tb_publicacao_arquivos } = require('../models/modeloPubliArquivos');
 const { Model, Op, Sequelize } = require('sequelize')
 const { connSequelize } = require('../../config/coneccao')
 const { tb_curtida } = require('../models/modeloCurtida');
-const { tb_seguindoSeguidor } = require('../models/modeloSeguindo');
+const { tb_seguindoSeguidor } = require('../models/modeloSeguindoSeguidor');
 const session = require('express-session');
 
 const pesquisa = require('../controllers/ControllerPesquisa');
@@ -308,45 +308,36 @@ router.post('/curtir/:cd_publicacao', async (req, res) => {
 });
 
 router.post('/seguir/:cd_usuario', async (req, res) => {
-    const cd_user = req.params.cd_usuario;
-    const cd_usuari = req.session.dadosUsuario.cd_usuario;
+    const cd_seguindo = req.params.cd_usuario;
+    const cd_seguidor = req.session.dadosUsuario.cd_usuario;
 
     try {
-        // Verificar se usuário está autenticado
-        if (!cd_usuari) {
-            return res.status(401).json({ message: 'Usuário não autenticado.' });
-        }
-
-        // Verificar se cd_usuario está presente
-        if (!cd_user) {
-            return res.status(400).json({ message: 'Parâmetros inválidos.' });
-        }
-
-        // Verificar se já está seguindo o usuário
-        const seguindo = await tb_seguindoSeguidor.findOne({
+        // Verificar se já segue
+        const seguindoExistente = await tb_seguindoSeguidor.findOne({
             where: {
-                cd_seguindo: cd_user,
-                cd_seguidor: cd_usuari
+                cd_seguindo,
+                cd_seguidor
             }
         });
 
-        if (seguindo) {
-            await seguindo.destroy();
-            res.json({ action: 'unfollow' });
+        if (seguindoExistente) {
+            // Se já segue, desfaz o seguimento
+            await seguindoExistente.destroy();
+            res.json({ message: 'Você parou de seguir este usuário.', action: 'unfollow' });
+        } else {
+            // Se não segue, cria um novo seguimento
+            await tb_seguindoSeguidor.create({
+                cd_seguindo,
+                cd_seguidor
+            });
+            res.json({ message: 'Você começou a seguir este usuário.', action: 'follow' });
         }
-
-        // Criar uma nova entrada na tabela de seguindo/seguidor
-        await tb_seguindoSeguidor.create({
-            cd_seguindo: cd_usuario,
-            cd_seguidor: usuarioLogado.cd_usuario
-        });
-
-        res.status(201).json({ message: 'Agora você está seguindo este usuário.' });
     } catch (error) {
-        console.error('Erro ao tentar seguir o usuário:', error);
-        res.status(500).json({ message: 'Erro ao tentar seguir o usuário.' });
+        console.error('Erro ao tentar seguir/desseguir o usuário:', error);
+        res.status(500).send('Erro ao tentar seguir/desseguir o usuário.');
     }
 });
+
 
 
 module.exports = router;
@@ -358,7 +349,6 @@ router.get('/logout', async (req, res) => {
             return res.status(500).send('Erro ao fazer logout');
         }
         res.redirect('/');
-        console.log(req.session.dadosUsuario)
     });
 });
 module.exports = router;
