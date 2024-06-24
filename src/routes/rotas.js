@@ -86,6 +86,50 @@ router.get("/homeUsu", userAuth, async (req, res) => {
     }
 });
 
+router.get("/PerfilUsu/:cd_usuario", async (req, res) => {
+    try {
+        const usuario = await tb_usuario.findOne({ where: { cd_usuario: req.params.cd_usuario } });
+        const img = await tb_img.findOne({ where: { cd_user: req.params.cd_usuario } });
+
+        const publicacoesComTipo = await tb_publicacao.findAll({
+            include: [{
+                model: tb_publicacao_arquivos,
+                as: 'tb_publicacao_arquivos'
+            }],
+            where: { cd_usuario: req.params.cd_usuario }
+        });
+
+        const publicacoesComTipoEArquivos = publicacoesComTipo.map(publi => {
+            const arquivosComTipo = publi.tb_publicacao_arquivos.map(arquivo => {
+                const base64Data = Buffer.from(arquivo.arquivos).toString('base64');
+                const dataUri = `data:${arquivo.tipo_arquivo};base64,${base64Data}`;
+                if (arquivo.tipo_arquivo.startsWith('image/')) {
+                    return { ...arquivo.toJSON(), tipo: 'image', dataUri };
+                } else if (arquivo.tipo_arquivo.startsWith('video/')) {
+                    return { ...arquivo.toJSON(), tipo: 'video', dataUri };
+                } else {
+                    return { ...arquivo.toJSON(), tipo: 'unknown', dataUri };
+                }
+            });
+
+            return {
+                ...publi.toJSON(),
+                tb_publicacao_arquivos: arquivosComTipo
+            };
+        });
+
+        res.render('PerfilUsu', {
+            username: usuario.nm_usuario,
+            profilePicture: img ? (await getFotoPerfilUri(req.params.cd_usuario)) : null,
+            logout: '<h3><a class="bo" href="/logout">logout</a></h3>',
+            publicacoes: publicacoesComTipoEArquivos
+        });
+    } catch (error) {
+        console.error('Erro ao buscar usuário ou publicações:', error);
+        res.redirect('/login');
+    }
+});
+
 // Função auxiliar para obter a URI da imagem do perfil
 async function getFotoPerfilUri(cd_usuario) {
     const img = await tb_img.findOne({ where: { cd_user: cd_usuario } });

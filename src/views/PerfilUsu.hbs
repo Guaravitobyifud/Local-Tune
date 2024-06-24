@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/estilo.css">
+    <link rel="stylesheet" type="text/css" href="/homeusu.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet">
+    <title>Perfil Usuário</title>
+</head>
+
+<body>
+    <header>
+        <div class="text_left"></div>
+            <div class="bo1a"><a class="bo2" href="/logout"><h3 class="bo3">Logout</h3></a></div>
+       
+    </header>
+     <section class="lateral-menu" id="lateralMenu" {{#if menuHidden}}hidden{{/if}}>
+        <div class="menu-header">
+        <img src="/images/baixados.svg" class="logo">
+        </div>
+        <div class="menu-content">
+            <div class="menu-item"><a href="/feed_user">Feed</a></div>
+            <div class="menu-item"><a href="/Search">Pesquisar</a></div>
+            <div class="menu-item"><a href="/settings">Configurações</a></div>
+            <div class="menu-item"><a href="/about">Sobre</a></div>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="perfil2">
+
+        <div class="perfil">
+            
+        {{#if profilePicture}}
+        <div class="ft_perfil">
+            <img class="img_perfil" src="{{profilePicture}}" alt="Imagem de Perfil">
+        </div>
+        <div class="ft_perfil2"></div>
+        <div class="itens">
+        <h1>{{username}}!</h1>
+        {{else}}
+        <div class="ft_perfil">
+            <img class="img_perfil" src="/images/dflt.jpeg" alt="Imagem Default de Perfil">
+        </div>
+        <div class="ft_perfil2"></div>
+        <div class="itens">
+        <h1>{{username}}!</h1>
+        
+        {{/if}}
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div id="publicacoes-container">
+            <h2>Publicações</h2>
+            <div id="publicacoes">
+                {{#each publicacoes}}
+                    <div class="publicacao" onclick="window.location.href='/publicacao/{{cd_publicacao}}'">
+                        <div class="publicacao_content">
+                            {{#if tb_publicacao_arquivos.[0]}}
+                                {{#if (eq tb_publicacao_arquivos.[0].tipo 'image')}}
+                                    <img class="publicacao_img" src="{{tb_publicacao_arquivos.[0].dataUri}}" alt="Imagem da Publicação">
+                                {{/if}}
+                                {{#if (eq tb_publicacao_arquivos.[0].tipo 'video')}}
+                                    <video class="publicacao_video" controls>
+                                        <source src="{{tb_publicacao_arquivos.[0].dataUri}}" type="{{tb_publicacao_arquivos.[0].tipo_arquivo}}">
+                                        Seu navegador não suporta o elemento de vídeo.
+                                    </video>
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        var modal = document.getElementById("uploadModal");
+        var btn = document.getElementById("uploadButton");
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>
