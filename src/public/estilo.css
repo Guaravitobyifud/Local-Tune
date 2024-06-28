@@ -1,11 +1,11 @@
 body {
   font-family: "Poppins", sans-serif;
   margin: 0;
-  background-color: #303440;
-  background-size: 25px 25px;
+  background-color: #858585;
+  /* background-size: 25px 25px;
   background-image: 
       linear-gradient(to right, grey 1px, transparent 1px),
-      linear-gradient(to bottom, grey 1px, transparent 1px);
+      linear-gradient(to bottom, grey 1px, transparent 1px); */
   display: flex;
   flex-direction: column;
 
@@ -325,7 +325,7 @@ button{
   background-color: #fff;
   z-index: 20;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   transform: translateY(-30px);
   border: #000 solid 1px;
   border-radius: 20px;

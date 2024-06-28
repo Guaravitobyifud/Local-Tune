@@ -43,15 +43,15 @@
                     {{/if}}
                 </div>
                 <p>{{usuario.nm_usuario}}</p>
-    </div>
-{{#if (eq usuario.cd_usuario usuarioId)}}
-    <!-- Não mostra o botão de seguir -->
-{{else}}
-    <!-- Mostra o botão de seguir -->
-    <button id="seguir-btn-{{usuario.cd_usuario}}" onclick="toggleSeguir({{usuario.cd_usuario}})">
-    Seguir
-</button>
-{{/if}}
+                </div>
+                {{#if (eq usuario.cd_usuario usuarioId)}}
+                    <!-- Não mostra o botão de seguir -->
+                {{else}}
+                    <!-- Mostra o botão de seguir/desseguir -->
+                    <button id="seguir-btn-{{usuario.cd_usuario}}" class="seguir-btn" onclick="toggleSeguir({{usuario.cd_usuario}})">
+                        {{#if seguido}}Seguindo{{else}}Seguir{{/if}}
+                    </button>
+                {{/if}}
             </div>
             <div class="publi-perfil-2"></div>
             <div id="carrosselPublicacao{{@index}}" class="carousel">
@@ -86,6 +86,7 @@
                     onclick="toggleCurtida({{cd_publicacao}})">
                     {{#if curtido}}Descurtir{{else}}Curtir{{/if}}
                 </button>
+                <br>
                 <p>{{ds_publicacao}}</p>
             </div>
         </div>
@@ -148,14 +149,10 @@
         function updateCurtidaButton(cd_publicacao, action) {
             const button = document.getElementById(`curtida-btn-${cd_publicacao}`);
             if (button) {
-                console.log(`Botão encontrado para cd_publicacao ${cd_publicacao}:`, button);
                 button.textContent = action === 'like' ? 'Descurtir' : 'Curtir';
-            } else {
-                console.log(`Botão não encontrado para cd_publicacao ${cd_publicacao}`);
             }
         }
-    </script>
-    <script>
+
         async function toggleSeguir(cd_usuario) {
             try {
                 const response = await fetch(`/seguir/${cd_usuario}`, {
@@ -174,7 +171,7 @@
         function updateSeguirButton(cd_usuario, action) {
             const button = document.getElementById(`seguir-btn-${cd_usuario}`);
             if (button) {
-                button.textContent = action === 'seguir' ? 'Deixar de Seguir' : 'Seguir';
+                button.textContent = action === 'follow' ? 'Seguindo' : 'Seguir';
             }
         }
     </script>

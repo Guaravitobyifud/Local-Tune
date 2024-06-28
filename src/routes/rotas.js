@@ -184,39 +184,33 @@ router.get("/feed_user", userAuth, async (req, res) => {
                     }
                 });
 
-                // Verificar se o usuário curtiu a publicação
-                const curtido = await tb_curtida.findOne({
-                    where: {
-                        cd_publicacao: publi.cd_publicacao,
-                        cd_usuario: usuarioId
-                    }
-                });
+                const curtida = await tb_curtida.findOne({ where: { cd_usuario: usuarioId, cd_publicacao: publi.cd_publicacao } });
+                const seguido = await tb_seguindoSeguidor.findOne({ where: { cd_seguidor: usuarioId, cd_seguindo: publi.usuario.cd_usuario } });
 
-                const fotoPerfilUri = await getFotoPerfilUri(publi.usuario.cd_usuario);
                 return {
                     ...publi.toJSON(),
+                    curtido: !!curtida,
+                    seguido: !!seguido,
                     tb_publicacao_arquivos: arquivosComTipo,
-                    usuario: {
-                        ...publi.usuario.toJSON(),
-                        fotoPerfilUri
-                    },
-                    curtido: !!curtido // true se curtido, false se não curtido
+                    usuarioId: usuarioId
                 };
             }));
 
-            res.render('feed_user', { 
+            res.render("feed_user", {
                 publicacoes: publicacoesComTipoEArquivos,
-                img: img ? (await getFotoPerfilUri(usuarioId)) : null,
-                cd_user: usuarioId
+                usuarioId: usuarioId,
+                img: img ? img.cd_img : null
             });
         } else {
-            res.render('login');
+            res.redirect("/login");
         }
     } catch (error) {
-        console.error('Erro ao buscar publicações:', error);
-        res.status(500).send('Erro ao buscar publicações');
+        console.error("Erro ao carregar o feed do usuário:", error);
+        res.status(500).send("Erro interno do servidor.");
     }
 });
+
+
 
 
 router.get("/", async (req, res) => {
@@ -351,37 +345,34 @@ router.post('/curtir/:cd_publicacao', async (req, res) => {
     }
 });
 
-router.post('/seguir/:cd_usuario', async (req, res) => {
-    const cd_seguindo = req.params.cd_usuario;
-    const cd_seguidor = req.session.dadosUsuario.cd_usuario;
-
+router.post('/seguir/:cd_usuario', userAuth, async (req, res) => {
     try {
-        // Verificar se já segue
-        const seguindoExistente = await tb_seguindoSeguidor.findOne({
-            where: {
-                cd_seguindo,
-                cd_seguidor
-            }
+        const seguidorId = req.session.dadosUsuario.cd_usuario;
+        const seguindoId = req.params.cd_usuario;
+
+        const seguir = await tb_seguindoSeguidor.findOne({
+            where: { cd_seguidor: seguidorId, cd_seguindo: seguindoId }
         });
 
-        if (seguindoExistente) {
-            // Se já segue, desfaz o seguimento
-            await seguindoExistente.destroy();
-            res.json({ message: 'Você parou de seguir este usuário.', action: 'unfollow' });
-        } else {
-            // Se não segue, cria um novo seguimento
-            await tb_seguindoSeguidor.create({
-                cd_seguindo,
-                cd_seguidor
+        if (seguir) {
+            // Se já segue, desfazer
+            await tb_seguindoSeguidor.destroy({
+                where: { cd_seguidor: seguidorId, cd_seguindo: seguindoId }
             });
-            res.json({ message: 'Você começou a seguir este usuário.', action: 'follow' });
+            res.json({ action: 'unfollow' });
+        } else {
+            // Se não segue, começar a seguir
+            await tb_seguindoSeguidor.create({
+                cd_seguidor: seguidorId,
+                cd_seguindo: seguindoId
+            });
+            res.json({ action: 'follow' });
         }
     } catch (error) {
-        console.error('Erro ao tentar seguir/desseguir o usuário:', error);
-        res.status(500).send('Erro ao tentar seguir/desseguir o usuário.');
+        console.error('Erro ao seguir/desseguir o usuário:', error);
+        res.status(500).json({ error: 'Erro ao seguir/desseguir o usuário.' });
     }
 });
-
 
 
 module.exports = router;
