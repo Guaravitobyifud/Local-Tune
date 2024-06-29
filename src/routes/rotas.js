@@ -373,7 +373,6 @@ router.post('/seguir/:cd_usuario', userAuth, async (req, res) => {
         res.status(500).json({ error: 'Erro ao seguir/desseguir o usuário.' });
     }
 });
-;
 
 
 module.exports = router;
