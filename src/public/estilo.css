@@ -8,9 +8,6 @@ body {
       linear-gradient(to bottom, grey 1px, transparent 1px); */
   display: flex;
   flex-direction: column;
-
-    margin: 0; /* Remove a margem padrão do body */ /* Adiciona padding no topo para que o conteúdo não fique escondido atrás do header */
-    margin-top: 120px;
 }
 
 .menu-button {
@@ -44,7 +41,7 @@ body {
 }
 
 .lateral-menu {
-  width: 11vw;
+  width: 14vw;
   height: 100vh;
   background-color: #303440;
   position: fixed;
@@ -97,18 +94,15 @@ body {
   color: #ffffff;
   font-size: 18px;
   transition: 0.3s ease;
-  font-size: 25px;
+  font-size: 15px;
   padding: 5px;
   margin: 0;
   width: auto;
 }
 
 .menu-item a:hover {
-  color: #fefdff;
-  text-shadow: 0 0 15px rgb(255, 255, 255);
-  box-shadow: 0 0 20px rgb(132, 0, 255);
-  transform: translateX(30px); /* Ajuste a quantidade de pixels conforme necessário */
-  background-color: #303440;
+  color: #000000;
+  background-color: #ffffff;
   border-radius: 10px;
 }
 
@@ -121,11 +115,10 @@ header {
   justify-content: center;
   width: 100%;
   background-color: #303440;
-  height: 100px;
   position: fixed;
   top: 0; /* Garantir que o header fique no topo */
   left: 0; /* Garantir que o header fique alinhado à esquerda */
-  z-index: 100;
+  z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra para destacar o header */
 
 }
@@ -138,7 +131,7 @@ header {
 .logo{
   align-self: center;
   width: 190px;
-  margin-right: 20px;
+  margin-right: 55%;
 }
 
 .buscar {
@@ -154,14 +147,12 @@ button{
 }
 
 .buscar input {
-  color: #fff;
   padding: 8px;
   border: 3px solid rgb(255, 255, 255);
   border-radius: 10px;
   width: 200px;
   margin-right: 20px;
   margin: 5px;
-  background-color: #303440;
 }
 
 .buscar button {
@@ -194,33 +185,43 @@ button{
 }
 
 .bo1, .bo1a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  color: #ffffff;
-  border: 1px solid rgb(255, 255, 255);
-  border-radius: 10px;
-  text-align: center;
-  overflow: hidden;
-  max-height: 70px;
+  display: inline-block;
+  margin: 0 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 15px;
 }
 
 .bo1 {
-  background-color: #303440;
+  margin: 10px;
+  text-decoration: none;
+  color: #FFF;
+  border: 2px solid #FFF;
+  border-radius: 7px;
+  background: #2B282B;
+  transition: background-color 0.3s ease;;
+}
+
+.bo1:hover {
+  color: #2B282B;
+  background: #fff;
 }
 
 .bo1a {
-  background-color: rgb(255, 211, 77);
-  color: #000000;
-  transition: all 0.3s ease;
-  margin-right: 5vw;
+  margin: 10px;
+  text-decoration: none;
+  color: #2B282B;
+  border: 2px solid #FFF;
+  border-radius: 7px;
+  background: #FFD34D;
+  transition: background-color 0.3s ease;
 }
 
 
-.bo1:hover {
-  text-shadow: 0 0 15px rgb(255, 211, 77);
-  box-shadow: 0 0 20px rgb(255, 211, 77), inset 0 0 10px rgb(255, 211, 77);
+.bo1a:hover {
+  color: rgb(255, 247, 240);
+  background: #303440;
 }
 
 .bo2 {
@@ -229,15 +230,15 @@ button{
   justify-content: center;
   text-decoration: none;
   color: inherit;
-  width: 100%;
-  height: 100%;
   margin: 0;
-  padding: 10px;
+  padding: 5px;
 }
+
+
 
 .bo3 {
   margin: 0;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 .message {
